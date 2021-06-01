@@ -1,0 +1,13 @@
+{
+    "wentWell":true,
+    "responseBody": {
+        "uid":"12345",
+        "email":"KamilKoczan@wp.pl",
+        "phone":"796262965",
+        "profileImageUrl":"12345",
+        "name":"kamil",
+        "gender":"GenderEnum.male",
+        "hasOwnImage": false,
+        "contactUids":["empty"]
+    }
+}

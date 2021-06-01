@@ -1,0 +1,10 @@
+{
+    "email":"KamilKoczan@wp.pl",
+    "phone":"796262965",
+    "password":"12345",
+    "name":"Kamil",
+    "profileImageUrl":"12345",
+    "hasOwnImage": false,
+    "gender":"GenderEnum.male",
+    "contactUids":["one", "two"]
+}
