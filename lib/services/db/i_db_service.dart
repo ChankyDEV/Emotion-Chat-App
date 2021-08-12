@@ -9,13 +9,13 @@ abstract class IDatabaseService {
   Future<Either<DatabaseFailure, Unit>> deleteConversation(
       Conversation conversation);
   Future<Either<DatabaseFailure, Unit>> createNewConversationWithUser(
-      User user);
-  Future<Either<DatabaseFailure, List<User>>> getAllUsersForConversation(
+      MyUser user);
+  Future<Either<DatabaseFailure, List<MyUser>>> getAllUsersForConversation(
       Conversation conversation);
 
-  Future<Either<DatabaseFailure, List<User>>> getAllContacts();
-  Future<Either<DatabaseFailure, Unit>> deleteContact(User contactToDelete);
-  Future<Either<DatabaseFailure, Unit>> addContact(User contactToAdd);
+  Future<Either<DatabaseFailure, List<MyUser>>> getAllContacts();
+  Future<Either<DatabaseFailure, Unit>> deleteContact(MyUser contactToDelete);
+  Future<Either<DatabaseFailure, Unit>> addContact(MyUser contactToAdd);
 
   Future<Either<DatabaseFailure, Unit>> saveMessage(
       Message message, Conversation conversation);

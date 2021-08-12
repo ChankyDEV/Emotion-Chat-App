@@ -21,7 +21,7 @@ import 'package:rxdart/src/subjects/behavior_subject.dart' as _i4;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-class _FakeUser extends _i1.Fake implements _i2.User {}
+class _FakeMyUser extends _i1.Fake implements _i2.MyUser {}
 
 /// A class which mocks [IAuthService].
 ///
@@ -32,11 +32,11 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
   }
 
   @override
-  set currentUser(_i4.BehaviorSubject<_i2.User>? _currentUser) =>
+  set currentUser(_i4.BehaviorSubject<_i2.MyUser>? _currentUser) =>
       super.noSuchMethod(Invocation.setter(#currentUser, _currentUser),
           returnValueForMissingStub: null);
   @override
-  _i5.Future<_i2.User> signUpWithEmailAndPhone(
+  _i5.Future<_i2.MyUser> signUpWithEmailAndPhone(
           {_i6.EmailAddress? emailAddress,
           _i6.PhoneNumber? phoneNumber,
           _i6.Password? password}) =>
@@ -46,26 +46,26 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
                 #phoneNumber: phoneNumber,
                 #password: password
               }),
-              returnValue: Future<_i2.User>.value(_FakeUser()))
-          as _i5.Future<_i2.User>);
+              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
+          as _i5.Future<_i2.MyUser>);
   @override
-  _i5.Future<_i2.User> signInWithEmail(
+  _i5.Future<_i2.MyUser> signInWithEmail(
           {_i6.EmailAddress? emailAddress, _i6.Password? password}) =>
       (super.noSuchMethod(
               Invocation.method(#signInWithEmail, [],
                   {#emailAddress: emailAddress, #password: password}),
-              returnValue: Future<_i2.User>.value(_FakeUser()))
-          as _i5.Future<_i2.User>);
+              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
+          as _i5.Future<_i2.MyUser>);
   @override
-  _i5.Future<_i2.User> signInWithPhoneNumber(
+  _i5.Future<_i2.MyUser> signInWithPhoneNumber(
           {_i6.PhoneNumber? phoneNumber, _i6.Password? password}) =>
       (super.noSuchMethod(
               Invocation.method(#signInWithPhoneNumber, [],
                   {#phoneNumber: phoneNumber, #password: password}),
-              returnValue: Future<_i2.User>.value(_FakeUser()))
-          as _i5.Future<_i2.User>);
+              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
+          as _i5.Future<_i2.MyUser>);
   @override
-  _i5.Future<_i2.User> updateUserInfo(
+  _i5.Future<_i2.MyUser> updateUserInfo(
           {_i6.Name? name,
           _i6.Gender? gender,
           bool? hasOwnImage,
@@ -79,15 +79,15 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
                 #uid: uid,
                 #generatedImageUploadUrl: generatedImageUploadUrl
               }),
-              returnValue: Future<_i2.User>.value(_FakeUser()))
-          as _i5.Future<_i2.User>);
+              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
+          as _i5.Future<_i2.MyUser>);
   @override
-  _i5.Future<_i2.User> getSignedInUser() =>
+  _i5.Future<_i2.MyUser> getSignedInUser() =>
       (super.noSuchMethod(Invocation.method(#getSignedInUser, []),
-              returnValue: Future<_i2.User>.value(_FakeUser()))
-          as _i5.Future<_i2.User>);
+              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
+          as _i5.Future<_i2.MyUser>);
   @override
-  void addInfoAboutUserToStream(_i2.User? user) =>
+  void addInfoAboutUserToStream(_i2.MyUser? user) =>
       super.noSuchMethod(Invocation.method(#addInfoAboutUserToStream, [user]),
           returnValueForMissingStub: null);
   @override
@@ -123,15 +123,15 @@ class MockILocalDatabaseService extends _i1.Mock
   }
 
   @override
-  _i5.Future<void> saveUser(_i2.User? user) =>
+  _i5.Future<void> saveUser(_i2.MyUser? user) =>
       (super.noSuchMethod(Invocation.method(#saveUser, [user]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i5.Future<void>);
   @override
-  _i5.Future<_i2.User> getUser() =>
+  _i5.Future<_i2.MyUser> getUser() =>
       (super.noSuchMethod(Invocation.method(#getUser, []),
-              returnValue: Future<_i2.User>.value(_FakeUser()))
-          as _i5.Future<_i2.User>);
+              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
+          as _i5.Future<_i2.MyUser>);
   @override
   _i5.Future<bool> isUserSaved() =>
       (super.noSuchMethod(Invocation.method(#isUserSaved, []),

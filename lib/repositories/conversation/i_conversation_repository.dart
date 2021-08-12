@@ -9,7 +9,7 @@ abstract class IConversationRepository {
   Future<Either<ConversationFailure, Unit>> deleteConversation(
       Conversation conversation);
   Future<Either<ConversationFailure, Unit>> createNewConversationWithUser(
-      User user);
-  Future<Either<ConversationFailure, List<User>>> getAllUsersForConversation(
+      MyUser user);
+  Future<Either<ConversationFailure, List<MyUser>>> getAllUsersForConversation(
       Conversation conversation);
 }

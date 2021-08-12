@@ -39,6 +39,7 @@ class EmailOrPhoneTextField extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
       ),
       child: TextFormField(
+        key: Key('emailOrPhone'),
         style: textFormStyle.copyWith(color: textColor),
         validator: (value) {
           if (formInput == FormInput.emailAddress) {

@@ -5,7 +5,6 @@ import 'package:emotion_chat/screens/core/widgets/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ImagePicker extends StatelessWidget {
   final PageController genderController;
@@ -92,7 +91,7 @@ class ImagePicker extends StatelessWidget {
                               },
                               child: DialogItem(
                                 sideWidth: 80,
-                                icon: MdiIcons.imageArea,
+                                icon: Icons.image,
                                 text: 'Gallery',
                                 backgroundColor: whiteColor,
                                 iconColor: mBlack,
@@ -110,7 +109,7 @@ class ImagePicker extends StatelessWidget {
                               },
                               child: DialogItem(
                                 sideWidth: 80,
-                                icon: MdiIcons.camera,
+                                icon: Icons.camera,
                                 text: 'Camera',
                                 backgroundColor: whiteColor,
                                 iconColor: mBlack,

@@ -3,27 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class IAuthService {
-  Future<User> signUpWithEmailAndPhone(
+  Future<MyUser> signUpWithEmailAndPhone(
       {required EmailAddress? emailAddress,
       required PhoneNumber? phoneNumber,
       required Password? password});
 
-  Future<User> signInWithEmail(
+  Future<MyUser> signInWithEmail(
       {required EmailAddress? emailAddress, required Password? password});
 
-  Future<User> signInWithPhoneNumber(
+  Future<MyUser> signInWithPhoneNumber(
       {required PhoneNumber? phoneNumber, required Password? password});
-  Future<User> updateUserInfo(
+  Future<MyUser> updateUserInfo(
       {required Name? name,
       required Gender? gender,
       required bool? hasOwnImage,
       required String? uid,
       required String? generatedImageUploadUrl});
 
-  Future<User> getSignedInUser();
-  void addInfoAboutUserToStream(User user);
+  Future<MyUser> getSignedInUser();
+  void addInfoAboutUserToStream(MyUser user);
 
-  BehaviorSubject<User>? currentUser;
+  BehaviorSubject<MyUser>? currentUser;
   void close() {
     currentUser!.close();
   }

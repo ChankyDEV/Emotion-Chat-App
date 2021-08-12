@@ -51,7 +51,7 @@ void main() {
 
       verify(
         client.post(
-          Uri(path: 'http://192.168.0.107:3000/auth/signUp'),
+          Uri.parse('http://192.168.0.107:3000/auth/signUp'),
           headers: {HttpHeaders.contentTypeHeader: "application/json"},
           body: fixture('userToSignUp.json'),
           encoding: null,
@@ -65,7 +65,7 @@ void main() {
 
       verify(
         client.post(
-          Uri(path: 'http://192.168.0.107:3000/auth/signInEmail'),
+          Uri.parse('http://192.168.0.107:3000/auth/signInEmail'),
           headers: {HttpHeaders.contentTypeHeader: "application/json"},
           body: fixture('email_credentials.json'),
           encoding: null,
@@ -79,7 +79,7 @@ void main() {
 
       verify(
         client.post(
-          Uri(path: 'http://192.168.0.107:3000/auth/signInPhone'),
+          Uri.parse('http://192.168.0.107:3000/auth/signInPhone'),
           headers: {HttpHeaders.contentTypeHeader: "application/json"},
           body: fixture('phone_credentials.json'),
           encoding: null,
@@ -106,7 +106,7 @@ void main() {
 
       verify(
         client.post(
-          Uri(path: 'http://192.168.0.107:3000/auth/updateUserInfo'),
+          Uri.parse('http://192.168.0.107:3000/auth/updateUserInfo'),
           headers: {HttpHeaders.contentTypeHeader: "application/json"},
           body: fixture('updated_user_info.json'),
           encoding: null,
@@ -115,7 +115,7 @@ void main() {
     });
   });
 
-  final tuser = User(
+  final tuser = MyUser(
       uid: '12345',
       profileImage: ProfileImage(url: '12345'),
       emailAddress: emailAddress,
@@ -185,7 +185,7 @@ void main() {
     final tname = Name(value: 'kamil');
     final tgender = Gender(value: GenderEnum.male);
     final thasOwnImage = false;
-    final testUser = User(
+    final testUser = MyUser(
       name: tname,
       gender: tgender,
       profileImage: ProfileImage(url: '12345'),

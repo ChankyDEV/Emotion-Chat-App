@@ -6,20 +6,20 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: IDatabaseService)
 class MongoDatabaseService implements IDatabaseService {
   @override
-  Future<Either<DatabaseFailure, Unit>> addContact(User contactToAdd) {
+  Future<Either<DatabaseFailure, Unit>> addContact(MyUser contactToAdd) {
     // TODO: implement addContact
     throw UnimplementedError();
   }
 
   @override
   Future<Either<DatabaseFailure, Unit>> createNewConversationWithUser(
-      User user) {
+      MyUser user) {
     // TODO: implement createNewConversationWithUser
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<DatabaseFailure, Unit>> deleteContact(User contactToDelete) {
+  Future<Either<DatabaseFailure, Unit>> deleteContact(MyUser contactToDelete) {
     // TODO: implement deleteContact
     throw UnimplementedError();
   }
@@ -32,7 +32,7 @@ class MongoDatabaseService implements IDatabaseService {
   }
 
   @override
-  Future<Either<DatabaseFailure, List<User>>> getAllContacts() {
+  Future<Either<DatabaseFailure, List<MyUser>>> getAllContacts() {
     // TODO: implement getAllContacts
     throw UnimplementedError();
   }
@@ -44,7 +44,7 @@ class MongoDatabaseService implements IDatabaseService {
   }
 
   @override
-  Future<Either<DatabaseFailure, List<User>>> getAllUsersForConversation(
+  Future<Either<DatabaseFailure, List<MyUser>>> getAllUsersForConversation(
       Conversation conversation) {
     // TODO: implement getAllUsersForConversation
     throw UnimplementedError();

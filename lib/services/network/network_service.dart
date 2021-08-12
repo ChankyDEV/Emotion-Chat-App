@@ -1,13 +1,13 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/services.dart';
 import 'package:flutter/material.dart';
 
 import 'package:injectable/injectable.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 @LazySingleton(as: INetworkService)
 class NetworkService implements INetworkService {
-  final DataConnectionChecker dataConnectionChecker;
+  final InternetConnectionChecker dataConnectionChecker;
 
   NetworkService(this.dataConnectionChecker);
 
@@ -20,10 +20,10 @@ class NetworkService implements INetworkService {
           .map((status) => networkStatusConverter(status));
 
   @visibleForTesting
-  ConnectionStatus networkStatusConverter(DataConnectionStatus status) {
+  ConnectionStatus networkStatusConverter(InternetConnectionStatus status) {
     List<ConnectionStatus> possibleStatus = [
-      ConnectionStatus.disconnected,
       ConnectionStatus.connected,
+      ConnectionStatus.disconnected,
     ];
     return possibleStatus[status.index];
   }

@@ -1,13 +1,14 @@
 import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/data/models/auth/receiver.dart';
 import 'package:flutter/material.dart';
 
 class Conversation {
   final String conversationID;
-  final List<Message> messages;
-  final List<String> membersIDS;
+  final Message lastMessage;
+  final Receiver receiver;
 
   Conversation(
       {required this.conversationID,
-      required this.messages,
-      required this.membersIDS});
+      required this.lastMessage,
+      required this.receiver});
 }

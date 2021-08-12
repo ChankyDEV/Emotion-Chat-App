@@ -12,7 +12,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 part 'auth_form_event.dart';
+
 part 'auth_form_state.dart';
+
 part 'auth_form_bloc.freezed.dart';
 
 @LazySingleton()
@@ -22,11 +24,11 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
   late StreamSubscription authCubitStream;
   late final INetworkService networkService;
 
-  AuthFormBloc(
-      {required this.userRepository,
-      required this.authCubit,
-      required this.networkService})
-      : super(AuthFormState.initial(
+  AuthFormBloc({
+    required this.userRepository,
+    required this.authCubit,
+    required this.networkService,
+  }) : super(AuthFormState.initial(
           emailOrPhone: EmailAddress(value: ''),
           phone: PhoneNumber(value: ''),
           password: Password(value: ''),
@@ -135,7 +137,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
   }
 
   AuthFormState _stateFromAuthResult(
-      Either<Failure, User> result, AuthFormState state) {
+      Either<Failure, MyUser> result, AuthFormState state) {
     if (result.isLeft()) {
       var failure;
       result.fold((l) => failure = l, (_) => _);

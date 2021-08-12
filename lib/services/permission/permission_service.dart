@@ -19,6 +19,7 @@ class PermissionService implements IPermissionService {
 
   @override
   Future<MyPermissionStatus> getCameraPermission() async {
+    Permission.values;
     final status = await Permission.camera.request();
     return _mapToMyPermissionStatus(status);
   }

@@ -1,10 +1,9 @@
 import 'package:emotion_chat/constants/blocs.dart';
-import 'package:emotion_chat/screens/auth/sign_up_more_info/sign_up_button.dart';
+import 'package:emotion_chat/screens/auth/additional_user_info/sign_up_button.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'gender_switch.dart';
 import 'image_picker.dart';
@@ -91,6 +90,7 @@ class SignUpMoreInfoScreen extends StatelessWidget {
                                       top: 10,
                                       right: 0,
                                       child: IconButton(
+                                          key: Key('logoutMoreInfo'),
                                           icon: Icon(
                                             Icons.logout,
                                             color: whiteColor,
@@ -218,7 +218,7 @@ class CircleImage extends StatelessWidget {
                               },
                               child: DialogItem(
                                 sideWidth: 80,
-                                icon: MdiIcons.imageArea,
+                                icon: Icons.image,
                                 text: 'Gallery',
                                 backgroundColor: whiteColor,
                                 iconColor: mBlack,
@@ -236,7 +236,7 @@ class CircleImage extends StatelessWidget {
                               },
                               child: DialogItem(
                                 sideWidth: 80,
-                                icon: MdiIcons.camera,
+                                icon: Icons.camera,
                                 text: 'Camera',
                                 backgroundColor: whiteColor,
                                 iconColor: mBlack,

@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: ILocalDatabaseService)
 class HiveLocalDatabaseService implements ILocalDatabaseService {
   @override
-  Future<User> getUser() async {
+  Future<MyUser> getUser() async {
     final userBox = await openOrGetBox('user');
     final userDto = await performActionOnLocalUser<UserDTO>(
         () => userBox.get('user'), userBox);
@@ -17,7 +17,7 @@ class HiveLocalDatabaseService implements ILocalDatabaseService {
   }
 
   @override
-  Future<void> saveUser(User user) async {
+  Future<void> saveUser(MyUser user) async {
     final userBox = await openOrGetBox('user');
     final result = await performActionOnLocalUser<void>(
         () => userBox.put('user', user.fromDomain()), userBox);

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
@@ -24,7 +26,7 @@ class UserRepository implements IUserRepository {
   });
 
   @override
-  BehaviorSubject<User>? get currentUser => authService.currentUser;
+  BehaviorSubject<MyUser>? get currentUser => authService.currentUser;
 
   @override
   void close() {
@@ -32,26 +34,26 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<User> getSignedInUser() async {
+  Future<MyUser> getSignedInUser() async {
     return await authService.getSignedInUser();
   }
 
   @override
-  Future<Either<Failure, User>> signInWithEmail(
+  Future<Either<Failure, MyUser>> signInWithEmail(
       {required EmailAddress emailAddress, required Password password}) async {
     return await _performAuthAction(() => authService.signInWithEmail(
         emailAddress: emailAddress, password: password));
   }
 
   @override
-  Future<Either<Failure, User>> signInWithPhoneNumber(
+  Future<Either<Failure, MyUser>> signInWithPhoneNumber(
       {required PhoneNumber phoneNumber, required Password password}) async {
     return await _performAuthAction(() => authService.signInWithPhoneNumber(
         phoneNumber: phoneNumber, password: password));
   }
 
   @override
-  Future<Either<Failure, User>> signUp(
+  Future<Either<Failure, MyUser>> signUp(
       {required EmailAddress emailAddress,
       required PhoneNumber phoneNumber,
       required Password password}) async {
@@ -61,15 +63,18 @@ class UserRepository implements IUserRepository {
         password: password));
   }
 
-  Future<Either<Failure, User>> _performAuthAction(Function authAction) async {
+  Future<Either<Failure, MyUser>> _performAuthAction(
+      Function authAction) async {
     if (await networkService.isConnected) {
       try {
-        final user = await authAction() as User;
+        final user = await authAction() as MyUser;
         await localDatabaseService.saveUser(user);
         authService.addInfoAboutUserToStream(user);
         return right(user);
       } on AuthException catch (e) {
         return left(AuthFailure(message: e.message));
+      } on SocketException catch (e) {
+        return left(AuthFailure(message: 'Server error, we are sorry'));
       }
     } else {
       return left(NetworkFailure(message: 'No internet connection'));
@@ -80,7 +85,7 @@ class UserRepository implements IUserRepository {
   Future<bool> logout() async {
     try {
       await localDatabaseService.removeUser();
-      authService.addInfoAboutUserToStream(User.empty());
+      authService.addInfoAboutUserToStream(MyUser.empty());
       return true;
     } on AuthException catch (e) {
       print(e.message);
@@ -98,11 +103,11 @@ class UserRepository implements IUserRepository {
         return true;
       } on AuthException catch (e) {
         print(e);
-        authService.addInfoAboutUserToStream(User.empty());
+        authService.addInfoAboutUserToStream(MyUser.empty());
         return false;
       }
     } else {
-      authService.addInfoAboutUserToStream(User.empty());
+      authService.addInfoAboutUserToStream(MyUser.empty());
       return false;
     }
   }
@@ -115,7 +120,7 @@ class UserRepository implements IUserRepository {
       Image? profileImage}) async {
     if (await networkService.isConnected) {
       try {
-        User user = await authService.getSignedInUser();
+        MyUser user = await authService.getSignedInUser();
         String generatedImageUploadUrl = "";
         if (hasOwnImage) {
           generatedImageUploadUrl = await imageService.generateProfileImageUrl(

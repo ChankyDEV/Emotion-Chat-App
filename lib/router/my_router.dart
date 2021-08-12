@@ -1,5 +1,6 @@
 import 'package:emotion_chat/constants/blocs.dart';
 import 'package:emotion_chat/constants/screens.dart';
+import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,22 +11,26 @@ class MyRouter {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(providers: [
+            builder: (_) =>
+                MultiBlocProvider(providers: [
                   BlocProvider(
                     create: (context) {
-                      return getIt<AuthCubit>()..listenForAuthChanges();
+                      return getIt<AuthCubit>()
+                        ..listenForAuthChanges();
                     },
                   ),
                   BlocProvider(
                     create: (context) => getIt<MoreInfoFormBloc>(),
                   ),
                   BlocProvider(
-                    create: (context) => getIt<AuthFormBloc>()
+                    create: (context) =>
+                    getIt<AuthFormBloc>()
                       ..listenForLogout()
                       ..listenOnNetworkStatus(),
                   ),
                   BlocProvider(
-                    create: (context) => AnimatedButtonCubit(
+                    create: (context) =>
+                    AnimatedButtonCubit(
                         authFormBloc: getIt<AuthFormBloc>(),
                         authCubit: getIt<AuthCubit>())
                       ..listenForAuthFormBlocStateChanges(),
@@ -50,6 +55,10 @@ class MyRouter {
             return Unauthenticated();
           },
         );
+      case 'additionalInfo':
+        return MaterialPageRoute(builder: (context) {
+          return AdditionalUserInfoScreen();
+        });
       default:
         return MaterialPageRoute(builder: (_) => Wrapper());
     }

@@ -1,6 +1,5 @@
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class GenderSwitch extends StatefulWidget {
   final PageController genderController;
@@ -136,7 +135,7 @@ class _GenderSwitchState extends State<GenderSwitch>
             backgroundColor: _maleBackgroundColor,
             iconColor: _maleIconColor,
             offset: _offset,
-            icon: MdiIcons.genderMale,
+            icon: Icons.ac_unit,
             animateToPage: 0,
           ),
           AnimatedGenderItem(
@@ -148,7 +147,7 @@ class _GenderSwitchState extends State<GenderSwitch>
             backgroundColor: _femaleBackgroundColor,
             iconColor: _femaleIconColor,
             offset: _offset,
-            icon: MdiIcons.genderFemale,
+            icon: Icons.ac_unit,
             animateToPage: 1,
           ),
           AnimatedGenderItem(
@@ -160,7 +159,7 @@ class _GenderSwitchState extends State<GenderSwitch>
             backgroundColor: _nonBinaryBackgroundColor,
             iconColor: _nonBinaryIconColor,
             offset: _offset,
-            icon: MdiIcons.genderNonBinary,
+            icon: Icons.ac_unit,
             animateToPage: 2,
           )
         ],

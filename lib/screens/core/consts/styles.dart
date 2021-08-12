@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 var titleStyle = TextStyle(
     fontSize: 32.0,
-    fontStyle: FontStyle.italic,
-    fontFamily: 'OpenSans',
+    fontFamily: 'Lato',
     fontWeight: FontWeight.w600,
     color: whiteColor);
 

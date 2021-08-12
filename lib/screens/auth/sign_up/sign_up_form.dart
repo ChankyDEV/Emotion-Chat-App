@@ -69,6 +69,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     EmailOrPhoneTextField(
+                      key: Key('emailSignUpField'),
                       clearFunction: () =>
                           BlocProvider.of<AuthFormBloc>(context).add(
                         AuthFormEvent.clearEmailField(),
@@ -86,6 +87,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       height: 0.03 * height,
                     ),
                     EmailOrPhoneTextField(
+                      key: Key('phoneSignUpField'),
                       clearFunction: () =>
                           BlocProvider.of<AuthFormBloc>(context).add(
                         AuthFormEvent.clearPhoneField(),
@@ -103,6 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       height: 0.03 * height,
                     ),
                     PasswordTextField(
+                      key: Key('passwordSignUpField'),
                       passwordController: widget.passwordController,
                       hideOrShowPassword: () =>
                           BlocProvider.of<AuthFormBloc>(context).add(
@@ -110,10 +113,13 @@ class _SignUpFormState extends State<SignUpForm> {
                       ),
                       isPasswordVisible: state.showPassword,
                     ),
-                    SizedBox(
-                      height: 0.05 * height,
+                    Expanded(
+                      child: SizedBox(
+                        height: 0.05 * height,
+                      ),
                     ),
                     AnimatedButton(
+                      key: Key('animatedButton_SignUp'),
                       formKey: widget.formKey,
                       width: 0.4 * width,
                       height: 0.055 * height,
@@ -128,8 +134,10 @@ class _SignUpFormState extends State<SignUpForm> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 0.012 * height,
+                    Expanded(
+                      child: SizedBox(
+                        height: 0.012 * height,
+                      ),
                     ),
                     GestureDetector(
                       onTap: () => widget.pageController.previousPage(

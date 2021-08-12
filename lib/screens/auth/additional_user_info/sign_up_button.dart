@@ -72,6 +72,7 @@ class _SignUpButtonState extends State<SignUpButton>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+        key: Key('signUpButton'),
         onTap: () {
           if (!widget.isButtonClicked) {
             if (widget.formKey.currentState!.validate()) {

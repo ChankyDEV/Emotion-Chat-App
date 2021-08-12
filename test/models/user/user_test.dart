@@ -10,7 +10,7 @@ void main() {
   const phone = PhoneNumber(value: '796262965');
   const gender = Gender(value: GenderEnum.male);
   const name = Name(value: 'Kamil');
-  final user = User(
+  final user = MyUser(
       uid: '12345',
       emailAddress: email,
       phoneNumber: phone,

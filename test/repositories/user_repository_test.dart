@@ -23,7 +23,7 @@ void main() {
   const tContactUids = [''];
   final tProfileImage = ProfileImage(url: '');
   const tUid = 'ID123123210123213';
-  final tUser = User(
+  final tUser = MyUser(
     emailAddress: tEmail,
     phoneNumber: tPhone,
     name: tName,
@@ -179,7 +179,7 @@ void main() {
       });
     });
     group('update user info', () {
-      final tUserUpdated = User(
+      final tUserUpdated = MyUser(
         uid: tUid,
         emailAddress: tEmail,
         phoneNumber: tPhone,
@@ -189,7 +189,7 @@ void main() {
         hasOwnImage: false,
         profileImage: tProfileImage,
       );
-      final tUserUpdatedWithImage = User(
+      final tUserUpdatedWithImage = MyUser(
         uid: tUid,
         emailAddress: tEmail,
         phoneNumber: tPhone,
@@ -349,7 +349,7 @@ void main() {
       when(localDatabaseService.removeUser()).thenAnswer((_) async => _);
       final result = await repository.logout();
       verify(localDatabaseService.removeUser());
-      verify(authService.addInfoAboutUserToStream(User.empty()));
+      verify(authService.addInfoAboutUserToStream(MyUser.empty()));
       expect(result, true);
     });
     test('should return false if user logs out unsuccesffully', () async {
@@ -383,7 +383,7 @@ void main() {
     test('should return false when user is not saved ', () async {
       when(localDatabaseService.isUserSaved()).thenAnswer((_) async => false);
       final result = await repository.checkIfUserIsLoggedIn();
-      verify(authService.addInfoAboutUserToStream(User.empty()));
+      verify(authService.addInfoAboutUserToStream(MyUser.empty()));
       expect(result, false);
     });
   });

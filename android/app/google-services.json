@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "978243586798",
+    "project_id": "emotionchat-83e36",
+    "storage_bucket": "emotionchat-83e36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978243586798:android:4605a8ba167bb5d18f41ff",
+        "android_client_info": {
+          "package_name": "com.kamilkoczan.emotion_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978243586798-belqp0sheqdiu3brahs6rft2ik9aue87.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kamilkoczan.emotion_chat",
+            "certificate_hash": "ee42b8886d5e461933791433172fb1eaf082f786"
+          }
+        },
+        {
+          "client_id": "978243586798-dcglu0rqluf7o2ie80pcnu29a5se0ntm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyjVpglYp0mgQ4bzVNJpM84bwPZASrX0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978243586798-dcglu0rqluf7o2ie80pcnu29a5se0ntm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

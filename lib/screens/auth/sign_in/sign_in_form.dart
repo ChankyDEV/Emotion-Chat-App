@@ -32,7 +32,7 @@ class _SignInFormState extends State<SignInForm> {
       child: BlocConsumer<AuthFormBloc, AuthFormState>(
         listener: (context, state) {
           if (state.hasError == true) {
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.red,
                 behavior: SnackBarBehavior.floating,
@@ -87,6 +87,7 @@ class _SignInFormState extends State<SignInForm> {
                   height: 0.05 * height,
                 ),
                 AnimatedButton(
+                  key: Key('animatedButton_SignIn'),
                   formKey: widget.formKey,
                   width: 0.4 * width,
                   height: 0.055 * height,

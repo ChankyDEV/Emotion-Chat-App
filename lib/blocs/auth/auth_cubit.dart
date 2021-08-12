@@ -51,11 +51,11 @@ class AuthCubit extends Cubit<AuthState> {
     await checkAuthStatus();
   }
 
-  bool _userLoggedIn(User user) {
-    return user != User.empty() ? true : false;
+  bool _userLoggedIn(MyUser user) {
+    return user != MyUser.empty() ? true : false;
   }
 
-  bool _userLoggedForTheFirstTime(User user) {
+  bool _userLoggedForTheFirstTime(MyUser user) {
     return user.name.value == '' ? true : false;
   }
 

@@ -22,6 +22,7 @@ class NameTextField extends StatelessWidget {
         child: Form(
           key: formKey,
           child: TextFormField(
+            key: Key('nameField'),
             validator: (input) {
               Name name = Name(value: input!);
               if (!name.isValid()) {

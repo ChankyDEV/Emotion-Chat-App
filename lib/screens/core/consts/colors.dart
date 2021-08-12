@@ -13,3 +13,7 @@ const lightAccentColor = Color(0xFF3282b8);
 const purpleAccent = Color(0xFF7F4EBB);
 const textColor = Color(0xFFbbe1fa);
 var whiteColor = Colors.white;
+
+const cDarkGrey = Color(0xFF1C1B1B);
+const cLightGrey = Color(0xFF878787);
+const cWhite = Color(0xFFFCFCFC);

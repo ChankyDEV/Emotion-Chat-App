@@ -15,7 +15,7 @@ class ConversationRepository implements IConversationRepository {
 
   @override
   Future<Either<ConversationFailure, Unit>> createNewConversationWithUser(
-      User user) {
+      MyUser user) {
     throw UnimplementedError();
   }
 
@@ -38,7 +38,7 @@ class ConversationRepository implements IConversationRepository {
   }
 
   @override
-  Future<Either<ConversationFailure, List<User>>> getAllUsersForConversation(
+  Future<Either<ConversationFailure, List<MyUser>>> getAllUsersForConversation(
       Conversation conversation) {
     throw UnimplementedError();
   }

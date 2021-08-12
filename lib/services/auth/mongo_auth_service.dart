@@ -1,14 +1,12 @@
+import 'dart:convert' as convert;
 import 'dart:io';
+
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/services/auth/i_auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
-
 import 'package:rxdart/rxdart.dart';
 
-@LazySingleton(as: IAuthService)
 class MongoAuthService implements IAuthService {
   final http.Client client;
 
@@ -20,7 +18,7 @@ class MongoAuthService implements IAuthService {
   }
 
   @override
-  Future<User> signInWithEmail(
+  Future<MyUser> signInWithEmail(
       {required EmailAddress? emailAddress,
       required Password? password}) async {
     String url = 'http://192.168.0.107:3000/auth/signInEmail';
@@ -32,7 +30,7 @@ class MongoAuthService implements IAuthService {
   }
 
   @override
-  Future<User> signInWithPhoneNumber(
+  Future<MyUser> signInWithPhoneNumber(
       {required PhoneNumber? phoneNumber, required Password? password}) async {
     String url = 'http://192.168.0.107:3000/auth/signInPhone';
     var credentials = {
@@ -43,7 +41,7 @@ class MongoAuthService implements IAuthService {
   }
 
   @override
-  Future<User> signUpWithEmailAndPhone(
+  Future<MyUser> signUpWithEmailAndPhone(
       {required EmailAddress? emailAddress,
       required PhoneNumber? phoneNumber,
       required Password? password}) async {
@@ -59,7 +57,7 @@ class MongoAuthService implements IAuthService {
   }
 
   @override
-  Future<User> updateUserInfo(
+  Future<MyUser> updateUserInfo(
       {required Name? name,
       required Gender? gender,
       required bool? hasOwnImage,
@@ -76,9 +74,9 @@ class MongoAuthService implements IAuthService {
   }
 
   @visibleForTesting
-  Future<User> post(String url, Map<String, dynamic> json) async {
+  Future<MyUser> post(String url, Map<String, dynamic> json) async {
     final response = await client.post(
-      Uri(path: url),
+      Uri.parse(url),
       body: convert.jsonEncode(json),
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
     );
@@ -97,15 +95,15 @@ class MongoAuthService implements IAuthService {
   }
 
   @override
-  Future<User> getSignedInUser() {
+  Future<MyUser> getSignedInUser() {
     return Future.value(currentUser!.value);
   }
 
   @override
-  void addInfoAboutUserToStream(User user) {
+  void addInfoAboutUserToStream(MyUser user) {
     currentUser!.add(user);
   }
 
   @override
-  BehaviorSubject<User>? currentUser = BehaviorSubject<User>();
+  BehaviorSubject<MyUser>? currentUser = BehaviorSubject<MyUser>();
 }

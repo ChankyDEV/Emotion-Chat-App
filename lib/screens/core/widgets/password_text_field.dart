@@ -31,6 +31,7 @@ class PasswordTextField extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
       ),
       child: TextFormField(
+        key: Key('password'),
         style: textFormStyle.copyWith(color: textColor),
         validator: (value) {
           Password password = Password(value: value!);

@@ -1,6 +1,7 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+
 part 'user_dto.g.dart';
 
 @HiveType(typeId: 0)
@@ -37,9 +38,9 @@ class UserDTO extends Equatable {
   List<Object> get props =>
       [emailAddress, phoneNumber, name, gender, hasOwnImage];
 
-  factory UserDTO.fromJson(Map<String, dynamic> json) {
+  factory UserDTO.fromJson(Map<String, dynamic>? json) {
     return UserDTO(
-      uid: json['uid'],
+      uid: json!['uid'],
       emailAddress: json['email'],
       phoneNumber: json['phone'],
       name: json['name'],
@@ -63,8 +64,8 @@ class UserDTO extends Equatable {
     };
   }
 
-  User toDomain() {
-    return User(
+  MyUser toDomain() {
+    return MyUser(
       uid: uid,
       emailAddress: EmailAddress(value: emailAddress),
       phoneNumber: PhoneNumber(value: phoneNumber),

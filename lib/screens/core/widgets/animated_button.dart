@@ -50,29 +50,31 @@ class AnimatedButton extends StatelessWidget {
             height: height,
             child: state.isPressed
                 ? Text(
-                    'Processing'.toUpperCase(),
-                    style: bodyStyle.copyWith(color: textColor),
+                    'Processing',
+                    style: const TextStyle(
+                        fontFamily: 'Lato',
+                        color: cWhite,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500),
                   )
                 : Text(
-                    title.toUpperCase(),
-                    style: bodyStyle.copyWith(color: textColor),
+                    title,
+                    style: const TextStyle(
+                        fontFamily: 'Lato',
+                        color: cDarkGrey,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500),
                   ),
             decoration: state.isPressed
                 ? BoxDecoration(
                     color: endColor,
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                    border: Border.all(color: backgroundColor, width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    border: Border.all(color: cWhite, width: 1),
                   )
                 : BoxDecoration(
-                    color: backgroundColor,
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                    boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 0),
-                            color: shadowColor,
-                            blurRadius: 2,
-                            spreadRadius: 0.5)
-                      ]),
+                    color: cWhite,
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                  ),
           ),
         );
       },

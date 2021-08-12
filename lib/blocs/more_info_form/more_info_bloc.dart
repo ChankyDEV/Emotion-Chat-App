@@ -10,18 +10,21 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-part 'more_info_event.dart';
-part 'more_info_state.dart';
 part 'more_info_bloc.freezed.dart';
+
+part 'more_info_event.dart';
+
+part 'more_info_state.dart';
 
 @LazySingleton()
 class MoreInfoFormBloc extends Bloc<MoreInfoFormEvent, MoreInfoFormState> {
   late final IUserRepository userRepository;
   late final IImagePickerRepository profileImagePicker;
 
-  MoreInfoFormBloc(
-      {required this.userRepository, required this.profileImagePicker})
-      : super(_Initial(
+  MoreInfoFormBloc({
+    required this.userRepository,
+    required this.profileImagePicker,
+  }) : super(_Initial(
           genderPosition: 0,
           name: Name.empty(),
           isNameTextFieldOpened: false,
@@ -84,7 +87,7 @@ class MoreInfoFormBloc extends Bloc<MoreInfoFormEvent, MoreInfoFormState> {
     var failureOrUnit;
 
     // TODO: REPLACE NULL
-    if (state.profileImage != null) {
+    if (state.isImageUploaded) {
       failureOrUnit = await userRepository.updateUserInfo(
           hasOwnImage: true,
           gender: genders[state.genderPosition],

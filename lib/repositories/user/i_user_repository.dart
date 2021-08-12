@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class IUserRepository {
-  BehaviorSubject<User>? get currentUser;
-  Future<Either<Failure, User>> signUp(
+  BehaviorSubject<MyUser>? get currentUser;
+  Future<Either<Failure, MyUser>> signUp(
       {required EmailAddress emailAddress,
       required PhoneNumber phoneNumber,
       required Password password});
 
-  Future<Either<Failure, User>> signInWithEmail(
+  Future<Either<Failure, MyUser>> signInWithEmail(
       {required EmailAddress emailAddress, required Password password});
 
-  Future<Either<Failure, User>> signInWithPhoneNumber(
+  Future<Either<Failure, MyUser>> signInWithPhoneNumber(
       {required PhoneNumber phoneNumber, required Password password});
 
   Future<Either<Failure, Unit>> updateUserInfo(
@@ -22,7 +22,7 @@ abstract class IUserRepository {
       required bool hasOwnImage,
       Image? profileImage});
 
-  Future<User> getSignedInUser();
+  Future<MyUser> getSignedInUser();
 
   Future<bool> logout();
   Future<bool> checkIfUserIsLoggedIn();
