@@ -1,3 +1,4 @@
+import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/constants/blocs.dart';
 import 'package:emotion_chat/constants/screens.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
@@ -20,7 +21,7 @@ class MyRouter {
                     },
                   ),
                   BlocProvider(
-                    create: (context) => getIt<MoreInfoFormBloc>(),
+                    create: (context) => getIt<AdditionalInfoBloc>(),
                   ),
                   BlocProvider(
                     create: (context) =>
@@ -36,7 +37,6 @@ class MyRouter {
                       ..listenForAuthFormBlocStateChanges(),
                   ),
                 ], child: Wrapper()));
-        break;
       case 'moreAuthInfo':
         return MaterialPageRoute(
           builder: (context) {

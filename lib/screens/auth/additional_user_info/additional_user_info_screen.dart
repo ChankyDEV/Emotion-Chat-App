@@ -1,10 +1,13 @@
+import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/enums/form_input.dart';
-import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/screens/core/utils.dart';
 import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class AdditionalUserInfoScreen extends StatefulWidget {
   const AdditionalUserInfoScreen({Key? key}) : super(key: key);
@@ -15,39 +18,30 @@ class AdditionalUserInfoScreen extends StatefulWidget {
 }
 
 class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
-  late int _activeStepIndex;
-  late int _doneStepIndex;
   final double _horizontalHeaderMargin = 20.0;
   late Widget _mainPageContent;
   final TextEditingController _nameController = TextEditingController();
-  late String _name;
-  late Gender _gender;
-  late MyPickedFile _file;
-  late GenderEnum _activeGender;
 
   @override
   void initState() {
-    _activeStepIndex = 1;
-    _doneStepIndex = 0;
-    _activeGender = GenderEnum.male;
     _mainPageContent = _buildNameForm();
     _nameController.addListener(() {
-      setState(() {
-        _name = _nameController.value.text;
-        print(_name);
-      });
+      String name = _nameController.value.text;
+      BlocProvider.of<AdditionalInfoBloc>(context).add(
+        AdditionalInfoEvent.nameChanged(name),
+      );
     });
     super.initState();
   }
 
-  Widget _choosePage(int pageIndex) {
-    switch (pageIndex) {
+  Widget _choosePage(AdditionalInfoState state) {
+    switch (state.activeStep) {
       case 1:
         return _buildNameForm();
       case 2:
-        return _buildGenderSwitch();
+        return _buildGenderSwitch(state);
       case 3:
-        return _buildPhotoAdding();
+        return _buildPhotoAdding(state);
       default:
         return _buildNameForm();
     }
@@ -56,134 +50,149 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
   void _showParticularStep({
     required int doneStepIndex,
     required int activeStepIndex,
-  }) {
-    setState(() {
-      _doneStepIndex = doneStepIndex;
-      _activeStepIndex = activeStepIndex;
-      _mainPageContent = _choosePage(_activeStepIndex);
-    });
-  }
+  }) =>
+      BlocProvider.of<AdditionalInfoBloc>(context)
+          .add(AdditionalInfoEvent.particularStepChanged(
+        doneStepIndex,
+        activeStepIndex,
+      ));
 
-  void _showNextStep() {
-    setState(() {
-      if (_activeStepIndex < 3 && _doneStepIndex < 2) {
-        _activeStepIndex++;
-        _doneStepIndex++;
-      } else {
-        _activeStepIndex = 1;
-        _doneStepIndex = 0;
-      }
-      _mainPageContent = _choosePage(_activeStepIndex);
-    });
-  }
-
-  void _changeGender(GenderEnum activeGender) {
-    setState(() {
-      _activeGender = activeGender;
-      _mainPageContent = _choosePage(_activeStepIndex);
-    });
-  }
+  void _changeGender(GenderEnum activeGender) =>
+      BlocProvider.of<AdditionalInfoBloc>(context)
+          .add(AdditionalInfoEvent.genderChanged(activeGender));
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showNextStep,
-        child: Icon(
-          _activeStepIndex == 3 ? Icons.done : Icons.arrow_right_alt_sharp,
-          color: cDarkGrey,
-        ),
-        backgroundColor: cWhite,
-      ),
-      backgroundColor: cDarkGrey,
-      body: Column(
-        children: [
-          Expanded(
-              flex: 15,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                color: cWhite,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: _horizontalHeaderMargin,
-                    ),
-                    Expanded(
-                      child: _step(
-                        Icons.drive_file_rename_outline,
-                        cDarkGrey,
-                        cWhite,
-                        2.0,
-                        12.0,
-                        active: _activeStepIndex == 1,
-                        done: _doneStepIndex == 1 || _doneStepIndex == 2,
-                        onTap: () => _showParticularStep(
-                          doneStepIndex: 0,
-                          activeStepIndex: 1,
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return BlocConsumer<AdditionalInfoBloc, AdditionalInfoState>(
+      bloc: GetIt.I.get<AdditionalInfoBloc>(),
+      listener: (context, state) {
+        if (state.failureOccured) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating,
+              content: Container(
+                width: 0.9 * width,
+                height: 0.06 * height,
+                alignment: Alignment.center,
+                child: Text(
+                  state.failure.message,
+                  style: bodyStyle.copyWith(color: Colors.white),
+                ),
+              ),
+              elevation: 12.0,
+              duration: Duration(milliseconds: 2500),
+            ),
+          );
+          BlocProvider.of<AdditionalInfoBloc>(context)
+              .add(AdditionalInfoEvent.closeError());
+        }
+        _mainPageContent = _choosePage(state);
+      },
+      builder: (context, state) {
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => BlocProvider.of<AdditionalInfoBloc>(context)
+                .add(AdditionalInfoEvent.stepChanged()),
+            child: Icon(
+              state.activeStep == 3 ? Icons.done : Icons.arrow_right_alt_sharp,
+              color: cDarkGrey,
+            ),
+            backgroundColor: cWhite,
+          ),
+          backgroundColor: cDarkGrey,
+          body: Column(
+            children: [
+              Expanded(
+                  flex: 15,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    color: cWhite,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          width: _horizontalHeaderMargin,
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: _dotsSeparator(
-                        cDarkGrey,
-                        4,
-                        3,
-                        done: _doneStepIndex == 1 || _doneStepIndex == 2,
-                      ),
-                    ),
-                    Expanded(
-                      child:
-                          _step(Icons.people_alt, cDarkGrey, cWhite, 2.0, 12.0,
-                              active: _activeStepIndex == 2,
-                              done: _doneStepIndex == 2,
+                        Expanded(
+                          child: _step(
+                            Icons.drive_file_rename_outline,
+                            cDarkGrey,
+                            cWhite,
+                            2.0,
+                            12.0,
+                            active: state.activeStep == 1,
+                            done: state.doneStep == 1 || state.doneStep == 2,
+                            onTap: () => _showParticularStep(
+                              doneStepIndex: 0,
+                              activeStepIndex: 1,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: _dotsSeparator(
+                            cDarkGrey,
+                            4,
+                            3,
+                            done: state.doneStep == 1 || state.doneStep == 2,
+                          ),
+                        ),
+                        Expanded(
+                          child: _step(
+                              Icons.people_alt, cDarkGrey, cWhite, 2.0, 12.0,
+                              active: state.activeStep == 2,
+                              done: state.doneStep == 2,
                               onTap: () => _showParticularStep(
                                     doneStepIndex: 1,
                                     activeStepIndex: 2,
                                   )),
+                        ),
+                        Expanded(
+                          child: _dotsSeparator(
+                            cDarkGrey,
+                            4,
+                            3,
+                            done: state.doneStep == 2,
+                          ),
+                        ),
+                        Expanded(
+                          child: _step(Icons.assignment_ind_outlined, cDarkGrey,
+                              cWhite, 2.0, 12.0,
+                              active: state.activeStep == 3,
+                              done: state.doneStep == 3,
+                              onTap: () => _showParticularStep(
+                                    doneStepIndex: 2,
+                                    activeStepIndex: 3,
+                                  )),
+                        ),
+                        SizedBox(
+                          width: _horizontalHeaderMargin,
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: _dotsSeparator(
-                        cDarkGrey,
-                        4,
-                        3,
-                        done: _doneStepIndex == 2,
-                      ),
+                  )),
+              Expanded(
+                  flex: 85,
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: cDarkGrey,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 250),
+                      child: _mainPageContent,
+                      transitionBuilder: (child, animation) {
+                        return ScaleTransition(
+                          child: child,
+                          scale: animation,
+                        );
+                      },
                     ),
-                    Expanded(
-                      child: _step(Icons.assignment_ind_outlined, cDarkGrey,
-                          cWhite, 2.0, 12.0,
-                          active: _activeStepIndex == 3,
-                          done: _doneStepIndex == 3,
-                          onTap: () => _showParticularStep(
-                                doneStepIndex: 2,
-                                activeStepIndex: 3,
-                              )),
-                    ),
-                    SizedBox(
-                      width: _horizontalHeaderMargin,
-                    ),
-                  ],
-                ),
-              )),
-          Expanded(
-              flex: 85,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                color: cDarkGrey,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: _mainPageContent,
-                  transitionBuilder: (child, animation) {
-                    return ScaleTransition(
-                      child: child,
-                      scale: animation,
-                    );
-                  },
-                ),
-              )),
-        ],
-      ),
+                  )),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -212,10 +221,15 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
               hint: 'What is your name...',
               prefixIcon: Icons.mail_outline,
               suffixIcon: Icons.clear,
-              action: () => _nameController.clear(),
+              action: () {
+                _nameController.clear();
+                BlocProvider.of<AdditionalInfoBloc>(context)
+                    .add(AdditionalInfoEvent.nameCleared());
+              },
               isTextVisible: true,
               textInputAction: TextInputAction.next,
-              onSubmitted: _showNextStep,
+              onSubmitted: () => BlocProvider.of<AdditionalInfoBloc>(context)
+                  .add(AdditionalInfoEvent.stepChanged()),
             ),
           ),
         ),
@@ -224,7 +238,7 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
     );
   }
 
-  Widget _buildGenderSwitch() {
+  Widget _buildGenderSwitch(AdditionalInfoState state) {
     return Column(key: ValueKey(2), children: [
       Expanded(
         flex: 20,
@@ -251,11 +265,13 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
                 textAlign: TextAlign.center,
                 style: titleStyle.copyWith(
                     fontSize: 18.0,
-                    color:
-                        _activeGender == GenderEnum.male ? cDarkGrey : cWhite),
+                    color: state.gender.value == GenderEnum.male
+                        ? cDarkGrey
+                        : cWhite),
               ),
               decoration: BoxDecoration(
-                color: _activeGender == GenderEnum.male ? cWhite : cDarkGrey,
+                color:
+                    state.gender.value == GenderEnum.male ? cWhite : cDarkGrey,
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
                 border:
                     Border.all(color: cWhite.withOpacity(0.75), width: 1.25),
@@ -279,12 +295,14 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
                 textAlign: TextAlign.center,
                 style: titleStyle.copyWith(
                     fontSize: 18.0,
-                    color: _activeGender == GenderEnum.female
+                    color: state.gender.value == GenderEnum.female
                         ? cDarkGrey
                         : cWhite),
               ),
               decoration: BoxDecoration(
-                color: _activeGender == GenderEnum.female ? cWhite : cDarkGrey,
+                color: state.gender.value == GenderEnum.female
+                    ? cWhite
+                    : cDarkGrey,
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
                 border:
                     Border.all(color: cWhite.withOpacity(0.75), width: 1.25),
@@ -308,11 +326,13 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
                 textAlign: TextAlign.center,
                 style: titleStyle.copyWith(
                     fontSize: 18.0,
-                    color:
-                        _activeGender == GenderEnum.none ? cDarkGrey : cWhite),
+                    color: state.gender.value == GenderEnum.none
+                        ? cDarkGrey
+                        : cWhite),
               ),
               decoration: BoxDecoration(
-                color: _activeGender == GenderEnum.none ? cWhite : cDarkGrey,
+                color:
+                    state.gender.value == GenderEnum.none ? cWhite : cDarkGrey,
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
                 border:
                     Border.all(color: cWhite.withOpacity(0.75), width: 1.25),
@@ -325,7 +345,7 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
     ]);
   }
 
-  Widget _buildPhotoAdding() {
+  Widget _buildPhotoAdding(AdditionalInfoState state) {
     return Column(
       children: [
         Expanded(
@@ -343,23 +363,30 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 36, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  child: Icon(
+              child: Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: IconButton(
+                  icon: Icon(
                     Icons.add_a_photo_outlined,
                     color: cWhite.withOpacity(0.75),
                     size: 40,
                   ),
-                  decoration: BoxDecoration(
-                    color: cDarkGrey,
+                  onPressed: () => Utils.addPhotoDialog(
+                    context,
+                    onCameraTap: _choosePhotoFromCamera,
+                    onGalleryTap: _choosePhotoFromGallery,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: cWhite.withOpacity(0.2),
                     borderRadius: BorderRadius.all(Radius.circular(4.0)),
                     border: Border.all(
                         color: cWhite.withOpacity(0.75), width: 1.25),
-                  ),
-                ),
+                    image: state.hasPhoto ? DecorationImage(
+                      image: state.photo.image,
+                      fit: BoxFit.fill,
+                    ): null),
               ),
             )),
         Expanded(flex: 10, child: const SizedBox()),
@@ -433,6 +460,34 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: dots,
       ),
+    );
+  }
+
+  void _choosePhotoFromCamera() =>
+      BlocProvider.of<AdditionalInfoBloc>(context).add(
+        AdditionalInfoEvent.addPhotoFromCamera(),
+      );
+
+  void _choosePhotoFromGallery() {}
+
+  Widget _showPhoto(Image photo) {
+    return Column(
+      children: [
+        Expanded(
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(child: Text('Add new photo')),
+                Expanded(child: Text('Remove')),
+              ],
+            )),
+        Expanded(
+            flex: 8,
+            child: Container(
+              child: const SizedBox(),
+            )),
+      ],
     );
   }
 }

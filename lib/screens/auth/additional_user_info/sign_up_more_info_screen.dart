@@ -2,6 +2,7 @@ import 'package:emotion_chat/constants/blocs.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/sign_up_button.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/screens/core/widgets/dialog_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

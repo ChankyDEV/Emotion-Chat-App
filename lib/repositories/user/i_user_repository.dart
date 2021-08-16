@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -20,7 +21,7 @@ abstract class IUserRepository {
       {required Name name,
       required Gender gender,
       required bool hasOwnImage,
-      Image? profileImage});
+      MyPickedFile? profileImage});
 
   Future<MyUser> getSignedInUser();
 

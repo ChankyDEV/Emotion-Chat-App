@@ -99,109 +99,132 @@ class _NewSignInScreenState extends State<NewSignInScreen> {
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 25,
-                            ),
-                            Text(
-                              'Sign in',
-                              style: const TextStyle(
-                                  color: cWhite,
-                                  fontSize: 30,
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 45,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(flex: 7, child: const SizedBox()),
-                            Expanded(
-                              flex: 86,
-                              child: MyTextField(
-                                formNode: _formNode,
-                                controller: widget.emailController,
-                                formInput: FormInput.emailAddress,
-                                hint: 'Email or mobile phone...',
-                                prefixIcon: Icons.mail_outline,
-                                suffixIcon: Icons.clear,
-                                action: () {
-                                  BlocProvider.of<AuthFormBloc>(context)
-                                      .add(AuthFormEvent.clearEmailField());
-                                  widget.emailController.clear();
-                                },
-                                isTextVisible: true,
-                                textInputAction: TextInputAction.next,
-                                onSubmitted: () => _formNode.nextFocus(),
+                        Expanded(
+                          flex: 2,
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 25,
                               ),
-                            ),
-                            Expanded(flex: 7, child: const SizedBox()),
-                          ],
+                              Text(
+                                'Sign in',
+                                style: const TextStyle(
+                                    color: cWhite,
+                                    fontSize: 22,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
                         ),
-                        const SizedBox(
-                          height: 30,
+                        Expanded(
+                          child: const SizedBox(
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(flex: 7, child: const SizedBox()),
-                            Expanded(
-                              flex: 86,
-                              child: MyTextField(
-                                formNode: _formNode,
-                                controller: widget.passwordController,
-                                formInput: FormInput.password,
-                                hint: 'Password...',
-                                prefixIcon: Icons.lock_outline,
-                                suffixIcon: Icons.visibility_off_outlined,
-                                action: () =>
-                                    BlocProvider.of<AuthFormBloc>(context).add(
-                                        AuthFormEvent.showOrHidePassword()),
-                                isTextVisible: state.showPassword,
-                                textInputAction: TextInputAction.done,
-                                onSubmitted: () {},
-                              ),
-                            ),
-                            Expanded(flex: 7, child: const SizedBox()),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        AnimatedButton(
-                            formKey: _formKey,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            height: MediaQuery.of(context).size.height * 0.06,
-                            title: 'Sign in',
-                            onTap: () =>
-                                BlocProvider.of<AuthFormBloc>(context).add(
-                                  AuthFormEvent.signIn(),
+                        Expanded(
+                          flex:3,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(flex: 7, child: const SizedBox()),
+                              Expanded(
+                                flex: 86,
+                                child: MyTextField(
+                                  formNode: _formNode,
+                                  controller: widget.emailController,
+                                  formInput: FormInput.emailAddress,
+                                  hint: 'Email or mobile phone...',
+                                  prefixIcon: Icons.mail_outline,
+                                  suffixIcon: Icons.clear,
+                                  action: () {
+                                    BlocProvider.of<AuthFormBloc>(context)
+                                        .add(AuthFormEvent.clearEmailField());
+                                    widget.emailController.clear();
+                                  },
+                                  isTextVisible: true,
+                                  textInputAction: TextInputAction.next,
+                                  onSubmitted: () => _formNode.nextFocus(),
                                 ),
-                            backgroundColor: cWhite,
-                            endColor: cDarkGrey,
-                            shadowColor: cLightGrey),
+                              ),
+                              Expanded(flex: 7, child: const SizedBox()),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: const SizedBox(
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(flex: 7, child: const SizedBox()),
+                              Expanded(
+                                flex: 86,
+                                child: MyTextField(
+                                  formNode: _formNode,
+                                  controller: widget.passwordController,
+                                  formInput: FormInput.password,
+                                  hint: 'Password...',
+                                  prefixIcon: Icons.lock_outline,
+                                  suffixIcon: Icons.visibility_off_outlined,
+                                  action: () =>
+                                      BlocProvider.of<AuthFormBloc>(context).add(
+                                          AuthFormEvent.showOrHidePassword()),
+                                  isTextVisible: state.showPassword,
+                                  textInputAction: TextInputAction.done,
+                                  onSubmitted: () {},
+                                ),
+                              ),
+                              Expanded(flex: 7, child: const SizedBox()),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: const SizedBox(
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: AnimatedButton(
+                              formKey: _formKey,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              title: 'Sign in',
+                              onTap: () =>
+                                  BlocProvider.of<AuthFormBloc>(context).add(
+                                    AuthFormEvent.signIn(),
+                                  ),
+                              backgroundColor: cWhite,
+                              endColor: cDarkGrey,
+                              shadowColor: cLightGrey),
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () => widget.pageController.nextPage(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeIn),
-                              child: Text('Do not have an account',
-                                  style: const TextStyle(
-                                      color: cLightGrey,
-                                      fontSize: 12,
-                                      fontFamily: 'Lato')),
-                            )
-                          ],
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () => widget.pageController.nextPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeIn),
+                                child: Text('Do not have an account',
+                                    style: const TextStyle(
+                                        color: cLightGrey,
+                                        fontSize: 12,
+                                        fontFamily: 'Lato')),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: const SizedBox(
+                          ),
                         ),
                       ],
                     ),

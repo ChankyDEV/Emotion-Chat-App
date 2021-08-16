@@ -7,11 +7,12 @@ import 'dart:async' as _i5;
 import 'package:emotion_chat/data/enums/connection_status.dart' as _i11;
 import 'package:emotion_chat/data/models/auth/user.dart' as _i2;
 import 'package:emotion_chat/data/models/auth/user_props.dart' as _i6;
+import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart'
+    as _i8;
 import 'package:emotion_chat/services/auth/i_auth_service.dart' as _i3;
 import 'package:emotion_chat/services/image_upload/i_image_service.dart' as _i7;
 import 'package:emotion_chat/services/local_db/i_local_db_service.dart' as _i9;
 import 'package:emotion_chat/services/network/i_network_service.dart' as _i10;
-import 'package:flutter/src/widgets/image.dart' as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:rxdart/src/subjects/behavior_subject.dart' as _i4;
 
@@ -106,7 +107,7 @@ class MockIImageUploadService extends _i1.Mock
 
   @override
   _i5.Future<String> generateProfileImageUrl(
-          {_i8.Image? profileImage, String? uid}) =>
+          {_i8.MyPickedFile? profileImage, String? uid}) =>
       (super.noSuchMethod(
           Invocation.method(#generateProfileImageUrl, [],
               {#profileImage: profileImage, #uid: uid}),

@@ -38,7 +38,7 @@ class MyTextField extends StatelessWidget {
         controller: controller,
         key: Key('emailOrPhone'),
         style: const TextStyle(
-            color: cLightGrey, fontSize: 13, fontFamily: 'Lato'),
+            color: cLightGrey, fontSize: 11, fontFamily: 'Lato'),
         validator: (value) {
           if (formInput == FormInput.emailAddress) {
             EmailAddress email = EmailAddress(value: value!);
@@ -83,6 +83,7 @@ class MyTextField extends StatelessWidget {
           prefixIcon: Icon(
             prefixIcon,
             color: cWhite,
+            size: 20,
           ),
           suffixIcon: IconButton(
             icon: Icon(
@@ -91,38 +92,28 @@ class MyTextField extends StatelessWidget {
                       ? Icons.visibility
                       : suffixIcon
                   : suffixIcon,
-              size: 24.0,
+              size: 16.0,
               color: cLightGrey,
             ),
             onPressed: action,
           ),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
-              ),
+          errorStyle: const TextStyle(
+              color: Colors.red, fontSize: 11, fontFamily: 'Lato'),
+          focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color: Colors.red, width: 1, style: BorderStyle.solid)),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
-              ),
+          errorBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color: Colors.red, width: 1, style: BorderStyle.solid)),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
-              ),
+          focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color: cLightGrey, width: 1, style: BorderStyle.solid)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
-              ),
+          enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color: cLightGrey, width: 1, style: BorderStyle.solid)),
           hintText: hint,
           hintStyle: const TextStyle(
-              color: cLightGrey, fontSize: 13, fontFamily: 'Lato'),
+              color: cLightGrey, fontSize: 11, fontFamily: 'Lato'),
         ),
       ),
     );

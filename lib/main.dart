@@ -1,7 +1,9 @@
+import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/router/my_router.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -30,12 +32,9 @@ class AppConfig extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AdditionalUserInfoScreen(),
-    );
-    return MaterialApp(
       onGenerateRoute: router.onGenerateRoute,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/additionalInfo',
+      initialRoute: '/',
       theme: ThemeData(
         scaffoldBackgroundColor: backgroundColor,
       ),

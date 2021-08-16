@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/services/auth/i_auth_service.dart';
 import 'package:emotion_chat/services/image_upload/i_image_service.dart';
@@ -117,7 +118,7 @@ class UserRepository implements IUserRepository {
       {required Name name,
       required Gender gender,
       required bool hasOwnImage,
-      Image? profileImage}) async {
+      MyPickedFile? profileImage}) async {
     if (await networkService.isConnected) {
       try {
         MyUser user = await authService.getSignedInUser();

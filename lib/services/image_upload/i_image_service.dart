@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 
 abstract class IImageUploadService {
   Future<String> generateProfileImageUrl(
-      {required Image? profileImage, required String? uid});
+      {required MyPickedFile? profileImage, required String? uid});
 }

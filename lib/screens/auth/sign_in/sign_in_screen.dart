@@ -44,7 +44,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        height: 0.35 * height,
+                        height: 0.3 * height,
                         width: width,
                         alignment: Alignment.center,
                         child: Stack(

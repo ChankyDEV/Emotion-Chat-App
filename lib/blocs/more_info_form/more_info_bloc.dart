@@ -88,11 +88,11 @@ class MoreInfoFormBloc extends Bloc<MoreInfoFormEvent, MoreInfoFormState> {
 
     // TODO: REPLACE NULL
     if (state.isImageUploaded) {
-      failureOrUnit = await userRepository.updateUserInfo(
-          hasOwnImage: true,
-          gender: genders[state.genderPosition],
-          name: state.name,
-          profileImage: state.profileImage);
+      // failureOrUnit = await userRepository.updateUserInfo(
+      //     hasOwnImage: true,
+      //     gender: genders[state.genderPosition],
+      //     name: state.name,
+      //     profileImage: state.profileImage);
     } else {
       failureOrUnit = await userRepository.updateUserInfo(
         hasOwnImage: false,

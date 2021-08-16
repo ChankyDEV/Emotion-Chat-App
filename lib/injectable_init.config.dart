@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i14;
 
+import 'blocs/additional_info/additional_info_bloc.dart' as _i28;
 import 'blocs/auth/auth_cubit.dart' as _i21;
 import 'blocs/auth_form/auth_form_bloc.dart' as _i22;
 import 'blocs/more_info_form/more_info_bloc.dart' as _i27;
@@ -71,5 +72,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i27.MoreInfoFormBloc>(() => _i27.MoreInfoFormBloc(
       userRepository: get<_i17.IUserRepository>(),
       profileImagePicker: get<_i25.IImagePickerRepository>()));
+  gh.lazySingleton<_i28.AdditionalInfoBloc>(() => _i28.AdditionalInfoBloc(
+      imagePickerRepository: get<_i25.IImagePickerRepository>(),
+      userRepository: get<_i17.IUserRepository>()));
   return get;
 }
