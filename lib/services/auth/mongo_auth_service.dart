@@ -14,7 +14,7 @@ class MongoAuthService implements IAuthService {
 
   @override
   void close() {
-    currentUser!.close();
+    currentUser.close();
   }
 
   @override
@@ -96,14 +96,14 @@ class MongoAuthService implements IAuthService {
 
   @override
   Future<MyUser> getSignedInUser() {
-    return Future.value(currentUser!.value);
+    return Future.value(currentUser.value);
   }
 
   @override
   void addInfoAboutUserToStream(MyUser user) {
-    currentUser!.add(user);
+    currentUser.add(user);
   }
 
   @override
-  BehaviorSubject<MyUser>? currentUser = BehaviorSubject<MyUser>();
+  BehaviorSubject<MyUser> currentUser = BehaviorSubject<MyUser>();
 }

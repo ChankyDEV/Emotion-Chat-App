@@ -8,6 +8,8 @@ import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/repositories/user/user_repository.dart';
 import 'package:emotion_chat/services/auth/firebase_auth_service.dart';
 import 'package:emotion_chat/services/auth/i_auth_service.dart';
+import 'package:emotion_chat/services/database/database_service.dart';
+import 'package:emotion_chat/services/database/database_service_impl.dart';
 import 'package:emotion_chat/services/image_picker/i_image_picker_service.dart';
 import 'package:emotion_chat/services/image_picker/image_picker_service.dart';
 import 'package:emotion_chat/services/image_upload/firebase_storage_service.dart';
@@ -19,7 +21,6 @@ import 'package:emotion_chat/services/network/network_service.dart';
 import 'package:emotion_chat/services/permission/i_permission_service.dart';
 import 'package:emotion_chat/services/permission/permission_service.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -41,7 +42,10 @@ class Config {
   Future<void> _registerServices() async {
     getItInstance
       ..registerSingleton<RoutingService>(RoutingService())
-      ..registerSingleton<IAuthService>(FirebaseAuthService())
+      ..registerSingleton<DatabaseService>(DatabaseServiceImpl())
+      ..registerSingleton<IAuthService>(
+        FirebaseAuthService(getItInstance.get<DatabaseService>()),
+      )
       ..registerSingleton<IImagePickerService>(ImagePickerService())
       ..registerSingleton<IImageUploadService>(FirebaseImageUploadService())
       ..registerSingleton<ILocalDatabaseService>(HiveLocalDatabaseService())
@@ -51,10 +55,12 @@ class Config {
       ..registerSingleton<IPermissionService>(PermissionService())
       ..registerSingleton<IUserRepository>(
         UserRepository(
-            imageService: getItInstance.get<IImageUploadService>(),
-            authService: getItInstance.get<IAuthService>(),
-            localDatabaseService: getItInstance.get<ILocalDatabaseService>(),
-            networkService: getItInstance.get<INetworkService>()),
+          imageService: getItInstance.get<IImageUploadService>(),
+          authService: getItInstance.get<IAuthService>(),
+          localDatabaseService: getItInstance.get<ILocalDatabaseService>(),
+          networkService: getItInstance.get<INetworkService>(),
+          db: getItInstance.get<DatabaseService>(),
+        ),
       )
       ..registerSingleton<IImagePickerRepository>(
         ImagePickerRepository(

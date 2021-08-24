@@ -5,6 +5,7 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/services/auth/i_auth_service.dart';
+import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:emotion_chat/services/image_upload/i_image_service.dart';
 import 'package:emotion_chat/services/local_db/i_local_db_service.dart';
 import 'package:emotion_chat/services/network/i_network_service.dart';
@@ -15,13 +16,14 @@ class UserRepository implements IUserRepository {
   final IAuthService authService;
   final ILocalDatabaseService localDatabaseService;
   final INetworkService networkService;
+  final DatabaseService db;
 
-  UserRepository({
-    required this.imageService,
-    required this.authService,
-    required this.localDatabaseService,
-    required this.networkService,
-  });
+  UserRepository(
+      {required this.imageService,
+      required this.authService,
+      required this.localDatabaseService,
+      required this.networkService,
+      required this.db});
 
   @override
   BehaviorSubject<MyUser>? get currentUser => authService.currentUser;
@@ -33,21 +35,35 @@ class UserRepository implements IUserRepository {
 
   @override
   Future<MyUser> getSignedInUser() async {
-    return await authService.getSignedInUser();
+    return await localDatabaseService.getUser();
   }
 
   @override
-  Future<Either<Failure, MyUser>> signInWithEmail(
-      {required EmailAddress emailAddress, required Password password}) async {
-    return await _performAuthAction(() => authService.signInWithEmail(
-        emailAddress: emailAddress, password: password));
+  Future<Either<Failure, MyUser>> signInWithEmail({
+    required EmailAddress emailAddress,
+    required Password password,
+  }) async {
+    return await _performAuthAction(
+      () => authService.signInWithEmail(
+        emailAddress: emailAddress,
+        password: password,
+      ),
+      false,
+    );
   }
 
   @override
-  Future<Either<Failure, MyUser>> signInWithPhoneNumber(
-      {required PhoneNumber phoneNumber, required Password password}) async {
-    return await _performAuthAction(() => authService.signInWithPhoneNumber(
-        phoneNumber: phoneNumber, password: password));
+  Future<Either<Failure, MyUser>> signInWithPhoneNumber({
+    required PhoneNumber phoneNumber,
+    required Password password,
+  }) async {
+    return await _performAuthAction(
+      () => authService.signInWithPhoneNumber(
+        phoneNumber: phoneNumber,
+        password: password,
+      ),
+      false,
+    );
   }
 
   @override
@@ -55,17 +71,25 @@ class UserRepository implements IUserRepository {
       {required EmailAddress emailAddress,
       required PhoneNumber phoneNumber,
       required Password password}) async {
-    return await _performAuthAction(() => authService.signUpWithEmailAndPhone(
-        emailAddress: emailAddress,
-        phoneNumber: phoneNumber,
-        password: password));
+    return await _performAuthAction(
+      () => authService.signUpWithEmailAndPhone(
+          emailAddress: emailAddress,
+          phoneNumber: phoneNumber,
+          password: password),
+      true,
+    );
   }
 
   Future<Either<Failure, MyUser>> _performAuthAction(
-      Function authAction) async {
+    Function authAction,
+    bool isSignUpAction,
+  ) async {
     if (await networkService.isConnected) {
       try {
         final user = await authAction() as MyUser;
+        if (isSignUpAction) {
+          await db.addUser(user);
+        }
         await localDatabaseService.saveUser(user);
         authService.addInfoAboutUserToStream(user);
         return right(user);
@@ -126,15 +150,19 @@ class UserRepository implements IUserRepository {
           generatedImageUploadUrl =
               await imageService.getProfileImageUrl(uid: user.uid);
         }
-        user = await authService.updateUserInfo(
-            name: name,
-            gender: gender,
-            hasOwnImage: hasOwnImage,
-            uid: user.uid,
-            generatedImageUploadUrl: generatedImageUploadUrl);
-
-        await localDatabaseService.saveUser(user);
-        authService.addInfoAboutUserToStream(user);
+        final updatedUser = MyUser(
+          phoneNumber: user.phoneNumber,
+          emailAddress: user.emailAddress,
+          name: name,
+          hasOwnImage: hasOwnImage,
+          gender: gender,
+          profileImage: ProfileImage(url: generatedImageUploadUrl),
+          contactsUIDS: user.contactsUIDS,
+          uid: user.uid,
+        );
+        await db.updateUser(updatedUser);
+        await localDatabaseService.saveUser(updatedUser);
+        authService.addInfoAboutUserToStream(updatedUser);
         return right(unit);
       } on AuthException catch (e) {
         return left(AuthFailure(message: e.message));
