@@ -1,5 +1,5 @@
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/helpers/helpers.dart';
+import 'package:emotion_chat/helpers/extensions.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +46,7 @@ class MyTextField extends StatelessWidget {
               return 'Email address is not valid';
             }
           } else if (formInput == FormInput.phoneNumber) {
-            String convertedValue = removeSpacesFromString(value!);
+            String convertedValue = value!.removeSpacesFromString();
             PhoneNumber phone = PhoneNumber(value: convertedValue);
 
             if (!phone.isValid()) {

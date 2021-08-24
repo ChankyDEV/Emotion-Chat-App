@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/helpers/helpers.dart';
+import 'package:emotion_chat/helpers/extensions.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/services/network/i_network_service.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +76,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
       phoneChanged: (e) async* {
         yield state.copyWith(
             phone:
-                state.phone.copyWith(value: removeSpacesFromString(e.input)));
+                state.phone.copyWith(value: e.input.removeSpacesFromString()));
       },
       clearEmailField: (e) async* {
         yield state.copyWith(emailOrPhone: EmailAddress(value: ''));
@@ -149,7 +149,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
   }
 
   AuthFormState emailOrPhoneChanged(String input) {
-    String emailOrPhone = removeSpacesFromString(input);
+    String emailOrPhone = input.removeSpacesFromString();
     if (int.tryParse(emailOrPhone) != null) {
       return state.copyWith(
           emailOrPhone: state.emailOrPhone.copyWith(value: emailOrPhone),
