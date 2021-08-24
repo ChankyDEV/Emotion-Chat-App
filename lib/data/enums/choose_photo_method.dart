@@ -1,4 +1,4 @@
-enum ChoosePhotoMethod {
+enum AddingPhotoMethod {
   camera,
   gallery,
 }

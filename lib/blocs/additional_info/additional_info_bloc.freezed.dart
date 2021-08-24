@@ -48,7 +48,7 @@ class _$AdditionalInfoEventTearOff {
     return const _CloseError();
   }
 
-  _AddPhotoFromCamera addPhoto(ChoosePhotoMethod method) {
+  _AddPhotoFromCamera addPhoto(AddingPhotoMethod method) {
     return _AddPhotoFromCamera(
       method,
     );
@@ -73,7 +73,7 @@ mixin _$AdditionalInfoEvent {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) =>
       throw _privateConstructorUsedError;
@@ -86,7 +86,7 @@ mixin _$AdditionalInfoEvent {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) =>
@@ -208,7 +208,7 @@ class _$_NameChanged implements _NameChanged {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return nameChanged(input);
@@ -224,7 +224,7 @@ class _$_NameChanged implements _NameChanged {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {
@@ -326,7 +326,7 @@ class _$_NameCleared implements _NameCleared {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return nameCleared();
@@ -342,7 +342,7 @@ class _$_NameCleared implements _NameCleared {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {
@@ -439,7 +439,7 @@ class _$_StepChanged implements _StepChanged {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return stepChanged();
@@ -455,7 +455,7 @@ class _$_StepChanged implements _StepChanged {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {
@@ -578,7 +578,7 @@ class _$_GenderChanged implements _GenderChanged {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return genderChanged(activeGender);
@@ -594,7 +594,7 @@ class _$_GenderChanged implements _GenderChanged {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {
@@ -735,7 +735,7 @@ class _$_ParticularStepChanged implements _ParticularStepChanged {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return particularStepChanged(doneStepIndex, activeStepIndex);
@@ -751,7 +751,7 @@ class _$_ParticularStepChanged implements _ParticularStepChanged {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {
@@ -855,7 +855,7 @@ class _$_CloseError implements _CloseError {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return closeError();
@@ -871,7 +871,7 @@ class _$_CloseError implements _CloseError {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {
@@ -926,7 +926,7 @@ abstract class _$AddPhotoFromCameraCopyWith<$Res> {
   factory _$AddPhotoFromCameraCopyWith(
           _AddPhotoFromCamera value, $Res Function(_AddPhotoFromCamera) then) =
       __$AddPhotoFromCameraCopyWithImpl<$Res>;
-  $Res call({ChoosePhotoMethod method});
+  $Res call({AddingPhotoMethod method});
 }
 
 /// @nodoc
@@ -948,7 +948,7 @@ class __$AddPhotoFromCameraCopyWithImpl<$Res>
       method == freezed
           ? _value.method
           : method // ignore: cast_nullable_to_non_nullable
-              as ChoosePhotoMethod,
+              as AddingPhotoMethod,
     ));
   }
 }
@@ -959,7 +959,7 @@ class _$_AddPhotoFromCamera implements _AddPhotoFromCamera {
   const _$_AddPhotoFromCamera(this.method);
 
   @override
-  final ChoosePhotoMethod method;
+  final AddingPhotoMethod method;
 
   @override
   String toString() {
@@ -993,7 +993,7 @@ class _$_AddPhotoFromCamera implements _AddPhotoFromCamera {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return addPhoto(method);
@@ -1009,7 +1009,7 @@ class _$_AddPhotoFromCamera implements _AddPhotoFromCamera {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {
@@ -1056,10 +1056,10 @@ class _$_AddPhotoFromCamera implements _AddPhotoFromCamera {
 }
 
 abstract class _AddPhotoFromCamera implements AdditionalInfoEvent {
-  const factory _AddPhotoFromCamera(ChoosePhotoMethod method) =
+  const factory _AddPhotoFromCamera(AddingPhotoMethod method) =
       _$_AddPhotoFromCamera;
 
-  ChoosePhotoMethod get method => throw _privateConstructorUsedError;
+  AddingPhotoMethod get method => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$AddPhotoFromCameraCopyWith<_AddPhotoFromCamera> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1112,7 +1112,7 @@ class _$_RemovePhoto implements _RemovePhoto {
     required TResult Function(int doneStepIndex, int activeStepIndex)
         particularStepChanged,
     required TResult Function() closeError,
-    required TResult Function(ChoosePhotoMethod method) addPhoto,
+    required TResult Function(AddingPhotoMethod method) addPhoto,
     required TResult Function() removePhoto,
   }) {
     return removePhoto();
@@ -1128,7 +1128,7 @@ class _$_RemovePhoto implements _RemovePhoto {
     TResult Function(int doneStepIndex, int activeStepIndex)?
         particularStepChanged,
     TResult Function()? closeError,
-    TResult Function(ChoosePhotoMethod method)? addPhoto,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
     TResult Function()? removePhoto,
     required TResult orElse(),
   }) {

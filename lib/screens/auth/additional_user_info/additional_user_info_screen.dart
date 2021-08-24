@@ -402,6 +402,48 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
         ));
   }
 
+  Widget _buildPhotoContent(AdditionalInfoState state) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 0.0),
+      child: Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        child: IconButton(
+          icon: Icon(
+            Icons.add_a_photo_outlined,
+            color:
+                state.hasPhoto ? Colors.transparent : cWhite.withOpacity(0.75),
+            size: 40,
+          ),
+          onPressed: () => Utils.addPhotoDialog(
+            context,
+            onCameraTap: () => _choosePhotoWithMethod(AddingPhotoMethod.camera),
+            onGalleryTap: () =>
+                _choosePhotoWithMethod(AddingPhotoMethod.gallery),
+          ),
+        ),
+        decoration: BoxDecoration(
+            color: cWhite.withOpacity(0.2),
+            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+            border: Border.all(color: cWhite.withOpacity(0.75), width: 1.25),
+            image: state.hasPhoto
+                ? DecorationImage(
+                    image: state.photo.image,
+                    fit: BoxFit.fill,
+                  )
+                : null),
+      ),
+    );
+  }
+
+  void _choosePhotoWithMethod(AddingPhotoMethod method) =>
+      BlocProvider.of<AdditionalInfoBloc>(context).add(
+        AdditionalInfoEvent.addPhoto(method),
+      );
+
+  void _removePhoto() => BlocProvider.of<AdditionalInfoBloc>(context)
+      .add(AdditionalInfoEvent.removePhoto());
+
   Widget _step(
     IconData iconData,
     Color outsideColor,
@@ -470,67 +512,4 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
       ),
     );
   }
-
-  void _choosePhotoWithMethod(ChoosePhotoMethod method) =>
-      BlocProvider.of<AdditionalInfoBloc>(context).add(
-        AdditionalInfoEvent.addPhoto(method),
-      );
-
-  Widget _showPhoto(Image photo) {
-    return Column(
-      children: [
-        Expanded(
-            flex: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(child: Text('Add new photo')),
-                Expanded(child: Text('Remove')),
-              ],
-            )),
-        Expanded(
-            flex: 8,
-            child: Container(
-              child: const SizedBox(),
-            )),
-      ],
-    );
-  }
-
-  _buildPhotoContent(AdditionalInfoState state) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 0.0),
-      child: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: IconButton(
-          icon: Icon(
-            Icons.add_a_photo_outlined,
-            color:
-                state.hasPhoto ? Colors.transparent : cWhite.withOpacity(0.75),
-            size: 40,
-          ),
-          onPressed: () => Utils.addPhotoDialog(
-            context,
-            onCameraTap: () => _choosePhotoWithMethod(ChoosePhotoMethod.camera),
-            onGalleryTap: () =>
-                _choosePhotoWithMethod(ChoosePhotoMethod.gallery),
-          ),
-        ),
-        decoration: BoxDecoration(
-            color: cWhite.withOpacity(0.2),
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            border: Border.all(color: cWhite.withOpacity(0.75), width: 1.25),
-            image: state.hasPhoto
-                ? DecorationImage(
-                    image: state.photo.image,
-                    fit: BoxFit.fill,
-                  )
-                : null),
-      ),
-    );
-  }
-
-  void _removePhoto() => BlocProvider.of<AdditionalInfoBloc>(context)
-      .add(AdditionalInfoEvent.removePhoto());
 }

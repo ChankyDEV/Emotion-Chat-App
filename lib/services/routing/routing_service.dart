@@ -74,9 +74,11 @@ class RoutingService {
 
   MaterialPageRoute authenticated() {
     return MaterialPageRoute(
-      builder: (context) {
-        return Authenticated();
-      },
+      builder: (context) => MultiBlocProvider(providers: [
+        BlocProvider(
+          create: (context) => getIt.get<AuthCubit>(),
+        ),
+      ], child: Authenticated()),
     );
   }
 }

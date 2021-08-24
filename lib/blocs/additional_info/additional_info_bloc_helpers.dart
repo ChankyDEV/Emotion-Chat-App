@@ -14,8 +14,8 @@ AdditionalInfoState _resetState() {
   );
 }
 
-bool _isCameraMethodChosen(ChoosePhotoMethod method) {
-  return method == ChoosePhotoMethod.camera;
+bool _isCameraMethodChosen(AddingPhotoMethod method) {
+  return method == AddingPhotoMethod.camera;
 }
 
 AdditionalInfoState _showFailure(AdditionalInfoState state,
