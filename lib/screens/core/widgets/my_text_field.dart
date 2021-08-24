@@ -38,7 +38,7 @@ class MyTextField extends StatelessWidget {
         controller: controller,
         key: Key('emailOrPhone'),
         style: const TextStyle(
-            color: cLightGrey, fontSize: 11, fontFamily: 'Lato'),
+            color: cLightGrey, fontSize: 13, fontFamily: 'Lato'),
         validator: (value) {
           if (formInput == FormInput.emailAddress) {
             EmailAddress email = EmailAddress(value: value!);
@@ -98,7 +98,7 @@ class MyTextField extends StatelessWidget {
             onPressed: action,
           ),
           errorStyle: const TextStyle(
-              color: Colors.red, fontSize: 11, fontFamily: 'Lato'),
+              color: Colors.red, fontSize: 13, fontFamily: 'Lato'),
           focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color: Colors.red, width: 1, style: BorderStyle.solid)),
@@ -113,7 +113,7 @@ class MyTextField extends StatelessWidget {
                   color: cLightGrey, width: 1, style: BorderStyle.solid)),
           hintText: hint,
           hintStyle: const TextStyle(
-              color: cLightGrey, fontSize: 11, fontFamily: 'Lato'),
+              color: cLightGrey, fontSize: 13, fontFamily: 'Lato'),
         ),
       ),
     );

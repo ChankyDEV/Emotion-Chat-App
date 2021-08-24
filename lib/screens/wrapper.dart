@@ -21,12 +21,21 @@ class _WrapperState extends State<Wrapper> {
           if (!state.isLoading) {
             if (state.isLoggedIn) {
               if (state.canShowMoreInfoScreen) {
-                await Navigator.pushNamed(context, Screens.additionalInfo);
+                await Navigator.pushReplacementNamed(
+                  context,
+                  Screens.additionalInfo,
+                );
               } else {
-                await Navigator.pushNamed(context, Screens.authenticated);
+                await Navigator.pushReplacementNamed(
+                  context,
+                  Screens.authenticated,
+                );
               }
             } else {
-              await Navigator.pushNamed(context, Screens.unauthenticated);
+              await Navigator.pushReplacementNamed(
+                context,
+                Screens.unauthenticated,
+              );
             }
           }
         },

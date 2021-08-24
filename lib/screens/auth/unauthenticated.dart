@@ -1,7 +1,7 @@
 import 'package:emotion_chat/blocs/auth_form/auth_form_bloc.dart';
-import 'package:emotion_chat/screens/auth/sign_in/new_sign_in_screen.dart';
 import 'package:emotion_chat/screens/auth/sign_in/sign_in_screen.dart';
-import 'package:emotion_chat/screens/auth/sign_up/new_sign_up_screen.dart';
+import 'package:emotion_chat/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:emotion_chat/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:emotion_chat/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,28 +29,17 @@ class _UnauthenticatedState extends State<Unauthenticated> {
       key: Key('pageView'),
       controller: _pageController,
       children: [
-        // SignInScreen(
-        //   pageController: _pageController,
-        //   emailController: _emailController,
-        //   passwordController: _passwordController,
-        // ),
-        NewSignInScreen(
+        SignInScreen(
           emailController: _emailController,
           passwordController: _passwordController,
           pageController: _pageController,
         ),
-        NewSignUpScreen(
+        SignUpScreen(
           pageController: _pageController,
           emailController: _emailController,
           passwordController: _passwordController,
           phoneController: _phoneController,
         )
-        // SignUpScreen(
-        //   pageController: _pageController,
-        //   emailController: _emailController,
-        //   phoneController: _phoneController,
-        //   passwordController: _passwordController,
-        // ),
       ],
     );
   }
