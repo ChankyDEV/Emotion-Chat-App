@@ -13,27 +13,28 @@ class MyRouter {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(providers: [
-                  BlocProvider(
-                    create: (context) {
-                      return getIt<AuthCubit>()..listenForAuthChanges();
-                    },
-                  ),
-                  BlocProvider(
-                    create: (context) => getIt<AdditionalInfoBloc>(),
-                  ),
-                  BlocProvider(
-                    create: (context) => getIt<AuthFormBloc>()
-                      ..listenForLogout()
-                      ..listenOnNetworkStatus(),
-                  ),
-                  BlocProvider(
-                    create: (context) => AnimatedButtonCubit(
-                        authFormBloc: getIt<AuthFormBloc>(),
-                        authCubit: getIt<AuthCubit>())
-                      ..listenForAuthFormBlocStateChanges(),
-                  ),
-                ], child: Wrapper()));
+          builder: (_) => MultiBlocProvider(providers: [
+            BlocProvider(
+              create: (context) {
+                return getIt<AuthCubit>()..listenForAuthChanges();
+              },
+            ),
+            BlocProvider(
+              create: (context) => getIt<AdditionalInfoBloc>(),
+            ),
+            BlocProvider(
+              create: (context) => getIt<AuthFormBloc>()
+                ..listenForLogout()
+                ..listenOnNetworkStatus(),
+            ),
+            BlocProvider(
+              create: (context) => AnimatedButtonCubit(
+                  authFormBloc: getIt<AuthFormBloc>(),
+                  authCubit: getIt<AuthCubit>())
+                ..listenForAuthFormBlocStateChanges(),
+            ),
+          ], child: Wrapper()),
+        );
       case 'authenticated':
         return MaterialPageRoute(
           builder: (context) {

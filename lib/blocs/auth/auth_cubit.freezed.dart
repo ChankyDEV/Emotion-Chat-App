@@ -19,13 +19,13 @@ class _$AuthStateTearOff {
   _Initial initial(
       {required bool isLoggedIn,
       required bool areInputsWrong,
-      required bool showMoreInfoScreen,
+      required bool canShowMoreInfoScreen,
       required bool isLoading,
       required bool loggedOut}) {
     return _Initial(
       isLoggedIn: isLoggedIn,
       areInputsWrong: areInputsWrong,
-      showMoreInfoScreen: showMoreInfoScreen,
+      canShowMoreInfoScreen: canShowMoreInfoScreen,
       isLoading: isLoading,
       loggedOut: loggedOut,
     );
@@ -39,21 +39,21 @@ const $AuthState = _$AuthStateTearOff();
 mixin _$AuthState {
   bool get isLoggedIn => throw _privateConstructorUsedError;
   bool get areInputsWrong => throw _privateConstructorUsedError;
-  bool get showMoreInfoScreen => throw _privateConstructorUsedError;
+  bool get canShowMoreInfoScreen => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get loggedOut => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(bool isLoggedIn, bool areInputsWrong,
-            bool showMoreInfoScreen, bool isLoading, bool loggedOut)
+            bool canShowMoreInfoScreen, bool isLoading, bool loggedOut)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isLoggedIn, bool areInputsWrong,
-            bool showMoreInfoScreen, bool isLoading, bool loggedOut)?
+            bool canShowMoreInfoScreen, bool isLoading, bool loggedOut)?
         initial,
     required TResult orElse(),
   }) =>
@@ -82,7 +82,7 @@ abstract class $AuthStateCopyWith<$Res> {
   $Res call(
       {bool isLoggedIn,
       bool areInputsWrong,
-      bool showMoreInfoScreen,
+      bool canShowMoreInfoScreen,
       bool isLoading,
       bool loggedOut});
 }
@@ -99,7 +99,7 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
   $Res call({
     Object? isLoggedIn = freezed,
     Object? areInputsWrong = freezed,
-    Object? showMoreInfoScreen = freezed,
+    Object? canShowMoreInfoScreen = freezed,
     Object? isLoading = freezed,
     Object? loggedOut = freezed,
   }) {
@@ -112,9 +112,9 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
           ? _value.areInputsWrong
           : areInputsWrong // ignore: cast_nullable_to_non_nullable
               as bool,
-      showMoreInfoScreen: showMoreInfoScreen == freezed
-          ? _value.showMoreInfoScreen
-          : showMoreInfoScreen // ignore: cast_nullable_to_non_nullable
+      canShowMoreInfoScreen: canShowMoreInfoScreen == freezed
+          ? _value.canShowMoreInfoScreen
+          : canShowMoreInfoScreen // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -136,7 +136,7 @@ abstract class _$InitialCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
   $Res call(
       {bool isLoggedIn,
       bool areInputsWrong,
-      bool showMoreInfoScreen,
+      bool canShowMoreInfoScreen,
       bool isLoading,
       bool loggedOut});
 }
@@ -154,7 +154,7 @@ class __$InitialCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoggedIn = freezed,
     Object? areInputsWrong = freezed,
-    Object? showMoreInfoScreen = freezed,
+    Object? canShowMoreInfoScreen = freezed,
     Object? isLoading = freezed,
     Object? loggedOut = freezed,
   }) {
@@ -167,9 +167,9 @@ class __$InitialCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
           ? _value.areInputsWrong
           : areInputsWrong // ignore: cast_nullable_to_non_nullable
               as bool,
-      showMoreInfoScreen: showMoreInfoScreen == freezed
-          ? _value.showMoreInfoScreen
-          : showMoreInfoScreen // ignore: cast_nullable_to_non_nullable
+      canShowMoreInfoScreen: canShowMoreInfoScreen == freezed
+          ? _value.canShowMoreInfoScreen
+          : canShowMoreInfoScreen // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -189,7 +189,7 @@ class _$_Initial implements _Initial {
   const _$_Initial(
       {required this.isLoggedIn,
       required this.areInputsWrong,
-      required this.showMoreInfoScreen,
+      required this.canShowMoreInfoScreen,
       required this.isLoading,
       required this.loggedOut});
 
@@ -198,7 +198,7 @@ class _$_Initial implements _Initial {
   @override
   final bool areInputsWrong;
   @override
-  final bool showMoreInfoScreen;
+  final bool canShowMoreInfoScreen;
   @override
   final bool isLoading;
   @override
@@ -206,7 +206,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'AuthState.initial(isLoggedIn: $isLoggedIn, areInputsWrong: $areInputsWrong, showMoreInfoScreen: $showMoreInfoScreen, isLoading: $isLoading, loggedOut: $loggedOut)';
+    return 'AuthState.initial(isLoggedIn: $isLoggedIn, areInputsWrong: $areInputsWrong, canShowMoreInfoScreen: $canShowMoreInfoScreen, isLoading: $isLoading, loggedOut: $loggedOut)';
   }
 
   @override
@@ -219,9 +219,9 @@ class _$_Initial implements _Initial {
             (identical(other.areInputsWrong, areInputsWrong) ||
                 const DeepCollectionEquality()
                     .equals(other.areInputsWrong, areInputsWrong)) &&
-            (identical(other.showMoreInfoScreen, showMoreInfoScreen) ||
-                const DeepCollectionEquality()
-                    .equals(other.showMoreInfoScreen, showMoreInfoScreen)) &&
+            (identical(other.canShowMoreInfoScreen, canShowMoreInfoScreen) ||
+                const DeepCollectionEquality().equals(
+                    other.canShowMoreInfoScreen, canShowMoreInfoScreen)) &&
             (identical(other.isLoading, isLoading) ||
                 const DeepCollectionEquality()
                     .equals(other.isLoading, isLoading)) &&
@@ -235,7 +235,7 @@ class _$_Initial implements _Initial {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(isLoggedIn) ^
       const DeepCollectionEquality().hash(areInputsWrong) ^
-      const DeepCollectionEquality().hash(showMoreInfoScreen) ^
+      const DeepCollectionEquality().hash(canShowMoreInfoScreen) ^
       const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(loggedOut);
 
@@ -248,24 +248,24 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(bool isLoggedIn, bool areInputsWrong,
-            bool showMoreInfoScreen, bool isLoading, bool loggedOut)
+            bool canShowMoreInfoScreen, bool isLoading, bool loggedOut)
         initial,
   }) {
-    return initial(
-        isLoggedIn, areInputsWrong, showMoreInfoScreen, isLoading, loggedOut);
+    return initial(isLoggedIn, areInputsWrong, canShowMoreInfoScreen, isLoading,
+        loggedOut);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isLoggedIn, bool areInputsWrong,
-            bool showMoreInfoScreen, bool isLoading, bool loggedOut)?
+            bool canShowMoreInfoScreen, bool isLoading, bool loggedOut)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(
-          isLoggedIn, areInputsWrong, showMoreInfoScreen, isLoading, loggedOut);
+      return initial(isLoggedIn, areInputsWrong, canShowMoreInfoScreen,
+          isLoading, loggedOut);
     }
     return orElse();
   }
@@ -295,7 +295,7 @@ abstract class _Initial implements AuthState {
   const factory _Initial(
       {required bool isLoggedIn,
       required bool areInputsWrong,
-      required bool showMoreInfoScreen,
+      required bool canShowMoreInfoScreen,
       required bool isLoading,
       required bool loggedOut}) = _$_Initial;
 
@@ -304,7 +304,7 @@ abstract class _Initial implements AuthState {
   @override
   bool get areInputsWrong => throw _privateConstructorUsedError;
   @override
-  bool get showMoreInfoScreen => throw _privateConstructorUsedError;
+  bool get canShowMoreInfoScreen => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
   @override

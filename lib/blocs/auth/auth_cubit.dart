@@ -19,7 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
           AuthState.initial(
             isLoggedIn: false,
             areInputsWrong: false,
-            showMoreInfoScreen: false,
+            canShowMoreInfoScreen: false,
             isLoading: true,
             loggedOut: false,
           ),
@@ -59,17 +59,23 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void _showMoreInfoScreen() {
-    emit(state.copyWith(
-        showMoreInfoScreen: true, isLoggedIn: true, loggedOut: false));
+    emit(
+      state.copyWith(
+          canShowMoreInfoScreen: true, isLoggedIn: true, loggedOut: false),
+    );
   }
 
   void _showAuthenticatedScreen() {
-    emit(state.copyWith(
-        showMoreInfoScreen: false, isLoggedIn: true, loggedOut: false));
+    emit(
+      state.copyWith(
+          canShowMoreInfoScreen: false, isLoggedIn: true, loggedOut: false),
+    );
   }
 
   void _showUnauthenticatedScreen() {
-    emit(state.copyWith(isLoggedIn: false, showMoreInfoScreen: false));
+    emit(
+      state.copyWith(isLoggedIn: false, canShowMoreInfoScreen: false),
+    );
   }
 
   void _turnOffLoadingScreen() {

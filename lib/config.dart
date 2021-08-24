@@ -18,6 +18,8 @@ import 'package:emotion_chat/services/network/i_network_service.dart';
 import 'package:emotion_chat/services/network/network_service.dart';
 import 'package:emotion_chat/services/permission/i_permission_service.dart';
 import 'package:emotion_chat/services/permission/permission_service.dart';
+import 'package:emotion_chat/services/routing/routing_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -38,6 +40,7 @@ class Config {
 
   Future<void> _registerServices() async {
     getItInstance
+      ..registerSingleton<RoutingService>(RoutingService())
       ..registerSingleton<IAuthService>(FirebaseAuthService())
       ..registerSingleton<IImagePickerService>(ImagePickerService())
       ..registerSingleton<IImageUploadService>(FirebaseImageUploadService())
