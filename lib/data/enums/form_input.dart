@@ -1,1 +1,1 @@
-enum FormInput { emailAddress, phoneNumber, both, password }
+enum InputType { emailAddress, phoneNumber, both, password }

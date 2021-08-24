@@ -131,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: MyTextField(
                                   formNode: _formNode,
                                   controller: widget.emailController,
-                                  formInput: FormInput.emailAddress,
+                                  inputType: InputType.emailAddress,
                                   hint: 'Email or mobile phone...',
                                   prefixIcon: Icons.mail_outline,
                                   suffixIcon: Icons.clear,
@@ -161,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: MyTextField(
                                   formNode: _formNode,
                                   controller: widget.phoneController,
-                                  formInput: FormInput.phoneNumber,
+                                  inputType: InputType.phoneNumber,
                                   hint: 'Phone number...',
                                   prefixIcon: Icons.phone_android_outlined,
                                   suffixIcon: Icons.clear,
@@ -191,7 +191,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: MyTextField(
                                   formNode: _formNode,
                                   controller: widget.passwordController,
-                                  formInput: FormInput.password,
+                                  inputType: InputType.password,
                                   hint: 'Password...',
                                   prefixIcon: Icons.lock_outline,
                                   suffixIcon: Icons.visibility_off_outlined,

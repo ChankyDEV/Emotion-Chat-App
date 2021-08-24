@@ -132,7 +132,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 child: MyTextField(
                                   formNode: _formNode,
                                   controller: widget.emailController,
-                                  formInput: FormInput.emailAddress,
+                                  inputType: InputType.emailAddress,
                                   hint: 'Email or mobile phone...',
                                   prefixIcon: Icons.mail_outline,
                                   suffixIcon: Icons.clear,
@@ -165,7 +165,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 child: MyTextField(
                                   formNode: _formNode,
                                   controller: widget.passwordController,
-                                  formInput: FormInput.password,
+                                  inputType: InputType.password,
                                   hint: 'Password...',
                                   prefixIcon: Icons.lock_outline,
                                   suffixIcon: Icons.visibility_off_outlined,

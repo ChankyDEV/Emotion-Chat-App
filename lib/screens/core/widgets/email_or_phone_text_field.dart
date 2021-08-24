@@ -10,7 +10,7 @@ class EmailOrPhoneTextField extends StatelessWidget {
   final Function clearFunction;
   final String hint;
   final Icon icon;
-  final FormInput formInput;
+  final InputType formInput;
   final bool isPhoneNumber;
 
   const EmailOrPhoneTextField(
@@ -42,19 +42,19 @@ class EmailOrPhoneTextField extends StatelessWidget {
         key: Key('emailOrPhone'),
         style: textFormStyle.copyWith(color: textColor),
         validator: (value) {
-          if (formInput == FormInput.emailAddress) {
+          if (formInput == InputType.emailAddress) {
             EmailAddress email = EmailAddress(value: value!);
             if (!email.isValid()) {
               return 'Email address is not valid';
             }
-          } else if (formInput == FormInput.phoneNumber) {
+          } else if (formInput == InputType.phoneNumber) {
             String convertedValue = value!.removeSpacesFromString();
             PhoneNumber phone = PhoneNumber(value: convertedValue);
 
             if (!phone.isValid()) {
               return 'Phone number has to nine numbers';
             }
-          } else if (formInput == FormInput.both) {
+          } else if (formInput == InputType.both) {
             if (value!.contains(' ')) {
               value = value.replaceAll(' ', '');
             }

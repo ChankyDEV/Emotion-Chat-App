@@ -76,7 +76,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       ),
                       controller: widget.emailController,
                       hint: 'Email',
-                      formInput: FormInput.emailAddress,
+                      formInput: InputType.emailAddress,
                       isPhoneNumber: state.isPhoneNumber,
                       icon: Icon(
                         Icons.email,
@@ -94,7 +94,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       ),
                       controller: widget.phoneController,
                       hint: 'Phone',
-                      formInput: FormInput.phoneNumber,
+                      formInput: InputType.phoneNumber,
                       isPhoneNumber: true,
                       icon: Icon(
                         Icons.phone,

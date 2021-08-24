@@ -66,7 +66,7 @@ class _SignInFormState extends State<SignInForm> {
                       .add(AuthFormEvent.clearEmailField()),
                   controller: widget.emailController,
                   hint: 'Email or phone',
-                  formInput: FormInput.both,
+                  formInput: InputType.both,
                   isPhoneNumber: state.isPhoneNumber,
                   icon: Icon(
                     Icons.email,

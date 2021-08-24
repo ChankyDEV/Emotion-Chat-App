@@ -2,6 +2,7 @@ import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/blocs/auth_form/auth_form_bloc.dart';
 import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
+import 'package:emotion_chat/helpers/validator.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/repositories/image_picker/image_picker_repository.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
@@ -41,6 +42,7 @@ class Config {
 
   Future<void> _registerServices() async {
     getItInstance
+      ..registerSingleton<Validator>(Validator())
       ..registerSingleton<RoutingService>(RoutingService())
       ..registerSingleton<DatabaseService>(DatabaseServiceImpl())
       ..registerSingleton<IAuthService>(

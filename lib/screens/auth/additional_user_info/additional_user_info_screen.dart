@@ -225,7 +225,7 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
                 const EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
             child: MyTextField(
               controller: _nameController,
-              formInput: FormInput.emailAddress,
+              inputType: InputType.emailAddress,
               hint: 'What is your name...',
               prefixIcon: Icons.mail_outline,
               suffixIcon: Icons.clear,

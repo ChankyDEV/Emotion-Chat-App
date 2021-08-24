@@ -42,20 +42,20 @@ class FirebaseAuthService implements IAuthService {
       return await getSignedInUser();
     } on FirebaseAuthException catch (e) {
       print(e.code);
-      if (e.code == 'invalid-email' || e.code == 'wrong-password') {
+      if (e.code == 'invalid-email' ||
+          e.code == 'wrong-password' ||
+          e.code == 'user-not-found') {
         throw AuthException(message: 'Wrong email or password');
       } else if (e.code == 'user-disabled') {
         throw AuthException(message: 'User is blocked');
-      } else if (e.code == 'user-not-found') {
-        throw AuthException(message: 'Password is too weak');
       } else {
         throw AuthException(message: 'Unknown error');
       }
     }
   }
 
-  MyUser _fromFirebaseUser(
-      UserCredential userCredential, PhoneNumber? phoneNumber) {
+  MyUser _fromFirebaseUser(UserCredential userCredential,
+      PhoneNumber? phoneNumber) {
     final user = userCredential.user;
     return MyUser(
       phoneNumber: PhoneNumber(value: phoneNumber!.value.toString()),
@@ -99,5 +99,4 @@ class FirebaseAuthService implements IAuthService {
       }
     }
   }
-
 }
