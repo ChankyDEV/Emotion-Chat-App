@@ -1,11 +1,8 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/services/local_db/i_local_db_service.dart';
 import 'package:flutter/material.dart';
-
 import 'package:hive/hive.dart';
-import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: ILocalDatabaseService)
 class HiveLocalDatabaseService implements ILocalDatabaseService {
   @override
   Future<MyUser> getUser() async {

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class AuthException implements Exception {
   final String message;
 
@@ -16,4 +14,10 @@ class ImagePickException implements Exception {
   final String message;
 
   ImagePickException({required this.message});
+}
+
+class ImageUploadException implements Exception {
+  final String message;
+
+  ImageUploadException({required this.message});
 }

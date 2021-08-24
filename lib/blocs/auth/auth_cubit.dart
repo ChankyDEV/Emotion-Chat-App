@@ -5,12 +5,11 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
-part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
-@LazySingleton()
+part 'auth_state.dart';
+
 class AuthCubit extends Cubit<AuthState> {
   late final IUserRepository authRepository;
   late StreamSubscription _authStream;

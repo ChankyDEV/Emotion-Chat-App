@@ -11,6 +11,6 @@ class AdditionalInfoEvent with _$AdditionalInfoEvent {
   const factory AdditionalInfoEvent.particularStepChanged(int doneStepIndex,
       int activeStepIndex) = _ParticularStepChanged;
   const factory AdditionalInfoEvent.closeError() = _CloseError;
-  const factory AdditionalInfoEvent.addPhotoFromCamera() = _AddPhotoFromCamera;
-  const factory AdditionalInfoEvent.addPhotoFromGallery() = _AddPhotoFromGallery;
+  const factory AdditionalInfoEvent.addPhoto(ChoosePhotoMethod method) = _AddPhotoFromCamera;
+  const factory AdditionalInfoEvent.removePhoto() = _RemovePhoto;
 }

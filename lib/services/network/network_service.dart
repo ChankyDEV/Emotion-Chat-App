@@ -1,11 +1,8 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/services.dart';
 import 'package:flutter/material.dart';
-
-import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-@LazySingleton(as: INetworkService)
 class NetworkService implements INetworkService {
   final InternetConnectionChecker dataConnectionChecker;
 

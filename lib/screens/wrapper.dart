@@ -1,7 +1,6 @@
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/constants/screens.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
-import 'package:emotion_chat/screens/auth/additional_user_info/sign_up_more_info_screen.dart';
 import 'package:emotion_chat/screens/core/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +12,7 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   late final PageController pageController;
+
   @override
   void initState() {
     super.initState();
@@ -49,9 +49,8 @@ class _WrapperState extends State<Wrapper> {
             } else {
               return Unauthenticated();
             }
-          } else {
-            return LoadingScreen();
           }
+          return LoadingScreen();
         },
       ),
     );

@@ -7,6 +7,7 @@ class AdditionalInfoState with _$AdditionalInfoState {
     required Gender gender,
     required Image photo,
     required bool hasPhoto,
+    required bool showLoading,
     required int activeStep,
     required int doneStep,
     required bool failureOccured,

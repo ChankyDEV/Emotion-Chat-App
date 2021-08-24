@@ -106,12 +106,17 @@ class MockIImageUploadService extends _i1.Mock
   }
 
   @override
-  _i5.Future<String> generateProfileImageUrl(
+  _i5.Future<void> uploadProfileImage(
           {_i8.MyPickedFile? profileImage, String? uid}) =>
       (super.noSuchMethod(
-          Invocation.method(#generateProfileImageUrl, [],
+          Invocation.method(#uploadProfileImage, [],
               {#profileImage: profileImage, #uid: uid}),
-          returnValue: Future<String>.value('')) as _i5.Future<String>);
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+  @override
+  _i5.Future<String> getProfileImageUrl({String? uid}) => (super.noSuchMethod(
+      Invocation.method(#getProfileImageUrl, [], {#uid: uid}),
+      returnValue: Future<String>.value('')) as _i5.Future<String>);
 }
 
 /// A class which mocks [ILocalDatabaseService].

@@ -17,8 +17,7 @@ abstract class IAuthService {
       {required Name? name,
       required Gender? gender,
       required bool? hasOwnImage,
-      required String? uid,
-      required String? generatedImageUploadUrl});
+      required String? uid, required String generatedImageUploadUrl});
 
   Future<MyUser> getSignedInUser();
   void addInfoAboutUserToStream(MyUser user);

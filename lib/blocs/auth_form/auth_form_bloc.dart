@@ -9,15 +9,13 @@ import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/services/network/i_network_service.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
+
+part 'auth_form_bloc.freezed.dart';
 
 part 'auth_form_event.dart';
 
 part 'auth_form_state.dart';
 
-part 'auth_form_bloc.freezed.dart';
-
-@LazySingleton()
 class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
   late final IUserRepository userRepository;
   late final AuthCubit authCubit;

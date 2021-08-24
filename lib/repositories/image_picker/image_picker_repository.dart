@@ -3,11 +3,9 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/services/image_picker/i_image_picker_service.dart';
 import 'package:emotion_chat/services/permission/i_permission_service.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
 import 'i_image_picker_repository.dart';
 
-@LazySingleton(as: IImagePickerRepository)
 class ImagePickerRepository implements IImagePickerRepository {
   final IImagePickerService imagePickerService;
   final IPermissionService permissionHandler;

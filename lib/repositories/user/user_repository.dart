@@ -8,11 +8,8 @@ import 'package:emotion_chat/services/auth/i_auth_service.dart';
 import 'package:emotion_chat/services/image_upload/i_image_service.dart';
 import 'package:emotion_chat/services/local_db/i_local_db_service.dart';
 import 'package:emotion_chat/services/network/i_network_service.dart';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-@LazySingleton(as: IUserRepository)
 class UserRepository implements IUserRepository {
   final IImageUploadService imageService;
   final IAuthService authService;
@@ -124,8 +121,10 @@ class UserRepository implements IUserRepository {
         MyUser user = await authService.getSignedInUser();
         String generatedImageUploadUrl = "";
         if (hasOwnImage) {
-          generatedImageUploadUrl = await imageService.generateProfileImageUrl(
+          await imageService.uploadProfileImage(
               profileImage: profileImage, uid: user.uid);
+          generatedImageUploadUrl =
+              await imageService.getProfileImageUrl(uid: user.uid);
         }
         user = await authService.updateUserInfo(
             name: name,

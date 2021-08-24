@@ -4,10 +4,8 @@ import 'package:emotion_chat/constants/services.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/auth/user_props.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:injectable/injectable.dart';
 import 'package:rxdart/src/subjects/behavior_subject.dart';
 
-@LazySingleton(as: IAuthService)
 class FirebaseAuthService implements IAuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -110,7 +108,7 @@ class FirebaseAuthService implements IAuthService {
     required Gender? gender,
     required bool? hasOwnImage,
     required String? uid,
-    required String? generatedImageUploadUrl,
+    required String generatedImageUploadUrl,
   }) async {
     final user = await getSignedInUser();
     final updatedUser = MyUser(
@@ -119,7 +117,7 @@ class FirebaseAuthService implements IAuthService {
       name: name!,
       hasOwnImage: hasOwnImage!,
       gender: gender!,
-      profileImage: user.profileImage,
+      profileImage: ProfileImage(url: generatedImageUploadUrl),
       contactsUIDS: user.contactsUIDS,
       uid: user.uid,
     );

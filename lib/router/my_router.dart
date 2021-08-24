@@ -4,45 +4,36 @@ import 'package:emotion_chat/constants/screens.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../injectable_init.dart';
+import 'package:get_it/get_it.dart';
 
 class MyRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
+    final getIt = GetIt.instance;
+
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
-            builder: (_) =>
-                MultiBlocProvider(providers: [
+            builder: (_) => MultiBlocProvider(providers: [
                   BlocProvider(
                     create: (context) {
-                      return getIt<AuthCubit>()
-                        ..listenForAuthChanges();
+                      return getIt<AuthCubit>()..listenForAuthChanges();
                     },
                   ),
                   BlocProvider(
                     create: (context) => getIt<AdditionalInfoBloc>(),
                   ),
                   BlocProvider(
-                    create: (context) =>
-                    getIt<AuthFormBloc>()
+                    create: (context) => getIt<AuthFormBloc>()
                       ..listenForLogout()
                       ..listenOnNetworkStatus(),
                   ),
                   BlocProvider(
-                    create: (context) =>
-                    AnimatedButtonCubit(
+                    create: (context) => AnimatedButtonCubit(
                         authFormBloc: getIt<AuthFormBloc>(),
                         authCubit: getIt<AuthCubit>())
                       ..listenForAuthFormBlocStateChanges(),
                   ),
                 ], child: Wrapper()));
-      case 'moreAuthInfo':
-        return MaterialPageRoute(
-          builder: (context) {
-            return SignUpMoreInfoScreen();
-          },
-        );
       case 'authenticated':
         return MaterialPageRoute(
           builder: (context) {

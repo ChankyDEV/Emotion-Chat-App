@@ -62,7 +62,7 @@ class MongoAuthService implements IAuthService {
       required Gender? gender,
       required bool? hasOwnImage,
       required String? uid,
-      required String? generatedImageUploadUrl}) async {
+      required String generatedImageUploadUrl}) async {
     final json = {
       'uid': uid,
       'profileImageUrl': generatedImageUploadUrl,

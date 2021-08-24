@@ -1,15 +1,12 @@
+import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/models/auth/receiver.dart';
 import 'package:emotion_chat/helpers/helpers.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
-
-import '../../injectable_init.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class Chats extends StatelessWidget {
   final List<Conversation> conversations = [
@@ -147,8 +144,8 @@ class Chats extends StatelessWidget {
         actions: [
           IconButton(
               key: Key('logout_messages_button'),
-              onPressed: () async {
-                await getIt<IUserRepository>().logout();
+              onPressed: () {
+                GetIt.I.get<AuthCubit>().logout();
               },
               icon: Icon(Icons.logout))
         ],
@@ -366,6 +363,7 @@ class Chats extends StatelessWidget {
 class CircleIcon extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
+
   const CircleIcon({Key? key, required this.icon, required this.onTap})
       : super(key: key);
 

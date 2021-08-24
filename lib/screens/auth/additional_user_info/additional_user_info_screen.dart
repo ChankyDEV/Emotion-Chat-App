@@ -1,8 +1,10 @@
 import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/data/enums/choose_photo_method.dart';
 import 'package:emotion_chat/data/enums/form_input.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/screens/core/loading_screen.dart';
 import 'package:emotion_chat/screens/core/utils.dart';
 import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
@@ -92,106 +94,112 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
         _mainPageContent = _choosePage(state);
       },
       builder: (context, state) {
-        return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => BlocProvider.of<AdditionalInfoBloc>(context)
-                .add(AdditionalInfoEvent.stepChanged()),
-            child: Icon(
-              state.activeStep == 3 ? Icons.done : Icons.arrow_right_alt_sharp,
-              color: cDarkGrey,
-            ),
-            backgroundColor: cWhite,
-          ),
-          backgroundColor: cDarkGrey,
-          body: Column(
-            children: [
-              Expanded(
-                  flex: 15,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    color: cWhite,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          width: _horizontalHeaderMargin,
-                        ),
-                        Expanded(
-                          child: _step(
-                            Icons.drive_file_rename_outline,
-                            cDarkGrey,
-                            cWhite,
-                            2.0,
-                            12.0,
-                            active: state.activeStep == 1,
-                            done: state.doneStep == 1 || state.doneStep == 2,
-                            onTap: () => _showParticularStep(
-                              doneStepIndex: 0,
-                              activeStepIndex: 1,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: _dotsSeparator(
-                            cDarkGrey,
-                            4,
-                            3,
-                            done: state.doneStep == 1 || state.doneStep == 2,
-                          ),
-                        ),
-                        Expanded(
-                          child: _step(
-                              Icons.people_alt, cDarkGrey, cWhite, 2.0, 12.0,
-                              active: state.activeStep == 2,
-                              done: state.doneStep == 2,
-                              onTap: () => _showParticularStep(
-                                    doneStepIndex: 1,
-                                    activeStepIndex: 2,
-                                  )),
-                        ),
-                        Expanded(
-                          child: _dotsSeparator(
-                            cDarkGrey,
-                            4,
-                            3,
-                            done: state.doneStep == 2,
-                          ),
-                        ),
-                        Expanded(
-                          child: _step(Icons.assignment_ind_outlined, cDarkGrey,
-                              cWhite, 2.0, 12.0,
-                              active: state.activeStep == 3,
-                              done: state.doneStep == 3,
-                              onTap: () => _showParticularStep(
-                                    doneStepIndex: 2,
-                                    activeStepIndex: 3,
-                                  )),
-                        ),
-                        SizedBox(
-                          width: _horizontalHeaderMargin,
-                        ),
-                      ],
-                    ),
-                  )),
-              Expanded(
-                  flex: 85,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
+        return !state.showLoading
+            ? Scaffold(
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () => BlocProvider.of<AdditionalInfoBloc>(context)
+                      .add(AdditionalInfoEvent.stepChanged()),
+                  child: Icon(
+                    state.activeStep == 3
+                        ? Icons.done
+                        : Icons.arrow_right_alt_sharp,
                     color: cDarkGrey,
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 250),
-                      child: _mainPageContent,
-                      transitionBuilder: (child, animation) {
-                        return ScaleTransition(
-                          child: child,
-                          scale: animation,
-                        );
-                      },
-                    ),
-                  )),
-            ],
-          ),
-        );
+                  ),
+                  backgroundColor: cWhite,
+                ),
+                backgroundColor: cDarkGrey,
+                body: Column(
+                  children: [
+                    Expanded(
+                        flex: 15,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          color: cWhite,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: _horizontalHeaderMargin,
+                              ),
+                              Expanded(
+                                child: _step(
+                                  Icons.drive_file_rename_outline,
+                                  cDarkGrey,
+                                  cWhite,
+                                  2.0,
+                                  12.0,
+                                  active: state.activeStep == 1,
+                                  done: state.doneStep == 1 ||
+                                      state.doneStep == 2,
+                                  onTap: () => _showParticularStep(
+                                    doneStepIndex: 0,
+                                    activeStepIndex: 1,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: _dotsSeparator(
+                                  cDarkGrey,
+                                  4,
+                                  3,
+                                  done: state.doneStep == 1 ||
+                                      state.doneStep == 2,
+                                ),
+                              ),
+                              Expanded(
+                                child: _step(Icons.people_alt, cDarkGrey,
+                                    cWhite, 2.0, 12.0,
+                                    active: state.activeStep == 2,
+                                    done: state.doneStep == 2,
+                                    onTap: () => _showParticularStep(
+                                          doneStepIndex: 1,
+                                          activeStepIndex: 2,
+                                        )),
+                              ),
+                              Expanded(
+                                child: _dotsSeparator(
+                                  cDarkGrey,
+                                  4,
+                                  3,
+                                  done: state.doneStep == 2,
+                                ),
+                              ),
+                              Expanded(
+                                child: _step(Icons.assignment_ind_outlined,
+                                    cDarkGrey, cWhite, 2.0, 12.0,
+                                    active: state.activeStep == 3,
+                                    done: state.doneStep == 3,
+                                    onTap: () => _showParticularStep(
+                                          doneStepIndex: 2,
+                                          activeStepIndex: 3,
+                                        )),
+                              ),
+                              SizedBox(
+                                width: _horizontalHeaderMargin,
+                              ),
+                            ],
+                          ),
+                        )),
+                    Expanded(
+                        flex: 85,
+                        child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          color: cDarkGrey,
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 250),
+                            child: _mainPageContent,
+                            transitionBuilder: (child, animation) {
+                              return ScaleTransition(
+                                child: child,
+                                scale: animation,
+                              );
+                            },
+                          ),
+                        )),
+                  ],
+                ),
+              )
+            : LoadingScreen();
       },
     );
   }
@@ -359,39 +367,39 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
           ),
         ),
         Expanded(
-            flex: 70,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 36, vertical: 8.0),
-              child: Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.add_a_photo_outlined,
-                    color: cWhite.withOpacity(0.75),
-                    size: 40,
-                  ),
-                  onPressed: () => Utils.addPhotoDialog(
-                    context,
-                    onCameraTap: _choosePhotoFromCamera,
-                    onGalleryTap: _choosePhotoFromGallery,
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    color: cWhite.withOpacity(0.2),
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                    border: Border.all(
-                        color: cWhite.withOpacity(0.75), width: 1.25),
-                    image: state.hasPhoto ? DecorationImage(
-                      image: state.photo.image,
-                      fit: BoxFit.fill,
-                    ): null),
-              ),
+            flex: 60,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                _buildPhotoContent(state),
+                _animatedCancelButton(state),
+              ],
             )),
-        Expanded(flex: 10, child: const SizedBox()),
+        Expanded(flex: 20, child: const SizedBox()),
       ],
     );
+  }
+
+  Widget _animatedCancelButton(AdditionalInfoState state) {
+    return AnimatedPositioned(
+        duration: const Duration(milliseconds: 500),
+        bottom: state.hasPhoto ? 10.0 : -30.0,
+        child: Container(
+          width: 50,
+          height: 50,
+          child: state.hasPhoto
+              ? IconButton(
+                  onPressed: _removePhoto,
+                  icon: Icon(
+                    Icons.close,
+                    color: cDarkGrey,
+                  ))
+              : const SizedBox(),
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: cWhite,
+          ),
+        ));
   }
 
   Widget _step(
@@ -463,12 +471,10 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
     );
   }
 
-  void _choosePhotoFromCamera() =>
+  void _choosePhotoWithMethod(ChoosePhotoMethod method) =>
       BlocProvider.of<AdditionalInfoBloc>(context).add(
-        AdditionalInfoEvent.addPhotoFromCamera(),
+        AdditionalInfoEvent.addPhoto(method),
       );
-
-  void _choosePhotoFromGallery() {}
 
   Widget _showPhoto(Image photo) {
     return Column(
@@ -490,4 +496,41 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
       ],
     );
   }
+
+  _buildPhotoContent(AdditionalInfoState state) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 0.0),
+      child: Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        child: IconButton(
+          icon: Icon(
+            Icons.add_a_photo_outlined,
+            color:
+                state.hasPhoto ? Colors.transparent : cWhite.withOpacity(0.75),
+            size: 40,
+          ),
+          onPressed: () => Utils.addPhotoDialog(
+            context,
+            onCameraTap: () => _choosePhotoWithMethod(ChoosePhotoMethod.camera),
+            onGalleryTap: () =>
+                _choosePhotoWithMethod(ChoosePhotoMethod.gallery),
+          ),
+        ),
+        decoration: BoxDecoration(
+            color: cWhite.withOpacity(0.2),
+            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+            border: Border.all(color: cWhite.withOpacity(0.75), width: 1.25),
+            image: state.hasPhoto
+                ? DecorationImage(
+                    image: state.photo.image,
+                    fit: BoxFit.fill,
+                  )
+                : null),
+      ),
+    );
+  }
+
+  void _removePhoto() => BlocProvider.of<AdditionalInfoBloc>(context)
+      .add(AdditionalInfoEvent.removePhoto());
 }

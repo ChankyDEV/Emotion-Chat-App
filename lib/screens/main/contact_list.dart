@@ -1,15 +1,8 @@
-import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/models/auth/receiver.dart';
-import 'package:emotion_chat/helpers/helpers.dart';
-import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
-import 'package:emotion_chat/screens/main/chats.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../injectable_init.dart';
 
 class ContactList extends StatelessWidget {
   List<Receiver> contactList = [

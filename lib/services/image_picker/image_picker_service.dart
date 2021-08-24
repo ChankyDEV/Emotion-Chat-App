@@ -1,9 +1,7 @@
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/services/image_picker/i_image_picker_service.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: IImagePickerService)
 class ImagePickerService implements IImagePickerService {
   @override
   Future<MyPickedFile> getImageFromCamera() async {

@@ -1,9 +1,7 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/services/permission/i_permission_service.dart';
-import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-@LazySingleton(as: IPermissionService)
 class PermissionService implements IPermissionService {
   _mapToMyPermissionStatus(PermissionStatus status) {
     final listOfMyStatuses = [
