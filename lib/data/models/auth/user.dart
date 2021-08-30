@@ -1,6 +1,5 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 class MyUser extends Equatable {
   final String uid;

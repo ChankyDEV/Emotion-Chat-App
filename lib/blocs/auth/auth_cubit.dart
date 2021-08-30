@@ -11,8 +11,7 @@ part 'auth_cubit.freezed.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  late final IUserRepository authRepository;
-  late StreamSubscription _authStream;
+  final IUserRepository authRepository;
 
   AuthCubit({required this.authRepository})
       : super(
@@ -23,11 +22,13 @@ class AuthCubit extends Cubit<AuthState> {
             isLoading: true,
             loggedOut: false,
           ),
-        );
+        ) {}
 
   void logout() async {
     final isLoggedOut = await authRepository.logout();
-    emit(state.copyWith(loggedOut: isLoggedOut));
+    emit(
+      state.copyWith(loggedOut: isLoggedOut),
+    );
   }
 
   Future<void> checkAuthStatus() async {
@@ -35,7 +36,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void listenForAuthChanges() async {
-    _authStream = authRepository.currentUser!.stream.listen((user) {
+    authRepository.currentUser.listen((user) {
       if (_userLoggedIn(user)) {
         if (_userLoggedForTheFirstTime(user)) {
           _showMoreInfoScreen();
@@ -61,30 +62,35 @@ class AuthCubit extends Cubit<AuthState> {
   void _showMoreInfoScreen() {
     emit(
       state.copyWith(
-          canShowMoreInfoScreen: true, isLoggedIn: true, loggedOut: false),
+        canShowMoreInfoScreen: true,
+        isLoggedIn: true,
+        loggedOut: false,
+      ),
     );
   }
 
   void _showAuthenticatedScreen() {
     emit(
       state.copyWith(
-          canShowMoreInfoScreen: false, isLoggedIn: true, loggedOut: false),
+        canShowMoreInfoScreen: false,
+        isLoggedIn: true,
+        loggedOut: false,
+      ),
     );
   }
 
   void _showUnauthenticatedScreen() {
     emit(
-      state.copyWith(isLoggedIn: false, canShowMoreInfoScreen: false),
+      state.copyWith(
+        isLoggedIn: false,
+        canShowMoreInfoScreen: false,
+      ),
     );
   }
 
   void _turnOffLoadingScreen() {
-    emit(state.copyWith(isLoading: false));
-  }
-
-  @override
-  Future<void> close() {
-    _authStream.cancel();
-    return super.close();
+    emit(
+      state.copyWith(isLoading: false),
+    );
   }
 }

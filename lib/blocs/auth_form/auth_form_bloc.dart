@@ -40,7 +40,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
         ));
 
   void listenForLogout() {
-    authCubitStream = authCubit.listen((authState) {
+    authCubitStream = authCubit.stream.listen((authState) {
       if (authState.loggedOut) {
         this.add(AuthFormEvent.resetState());
       }

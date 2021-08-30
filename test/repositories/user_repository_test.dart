@@ -3,16 +3,19 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/user/user_repository.dart';
 import 'package:emotion_chat/services/auth/i_auth_service.dart';
 import 'package:emotion_chat/services/image_upload/i_image_service.dart';
-import 'package:emotion_chat/services/local_db/i_local_db_service.dart';
 import 'package:emotion_chat/services/network/i_network_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../utils/mocks.dart';
 import 'user_repository_test.mocks.dart';
 
-@GenerateMocks(
-    [IAuthService, IImageUploadService, ILocalDatabaseService, INetworkService])
+@GenerateMocks([
+  IAuthService,
+  IImageUploadService,
+  INetworkService,
+])
 void main() {
   const tEmail = EmailAddress(value: 'email');
   const tPhone = PhoneNumber(value: 'phone');
@@ -35,16 +38,19 @@ void main() {
   );
 
   late MockIAuthService authService;
-  late MockILocalDatabaseService localDatabaseService;
+  late MockLocalDatabaseService localDatabaseService;
   late MockIImageUploadService imageUploadService;
   late MockINetworkService networkService;
+  late MockDatabaseService dbService;
   late UserRepository repository;
   setUp(() {
     authService = MockIAuthService();
-    localDatabaseService = MockILocalDatabaseService();
+    localDatabaseService = MockLocalDatabaseService();
     imageUploadService = MockIImageUploadService();
     networkService = MockINetworkService();
+    dbService = MockDatabaseService();
     repository = UserRepository(
+        db: dbService,
         imageService: imageUploadService,
         authService: authService,
         localDatabaseService: localDatabaseService,
@@ -203,28 +209,12 @@ void main() {
           'should return unit when user updates his info without profileImage succesffully',
           () async {
         when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-        when(
-          authService.updateUserInfo(
-            name: anyNamed('name'),
-            gender: anyNamed('gender'),
-            generatedImageUploadUrl: anyNamed('generatedImageUploadUrl'),
-            hasOwnImage: anyNamed('hasOwnImage'),
-            uid: anyNamed('uid'),
-          ),
-        ).thenAnswer((_) async => tUserUpdated);
+
         final result = await repository.updateUserInfo(
             name: Name(value: 'kamil'),
             gender: tGender,
             hasOwnImage: tHasOwnImage);
-        verify(
-          authService.updateUserInfo(
-            name: Name(value: 'kamil'),
-            gender: tGender,
-            generatedImageUploadUrl: '',
-            hasOwnImage: tUser.hasOwnImage,
-            uid: tUser.uid,
-          ),
-        );
+
         verify(authService.getSignedInUser());
         verify(localDatabaseService.saveUser(tUserUpdated));
         verify(authService.addInfoAboutUserToStream(tUserUpdated));
@@ -234,32 +224,10 @@ void main() {
           'should return unit when user updates his info with profileImage succesffully',
           () async {
         when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-        when(imageUploadService.generateProfileImageUrl(
-                profileImage: anyNamed('profileImage'), uid: anyNamed('uid')))
-            .thenAnswer((_) async => 'http://12345.pl');
-        when(
-          authService.updateUserInfo(
-            name: anyNamed('name'),
-            gender: anyNamed('gender'),
-            generatedImageUploadUrl: anyNamed('generatedImageUploadUrl'),
-            hasOwnImage: anyNamed('hasOwnImage'),
-            uid: anyNamed('uid'),
-          ),
-        ).thenAnswer((_) async => tUserUpdatedWithImage);
 
         final result = await repository.updateUserInfo(
             name: Name(value: 'kamil'), gender: tGender, hasOwnImage: true);
-        verify(
-          authService.updateUserInfo(
-            name: Name(value: 'kamil'),
-            gender: tGender,
-            generatedImageUploadUrl: 'http://12345.pl',
-            hasOwnImage: true,
-            uid: tUser.uid,
-          ),
-        );
-        verify(imageUploadService.generateProfileImageUrl(
-            profileImage: null, uid: tUid));
+
         verify(authService.getSignedInUser());
         verify(localDatabaseService.saveUser(tUserUpdatedWithImage));
         verify(authService.addInfoAboutUserToStream(tUserUpdatedWithImage));
@@ -270,16 +238,11 @@ void main() {
           'should return AuthFailure when there is problem with generating upload url',
           () async {
         when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-        when(imageUploadService.generateProfileImageUrl(
-                profileImage: anyNamed('profileImage'), uid: anyNamed('uid')))
-            .thenThrow(AuthException(
-                message: 'error occured while generating upload url'));
 
         final result = await repository.updateUserInfo(
             name: Name(value: 'kamil'), gender: tGender, hasOwnImage: true);
         verify(authService.getSignedInUser());
-        verify(imageUploadService.generateProfileImageUrl(
-            profileImage: null, uid: tUid));
+
         verifyNoMoreInteractions(authService);
         verifyZeroInteractions(localDatabaseService);
         expect(
@@ -291,28 +254,11 @@ void main() {
       test('should return AuthFailure when there is problem with updating info',
           () async {
         when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-        when(imageUploadService.generateProfileImageUrl(
-                profileImage: anyNamed('profileImage'), uid: anyNamed('uid')))
-            .thenAnswer((_) async => 'http://12345.pl');
-        when(authService.updateUserInfo(
-                name: anyNamed('name'),
-                gender: anyNamed('gender'),
-                generatedImageUploadUrl: anyNamed('generatedImageUploadUrl'),
-                hasOwnImage: anyNamed('hasOwnImage'),
-                uid: anyNamed('uid')))
-            .thenThrow(
-                AuthException(message: 'error occured while updating info'));
+
         final result = await repository.updateUserInfo(
             name: Name(value: 'kamil'), gender: tGender, hasOwnImage: true);
         verify(authService.getSignedInUser());
-        verify(imageUploadService.generateProfileImageUrl(
-            profileImage: null, uid: tUid));
-        verify(authService.updateUserInfo(
-            name: Name(value: 'kamil'),
-            gender: tGender,
-            generatedImageUploadUrl: 'http://12345.pl',
-            hasOwnImage: true,
-            uid: tUid));
+
         verifyNoMoreInteractions(authService);
         verifyZeroInteractions(localDatabaseService);
         expect(

@@ -4,7 +4,6 @@ import 'package:emotion_chat/constants/screens.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class Screens {
   static const initial = '/';
@@ -14,10 +13,17 @@ class Screens {
 }
 
 class RoutingService {
-  final getIt = GetIt.I;
+  final AuthCubit authCubit;
+  final AuthFormBloc authFormBloc;
+  final AdditionalInfoBloc additionalInfoBloc;
 
-  Route onGenerateRoute(RouteSettings routeSettings) {
-    final getIt = GetIt.instance;
+  RoutingService(
+    this.authCubit,
+    this.authFormBloc,
+    this.additionalInfoBloc,
+  );
+
+  Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Screens.initial:
         return wrapper();
@@ -28,57 +34,54 @@ class RoutingService {
       case Screens.additionalInfo:
         return additionalInfo();
       default:
-        return MaterialPageRoute(builder: (_) => Wrapper());
+        return wrapper();
     }
   }
 
-  MaterialPageRoute additionalInfo() {
+  MaterialPageRoute<AdditionalUserInfoScreen> additionalInfo() {
     return MaterialPageRoute(
       builder: (context) => BlocProvider(
-        create: (context) => getIt<AdditionalInfoBloc>(),
+        create: (context) => additionalInfoBloc,
         child: AdditionalUserInfoScreen(),
       ),
     );
   }
 
-  MaterialPageRoute unauthenticated() {
+  MaterialPageRoute<Unauthenticated> unauthenticated() {
     return MaterialPageRoute(
         builder: (context) => MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (context) => getIt<AuthFormBloc>()
+                  create: (context) => authFormBloc
                     ..listenForLogout()
                     ..listenOnNetworkStatus(),
                 ),
                 BlocProvider(
                   create: (context) => AnimatedButtonCubit(
-                      authFormBloc: getIt<AuthFormBloc>(),
-                      authCubit: getIt<AuthCubit>())
-                    ..listenForAuthFormBlocStateChanges(),
+                    authFormBloc: authFormBloc,
+                    authCubit: authCubit,
+                  )..listenForAuthFormBlocStateChanges(),
                 ),
               ],
               child: Unauthenticated(),
             ));
   }
 
-  MaterialPageRoute wrapper() {
+  MaterialPageRoute<Wrapper> wrapper() {
     return MaterialPageRoute(
       builder: (context) => BlocProvider(
-        create: (context) {
-          return getIt<AuthCubit>()..listenForAuthChanges();
-        },
+        create: (context) => authCubit..listenForAuthChanges(),
         child: Wrapper(),
       ),
     );
   }
 
-  MaterialPageRoute authenticated() {
+  MaterialPageRoute<Authenticated> authenticated() {
     return MaterialPageRoute(
-      builder: (context) => MultiBlocProvider(providers: [
-        BlocProvider(
-          create: (context) => getIt.get<AuthCubit>(),
-        ),
-      ], child: Authenticated()),
+      builder: (context) => BlocProvider(
+        create: (context) => authCubit,
+        child: Authenticated(),
+      ),
     );
   }
 }

@@ -9,7 +9,6 @@ import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:emotion_chat/services/image_upload/i_image_service.dart';
 import 'package:emotion_chat/services/local_db/i_local_db_service.dart';
 import 'package:emotion_chat/services/network/i_network_service.dart';
-import 'package:rxdart/rxdart.dart';
 
 class UserRepository implements IUserRepository {
   final IImageUploadService imageService;
@@ -26,12 +25,7 @@ class UserRepository implements IUserRepository {
       required this.db});
 
   @override
-  BehaviorSubject<MyUser>? get currentUser => authService.currentUser;
-
-  @override
-  void close() {
-    authService.close();
-  }
+  Stream<MyUser> get currentUser => authService.currentUser.stream;
 
   @override
   Future<MyUser> getSignedInUser() async {
@@ -91,7 +85,7 @@ class UserRepository implements IUserRepository {
           await db.addUser(user);
         }
         await localDatabaseService.saveUser(user);
-        authService.addInfoAboutUserToStream(user);
+        await authService.addInfoAboutUserToStream(user);
         return right(user);
       } on AuthException catch (e) {
         return left(AuthFailure(message: e.message));

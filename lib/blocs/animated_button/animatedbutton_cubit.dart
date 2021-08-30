@@ -6,8 +6,9 @@ import 'package:emotion_chat/blocs/auth_form/auth_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'animatedbutton_state.dart';
 part 'animatedbutton_cubit.freezed.dart';
+
+part 'animatedbutton_state.dart';
 
 class AnimatedButtonCubit extends Cubit<AnimatedButtonState> {
   late StreamSubscription authFormStream;
@@ -23,12 +24,12 @@ class AnimatedButtonCubit extends Cubit<AnimatedButtonState> {
         ));
 
   void listenForAuthFormBlocStateChanges() {
-    authFormStream = authFormBloc.listen((authFormState) {
+    authFormStream = authFormBloc.stream.listen((authFormState) {
       if (authFormState.authRequestFinished) {
         release();
       }
     });
-    authCubitStream = authCubit.listen((authState) {
+    authCubitStream = authCubit.stream.listen((authState) {
       if (authState.loggedOut) {
         release();
       }
@@ -38,7 +39,10 @@ class AnimatedButtonCubit extends Cubit<AnimatedButtonState> {
   void clicked() {
     if (!state.isProcessing) {
       emit(
-        state.copyWith(isPressed: true, isProcessing: true),
+        state.copyWith(
+          isPressed: true,
+          isProcessing: true,
+        ),
       );
     } else {}
   }

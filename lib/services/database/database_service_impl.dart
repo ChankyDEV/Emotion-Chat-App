@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
+import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 
 class DatabaseServiceImpl implements DatabaseService {
@@ -41,5 +42,28 @@ class DatabaseServiceImpl implements DatabaseService {
     } catch (e) {
       throw AuthException(message: onErrorMessage);
     }
+  }
+
+  @override
+  Future<String> findUserUidByEmail(String email) {
+    return Future.value('12345');
+  }
+
+  @override
+  Future<void> sendInvitation({
+    required String from,
+    required String to,
+  }) async {}
+
+  @override
+  Stream<Invitation> get invitations async* {
+    // yield* _db
+    //     .collection('invitations')
+    //     .doc('uid')
+    //     .collection('invites')
+    //     .snapshots()
+    //     .map((inv) => Invitation.fromJson(
+    //           inv.docChanges.first.doc.data(),
+    //         ));
   }
 }

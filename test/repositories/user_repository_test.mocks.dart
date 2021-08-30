@@ -2,19 +2,17 @@
 // in emotion_chat/test/repositories/user_repository_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:emotion_chat/data/enums/connection_status.dart' as _i11;
+import 'package:emotion_chat/data/enums/connection_status.dart' as _i9;
 import 'package:emotion_chat/data/models/auth/user.dart' as _i2;
-import 'package:emotion_chat/data/models/auth/user_props.dart' as _i6;
+import 'package:emotion_chat/data/models/auth/user_props.dart' as _i5;
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart'
-    as _i8;
+    as _i7;
 import 'package:emotion_chat/services/auth/i_auth_service.dart' as _i3;
-import 'package:emotion_chat/services/image_upload/i_image_service.dart' as _i7;
-import 'package:emotion_chat/services/local_db/i_local_db_service.dart' as _i9;
-import 'package:emotion_chat/services/network/i_network_service.dart' as _i10;
+import 'package:emotion_chat/services/image_upload/i_image_service.dart' as _i6;
+import 'package:emotion_chat/services/network/i_network_service.dart' as _i8;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:rxdart/src/subjects/behavior_subject.dart' as _i4;
 
 // ignore_for_file: avoid_redundant_argument_values
 // ignore_for_file: comment_references
@@ -33,14 +31,14 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
   }
 
   @override
-  set currentUser(_i4.BehaviorSubject<_i2.MyUser>? _currentUser) =>
-      super.noSuchMethod(Invocation.setter(#currentUser, _currentUser),
-          returnValueForMissingStub: null);
+  _i4.Stream<_i2.MyUser> get currentUser =>
+      (super.noSuchMethod(Invocation.getter(#currentUser),
+          returnValue: Stream<_i2.MyUser>.empty()) as _i4.Stream<_i2.MyUser>);
   @override
-  _i5.Future<_i2.MyUser> signUpWithEmailAndPhone(
-          {_i6.EmailAddress? emailAddress,
-          _i6.PhoneNumber? phoneNumber,
-          _i6.Password? password}) =>
+  _i4.Future<_i2.MyUser> signUpWithEmailAndPhone(
+          {_i5.EmailAddress? emailAddress,
+          _i5.PhoneNumber? phoneNumber,
+          _i5.Password? password}) =>
       (super.noSuchMethod(
               Invocation.method(#signUpWithEmailAndPhone, [], {
                 #emailAddress: emailAddress,
@@ -48,49 +46,33 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
                 #password: password
               }),
               returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
-          as _i5.Future<_i2.MyUser>);
+          as _i4.Future<_i2.MyUser>);
   @override
-  _i5.Future<_i2.MyUser> signInWithEmail(
-          {_i6.EmailAddress? emailAddress, _i6.Password? password}) =>
+  _i4.Future<_i2.MyUser> signInWithEmail(
+          {_i5.EmailAddress? emailAddress, _i5.Password? password}) =>
       (super.noSuchMethod(
               Invocation.method(#signInWithEmail, [],
                   {#emailAddress: emailAddress, #password: password}),
               returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
-          as _i5.Future<_i2.MyUser>);
+          as _i4.Future<_i2.MyUser>);
   @override
-  _i5.Future<_i2.MyUser> signInWithPhoneNumber(
-          {_i6.PhoneNumber? phoneNumber, _i6.Password? password}) =>
+  _i4.Future<_i2.MyUser> signInWithPhoneNumber(
+          {_i5.PhoneNumber? phoneNumber, _i5.Password? password}) =>
       (super.noSuchMethod(
               Invocation.method(#signInWithPhoneNumber, [],
                   {#phoneNumber: phoneNumber, #password: password}),
               returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
-          as _i5.Future<_i2.MyUser>);
+          as _i4.Future<_i2.MyUser>);
   @override
-  _i5.Future<_i2.MyUser> updateUserInfo(
-          {_i6.Name? name,
-          _i6.Gender? gender,
-          bool? hasOwnImage,
-          String? uid,
-          String? generatedImageUploadUrl}) =>
-      (super.noSuchMethod(
-              Invocation.method(#updateUserInfo, [], {
-                #name: name,
-                #gender: gender,
-                #hasOwnImage: hasOwnImage,
-                #uid: uid,
-                #generatedImageUploadUrl: generatedImageUploadUrl
-              }),
-              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
-          as _i5.Future<_i2.MyUser>);
-  @override
-  _i5.Future<_i2.MyUser> getSignedInUser() =>
+  _i4.Future<_i2.MyUser> getSignedInUser() =>
       (super.noSuchMethod(Invocation.method(#getSignedInUser, []),
               returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
-          as _i5.Future<_i2.MyUser>);
+          as _i4.Future<_i2.MyUser>);
   @override
-  void addInfoAboutUserToStream(_i2.MyUser? user) =>
-      super.noSuchMethod(Invocation.method(#addInfoAboutUserToStream, [user]),
-          returnValueForMissingStub: null);
+  _i4.Future<void> addInfoAboutUserToStream(_i2.MyUser? user) =>
+      (super.noSuchMethod(Invocation.method(#addInfoAboutUserToStream, [user]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future.value()) as _i4.Future<void>);
   @override
   void close() => super.noSuchMethod(Invocation.method(#close, []),
       returnValueForMissingStub: null);
@@ -100,70 +82,40 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIImageUploadService extends _i1.Mock
-    implements _i7.IImageUploadService {
+    implements _i6.IImageUploadService {
   MockIImageUploadService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<void> uploadProfileImage(
-          {_i8.MyPickedFile? profileImage, String? uid}) =>
+  _i4.Future<void> uploadProfileImage(
+          {_i7.MyPickedFile? profileImage, String? uid}) =>
       (super.noSuchMethod(
           Invocation.method(#uploadProfileImage, [],
               {#profileImage: profileImage, #uid: uid}),
           returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+          returnValueForMissingStub: Future.value()) as _i4.Future<void>);
   @override
-  _i5.Future<String> getProfileImageUrl({String? uid}) => (super.noSuchMethod(
+  _i4.Future<String> getProfileImageUrl({String? uid}) => (super.noSuchMethod(
       Invocation.method(#getProfileImageUrl, [], {#uid: uid}),
-      returnValue: Future<String>.value('')) as _i5.Future<String>);
-}
-
-/// A class which mocks [ILocalDatabaseService].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockILocalDatabaseService extends _i1.Mock
-    implements _i9.ILocalDatabaseService {
-  MockILocalDatabaseService() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i5.Future<void> saveUser(_i2.MyUser? user) =>
-      (super.noSuchMethod(Invocation.method(#saveUser, [user]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
-  @override
-  _i5.Future<_i2.MyUser> getUser() =>
-      (super.noSuchMethod(Invocation.method(#getUser, []),
-              returnValue: Future<_i2.MyUser>.value(_FakeMyUser()))
-          as _i5.Future<_i2.MyUser>);
-  @override
-  _i5.Future<bool> isUserSaved() =>
-      (super.noSuchMethod(Invocation.method(#isUserSaved, []),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
-  @override
-  _i5.Future<void> removeUser() =>
-      (super.noSuchMethod(Invocation.method(#removeUser, []),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+      returnValue: Future<String>.value('')) as _i4.Future<String>);
 }
 
 /// A class which mocks [INetworkService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockINetworkService extends _i1.Mock implements _i10.INetworkService {
+class MockINetworkService extends _i1.Mock implements _i8.INetworkService {
   MockINetworkService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<bool> get isConnected =>
+  _i4.Future<bool> get isConnected =>
       (super.noSuchMethod(Invocation.getter(#isConnected),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
+          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
   @override
-  _i5.Stream<_i11.ConnectionStatus> get onNetworkStatusChange =>
+  _i4.Stream<_i9.ConnectionStatus> get onNetworkStatusChange =>
       (super.noSuchMethod(Invocation.getter(#onNetworkStatusChange),
-              returnValue: Stream<_i11.ConnectionStatus>.empty())
-          as _i5.Stream<_i11.ConnectionStatus>);
+              returnValue: Stream<_i9.ConnectionStatus>.empty())
+          as _i4.Stream<_i9.ConnectionStatus>);
 }

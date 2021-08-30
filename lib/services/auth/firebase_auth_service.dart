@@ -1,28 +1,33 @@
+import 'dart:async';
+
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/services.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/auth/user_props.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rxdart/rxdart.dart';
 
 class FirebaseAuthService implements IAuthService {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
+  final StreamController<MyUser> _currentUserController;
   final DatabaseService _db;
 
-  @override
-  BehaviorSubject<MyUser> currentUser = BehaviorSubject<MyUser>();
+  FirebaseAuthService(
+    this._db,
+    this._currentUserController,
+  );
 
-  FirebaseAuthService(this._db);
+  @override
+  StreamController<MyUser> get currentUser => _currentUserController;
 
   @override
-  void addInfoAboutUserToStream(MyUser user) {
-    currentUser.add(user);
+  Future<void> addInfoAboutUserToStream(MyUser user) async {
+    _currentUserController.add(user);
   }
 
   @override
   void close() {
-    currentUser.close();
+    _currentUserController.close();
   }
 
   @override
@@ -54,8 +59,8 @@ class FirebaseAuthService implements IAuthService {
     }
   }
 
-  MyUser _fromFirebaseUser(UserCredential userCredential,
-      PhoneNumber? phoneNumber) {
+  MyUser _fromFirebaseUser(
+      UserCredential userCredential, PhoneNumber? phoneNumber) {
     final user = userCredential.user;
     return MyUser(
       phoneNumber: PhoneNumber(value: phoneNumber!.value.toString()),

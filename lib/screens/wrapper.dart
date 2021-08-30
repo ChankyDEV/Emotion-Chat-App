@@ -16,32 +16,27 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuthCubit, AuthState>(
+      body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) async {
           if (!state.isLoading) {
             if (state.isLoggedIn) {
               if (state.canShowMoreInfoScreen) {
-                await Navigator.pushReplacementNamed(
-                  context,
+                Navigator.of(context).pushNamed(
                   Screens.additionalInfo,
                 );
               } else {
-                await Navigator.pushReplacementNamed(
-                  context,
+                Navigator.of(context).pushNamed(
                   Screens.authenticated,
                 );
               }
             } else {
-              await Navigator.pushReplacementNamed(
-                context,
+              Navigator.of(context).pushNamed(
                 Screens.unauthenticated,
               );
             }
           }
         },
-        builder: (context, state) {
-          return LoadingScreen();
-        },
+        child: LoadingScreen(),
       ),
     );
   }

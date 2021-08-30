@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class IUserRepository {
-  BehaviorSubject<MyUser>? get currentUser;
+  Stream<MyUser> get currentUser;
   Future<Either<Failure, MyUser>> signUp(
       {required EmailAddress emailAddress,
       required PhoneNumber phoneNumber,
@@ -27,7 +27,4 @@ abstract class IUserRepository {
 
   Future<bool> logout();
   Future<bool> checkIfUserIsLoggedIn();
-  void close() {
-    currentUser!.close();
-  }
 }

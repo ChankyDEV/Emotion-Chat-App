@@ -21,3 +21,9 @@ class ImageUploadException implements Exception {
 
   ImageUploadException({required this.message});
 }
+
+class NoUserWithEmailException implements Exception {
+  final String message;
+
+  NoUserWithEmailException({required this.message});
+}

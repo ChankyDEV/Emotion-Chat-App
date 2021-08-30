@@ -100,7 +100,7 @@ class MongoAuthService implements IAuthService {
   }
 
   @override
-  void addInfoAboutUserToStream(MyUser user) {
+  Future<void> addInfoAboutUserToStream(MyUser user) async {
     currentUser.add(user);
   }
 

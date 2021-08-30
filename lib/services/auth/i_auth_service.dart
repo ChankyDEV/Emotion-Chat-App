@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:emotion_chat/constants/data.dart';
-import 'package:rxdart/rxdart.dart';
 
 abstract class IAuthService {
   Future<MyUser> signUpWithEmailAndPhone(
@@ -15,11 +16,9 @@ abstract class IAuthService {
 
   Future<MyUser> getSignedInUser();
 
-  void addInfoAboutUserToStream(MyUser user);
+  Future<void> addInfoAboutUserToStream(MyUser user);
 
-  late BehaviorSubject<MyUser> currentUser;
+  StreamController<MyUser> get currentUser;
 
-  void close() {
-    currentUser.close();
-  }
+  void close();
 }

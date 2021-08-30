@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/blocs/auth_form/auth_form_bloc.dart';
+import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
 import 'package:emotion_chat/helpers/validator.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/repositories/image_picker/image_picker_repository.dart';
+import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
+import 'package:emotion_chat/repositories/invitation/invitation_repository_impl.dart';
 import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/repositories/user/user_repository.dart';
 import 'package:emotion_chat/services/auth/firebase_auth_service.dart';
@@ -31,22 +36,35 @@ class Config {
   final getItInstance = GetIt.instance;
 
   Future<void> setup() async {
-    await configureDependencies();
     await configureLocalStorage();
+    await configureDependencies();
   }
 
   Future<void> configureDependencies() async {
     await _registerServices();
     await _registerBlocs();
+    _registerRouting();
+  }
+
+  void _registerRouting() {
+    getItInstance.registerSingleton<RoutingService>(
+      RoutingService(
+        GetIt.I.get<AuthCubit>(),
+        GetIt.I.get<AuthFormBloc>(),
+        GetIt.I.get<AdditionalInfoBloc>(),
+      ),
+    );
   }
 
   Future<void> _registerServices() async {
     getItInstance
       ..registerSingleton<Validator>(Validator())
-      ..registerSingleton<RoutingService>(RoutingService())
       ..registerSingleton<DatabaseService>(DatabaseServiceImpl())
       ..registerSingleton<IAuthService>(
-        FirebaseAuthService(getItInstance.get<DatabaseService>()),
+        FirebaseAuthService(
+          getItInstance.get<DatabaseService>(),
+          StreamController<MyUser>(),
+        ),
       )
       ..registerSingleton<IImagePickerService>(ImagePickerService())
       ..registerSingleton<IImageUploadService>(FirebaseImageUploadService())
@@ -55,6 +73,10 @@ class Config {
         InternetConnectionChecker(),
       ))
       ..registerSingleton<IPermissionService>(PermissionService())
+      ..registerSingleton<InvitationRepository>(InvitationRepositoryImpl(
+        db: getItInstance.get<DatabaseService>(),
+        local: getItInstance.get<ILocalDatabaseService>(),
+      ))
       ..registerSingleton<IUserRepository>(
         UserRepository(
           imageService: getItInstance.get<IImageUploadService>(),
