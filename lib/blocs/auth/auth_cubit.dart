@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/repositories/user/i_user_repository.dart';
+import 'package:emotion_chat/repositories/user/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,7 +11,7 @@ part 'auth_cubit.freezed.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final IUserRepository authRepository;
+  final UserRepository authRepository;
 
   AuthCubit({required this.authRepository})
       : super(

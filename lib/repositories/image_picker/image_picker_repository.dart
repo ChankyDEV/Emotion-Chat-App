@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/services/image_picker/i_image_picker_service.dart';
-import 'package:emotion_chat/services/permission/i_permission_service.dart';
+import 'package:emotion_chat/services/image_picker/image_picker_service.dart';
+import 'package:emotion_chat/services/permission/permission_service.dart';
 import 'package:flutter/material.dart';
 
 import 'i_image_picker_repository.dart';
 
 class ImagePickerRepository implements IImagePickerRepository {
-  final IImagePickerService imagePickerService;
-  final IPermissionService permissionHandler;
+  final ImagePickerService imagePickerService;
+  final PermissionService permissionHandler;
 
   ImagePickerRepository(
       {required this.imagePickerService, required this.permissionHandler});

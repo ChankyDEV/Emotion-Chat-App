@@ -7,12 +7,12 @@ import 'package:emotion_chat/data/models/auth/user_props.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirebaseAuthService implements IAuthService {
+class AuthServiceImpl implements AuthService {
   final _auth = FirebaseAuth.instance;
   final StreamController<MyUser> _currentUserController;
   final DatabaseService _db;
 
-  FirebaseAuthService(
+  AuthServiceImpl(
     this._db,
     this._currentUserController,
   );

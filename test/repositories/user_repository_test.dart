@@ -1,21 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/repositories/user/user_repository.dart';
-import 'package:emotion_chat/services/auth/i_auth_service.dart';
-import 'package:emotion_chat/services/image_upload/i_image_service.dart';
-import 'package:emotion_chat/services/network/i_network_service.dart';
+import 'package:emotion_chat/repositories/user/user_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../utils/mocks.dart';
-import 'user_repository_test.mocks.dart';
 
-@GenerateMocks([
-  IAuthService,
-  IImageUploadService,
-  INetworkService,
-])
 void main() {
   const tEmail = EmailAddress(value: 'email');
   const tPhone = PhoneNumber(value: 'phone');
@@ -37,19 +27,19 @@ void main() {
     uid: tUid,
   );
 
-  late MockIAuthService authService;
+  late MockAuthService authService;
   late MockLocalDatabaseService localDatabaseService;
-  late MockIImageUploadService imageUploadService;
-  late MockINetworkService networkService;
+  late MockImageUploadService imageUploadService;
+  late MockNetworkService networkService;
   late MockDatabaseService dbService;
-  late UserRepository repository;
-  setUp(() {
-    authService = MockIAuthService();
+  late UserRepositoryImpl repository;
+  setUpAll(() {
+    authService = MockAuthService();
     localDatabaseService = MockLocalDatabaseService();
-    imageUploadService = MockIImageUploadService();
-    networkService = MockINetworkService();
+    imageUploadService = MockImageUploadService();
+    networkService = MockNetworkService();
     dbService = MockDatabaseService();
-    repository = UserRepository(
+    repository = UserRepositoryImpl(
         db: dbService,
         imageService: imageUploadService,
         authService: authService,

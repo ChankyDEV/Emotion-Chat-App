@@ -5,8 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/helpers/extensions.dart';
-import 'package:emotion_chat/repositories/user/i_user_repository.dart';
-import 'package:emotion_chat/services/network/i_network_service.dart';
+import 'package:emotion_chat/repositories/user/user_repository.dart';
+import 'package:emotion_chat/services/network/network_service.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -17,10 +17,10 @@ part 'auth_form_event.dart';
 part 'auth_form_state.dart';
 
 class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
-  late final IUserRepository userRepository;
+  late final UserRepository userRepository;
   late final AuthCubit authCubit;
   late StreamSubscription authCubitStream;
-  late final INetworkService networkService;
+  late final NetworkService networkService;
 
   AuthFormBloc({
     required this.userRepository,

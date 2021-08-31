@@ -1,9 +1,9 @@
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/services/local_db/i_local_db_service.dart';
+import 'package:emotion_chat/services/local_db/local_database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class HiveLocalDatabaseService implements ILocalDatabaseService {
+class LocalDatabaseServiceImpl implements LocalDatabaseService {
   @override
   Future<MyUser> getUser() async {
     final userBox = await openOrGetBox('user');

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:emotion_chat/constants/data.dart';
 
-abstract class IAuthService {
+abstract class AuthService {
   Future<MyUser> signUpWithEmailAndPhone(
       {required EmailAddress? emailAddress,
       required PhoneNumber? phoneNumber,

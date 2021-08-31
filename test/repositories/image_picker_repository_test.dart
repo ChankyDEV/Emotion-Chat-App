@@ -2,15 +2,15 @@ import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/repositories/image_picker/image_picker_repository.dart';
-import 'package:emotion_chat/services/image_picker/i_image_picker_service.dart';
-import 'package:emotion_chat/services/permission/i_permission_service.dart';
+import 'package:emotion_chat/services/image_picker/image_picker_service.dart';
+import 'package:emotion_chat/services/permission/permission_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'image_picker_repository_test.mocks.dart';
 
-@GenerateMocks([IImagePickerService, IPermissionService])
+@GenerateMocks([ImagePickerService, PermissionService])
 void main() {
   late ImagePickerRepository imagePickerRepository;
   late MockIImagePickerService mockImagePickerService;

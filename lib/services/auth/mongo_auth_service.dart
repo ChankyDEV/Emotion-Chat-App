@@ -2,12 +2,12 @@ import 'dart:convert' as convert;
 import 'dart:io';
 
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/services/auth/i_auth_service.dart';
+import 'package:emotion_chat/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 
-class MongoAuthService implements IAuthService {
+class MongoAuthService implements AuthService {
   final http.Client client;
 
   MongoAuthService({required this.client});

@@ -8,7 +8,7 @@ import 'package:emotion_chat/services/database/database_service.dart';
 
 class InvitationRepositoryImpl implements InvitationRepository {
   final DatabaseService db;
-  final ILocalDatabaseService local;
+  final LocalDatabaseService local;
 
   InvitationRepositoryImpl({
     required this.db,

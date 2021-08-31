@@ -1,7 +1,7 @@
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
-import 'package:emotion_chat/services/image_upload/i_image_service.dart';
+import 'package:emotion_chat/services/image_upload/image_upload_service.dart';
 
-class AmazonImageUploadService implements IImageUploadService {
+class AmazonImageUploadService implements ImageUploadService {
   @override
   Future<String> getProfileImageUrl({required String? uid}) {
     // TODO: implement getProfileImageUrl

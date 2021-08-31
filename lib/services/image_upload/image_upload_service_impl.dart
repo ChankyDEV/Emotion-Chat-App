@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
-import 'package:emotion_chat/services/image_upload/i_image_service.dart';
+import 'package:emotion_chat/services/image_upload/image_upload_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class FirebaseImageUploadService implements IImageUploadService {
+class ImageUploadServiceImpl implements ImageUploadService {
   FirebaseStorage _storage = FirebaseStorage.instance;
 
   @override

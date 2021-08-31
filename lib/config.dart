@@ -10,22 +10,22 @@ import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository
 import 'package:emotion_chat/repositories/image_picker/image_picker_repository.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository_impl.dart';
-import 'package:emotion_chat/repositories/user/i_user_repository.dart';
 import 'package:emotion_chat/repositories/user/user_repository.dart';
-import 'package:emotion_chat/services/auth/firebase_auth_service.dart';
-import 'package:emotion_chat/services/auth/i_auth_service.dart';
+import 'package:emotion_chat/repositories/user/user_repository_impl.dart';
+import 'package:emotion_chat/services/auth/auth_service_impl.dart';
+import 'package:emotion_chat/services/auth/auth_service.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
-import 'package:emotion_chat/services/image_picker/i_image_picker_service.dart';
 import 'package:emotion_chat/services/image_picker/image_picker_service.dart';
-import 'package:emotion_chat/services/image_upload/firebase_storage_service.dart';
-import 'package:emotion_chat/services/image_upload/i_image_service.dart';
-import 'package:emotion_chat/services/local_db/hive_local_db_service.dart';
-import 'package:emotion_chat/services/local_db/i_local_db_service.dart';
-import 'package:emotion_chat/services/network/i_network_service.dart';
+import 'package:emotion_chat/services/image_picker/image_picker_service_impl.dart';
+import 'package:emotion_chat/services/image_upload/image_upload_service_impl.dart';
+import 'package:emotion_chat/services/image_upload/image_upload_service.dart';
+import 'package:emotion_chat/services/local_db/local_database_service_impl.dart';
+import 'package:emotion_chat/services/local_db/local_database_service.dart';
 import 'package:emotion_chat/services/network/network_service.dart';
-import 'package:emotion_chat/services/permission/i_permission_service.dart';
+import 'package:emotion_chat/services/network/network_service_impl.dart';
 import 'package:emotion_chat/services/permission/permission_service.dart';
+import 'package:emotion_chat/services/permission/permission_service_impl.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -60,54 +60,54 @@ class Config {
     getItInstance
       ..registerSingleton<Validator>(Validator())
       ..registerSingleton<DatabaseService>(DatabaseServiceImpl())
-      ..registerSingleton<IAuthService>(
-        FirebaseAuthService(
+      ..registerSingleton<AuthService>(
+        AuthServiceImpl(
           getItInstance.get<DatabaseService>(),
           StreamController<MyUser>(),
         ),
       )
-      ..registerSingleton<IImagePickerService>(ImagePickerService())
-      ..registerSingleton<IImageUploadService>(FirebaseImageUploadService())
-      ..registerSingleton<ILocalDatabaseService>(HiveLocalDatabaseService())
-      ..registerSingleton<INetworkService>(NetworkService(
+      ..registerSingleton<ImagePickerService>(ImagePickerServiceImpl())
+      ..registerSingleton<ImageUploadService>(ImageUploadServiceImpl())
+      ..registerSingleton<LocalDatabaseService>(LocalDatabaseServiceImpl())
+      ..registerSingleton<NetworkService>(NetworkServiceImpl(
         InternetConnectionChecker(),
       ))
-      ..registerSingleton<IPermissionService>(PermissionService())
+      ..registerSingleton<PermissionService>(PermissionServiceImpl())
       ..registerSingleton<InvitationRepository>(InvitationRepositoryImpl(
         db: getItInstance.get<DatabaseService>(),
-        local: getItInstance.get<ILocalDatabaseService>(),
+        local: getItInstance.get<LocalDatabaseService>(),
       ))
-      ..registerSingleton<IUserRepository>(
-        UserRepository(
-          imageService: getItInstance.get<IImageUploadService>(),
-          authService: getItInstance.get<IAuthService>(),
-          localDatabaseService: getItInstance.get<ILocalDatabaseService>(),
-          networkService: getItInstance.get<INetworkService>(),
+      ..registerSingleton<UserRepository>(
+        UserRepositoryImpl(
+          imageService: getItInstance.get<ImageUploadService>(),
+          authService: getItInstance.get<AuthService>(),
+          localDatabaseService: getItInstance.get<LocalDatabaseService>(),
+          networkService: getItInstance.get<NetworkService>(),
           db: getItInstance.get<DatabaseService>(),
         ),
       )
       ..registerSingleton<IImagePickerRepository>(
         ImagePickerRepository(
-            imagePickerService: getItInstance.get<IImagePickerService>(),
-            permissionHandler: getItInstance.get<IPermissionService>()),
+            imagePickerService: getItInstance.get<ImagePickerService>(),
+            permissionHandler: getItInstance.get<PermissionService>()),
       );
   }
 
   Future<void> _registerBlocs() async {
     getItInstance
       ..registerSingleton<AuthCubit>(
-        AuthCubit(authRepository: getItInstance.get<IUserRepository>()),
+        AuthCubit(authRepository: getItInstance.get<UserRepository>()),
       )
       ..registerSingleton<AuthFormBloc>(
         AuthFormBloc(
-            userRepository: getItInstance.get<IUserRepository>(),
+            userRepository: getItInstance.get<UserRepository>(),
             authCubit: getItInstance.get<AuthCubit>(),
-            networkService: getItInstance.get<INetworkService>()),
+            networkService: getItInstance.get<NetworkService>()),
       )
       ..registerSingleton<AdditionalInfoBloc>(
         AdditionalInfoBloc(
             imagePickerRepository: getItInstance.get<IImagePickerRepository>(),
-            userRepository: getItInstance.get<IUserRepository>()),
+            userRepository: getItInstance.get<UserRepository>()),
       );
   }
 

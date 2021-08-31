@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/enums/choose_photo_method.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
-import 'package:emotion_chat/repositories/user/i_user_repository.dart';
+import 'package:emotion_chat/repositories/user/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,12 +19,12 @@ part 'additional_info_state.dart';
 class AdditionalInfoBloc
     extends Bloc<AdditionalInfoEvent, AdditionalInfoState> {
   late final IImagePickerRepository _imagePickerRepository;
-  late final IUserRepository _userRepository;
+  late final UserRepository _userRepository;
   MyPickedFile? _userPhoto;
 
   AdditionalInfoBloc({
     required IImagePickerRepository imagePickerRepository,
-    required IUserRepository userRepository,
+    required UserRepository userRepository,
   }) : super(
           _Initial(
             name: Name.empty(),
