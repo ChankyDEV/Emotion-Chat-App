@@ -18,7 +18,7 @@ abstract class AuthService {
 
   Future<void> addInfoAboutUserToStream(MyUser user);
 
-  StreamController<MyUser> get currentUser;
+  Stream<UserDTO> get currentUser;
 
   void close();
 }

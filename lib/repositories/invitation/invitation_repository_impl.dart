@@ -33,10 +33,18 @@ class InvitationRepositoryImpl implements InvitationRepository {
         ));
       }
     } else {
-      return left(Failure(message: 'Cant send invitation now'));
+      return left(
+        Failure(message: 'Cant send invitation now'),
+      );
     }
   }
 
   @override
-  Stream<Invitation> get invitations => db.invitations;
+  Future<Stream<List<Invitation>>> get invitations async => _getInvitationsStream();
+
+  Future<Stream<List<Invitation>>> _getInvitationsStream() async {
+    final user = await local.getUser();
+    return db.getInvitationsStreamOnUid(user.uid);
+  }
+
 }

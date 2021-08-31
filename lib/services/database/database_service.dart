@@ -15,5 +15,5 @@ abstract class DatabaseService {
     required String to,
   });
 
-  Stream<Invitation> get invitations;
+  Stream<List<Invitation>> getInvitationsStreamOnUid(String uid);
 }

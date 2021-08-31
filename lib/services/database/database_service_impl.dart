@@ -28,17 +28,28 @@ class DatabaseServiceImpl implements DatabaseService {
   Future<void> updateUser(MyUser user) => _addOrUpdateUser(
         user,
         onErrorMessage: 'Cant update user',
+        isFirstTime: false,
       );
 
   Future<void> _addOrUpdateUser(
     MyUser user, {
     String onErrorMessage = '',
+    bool isFirstTime = true,
   }) async {
     try {
       await _db
           .collection('users')
           .doc(user.uid)
           .set(user.fromDomain().toJson());
+      if (isFirstTime) {
+        await _db
+            .collection('invitations')
+            .doc(user.uid)
+            .collection('invites')
+            .add(
+              Invitation.empty().toJson(),
+            );
+      }
     } catch (e) {
       throw AuthException(message: onErrorMessage);
     }
@@ -56,14 +67,30 @@ class DatabaseServiceImpl implements DatabaseService {
   }) async {}
 
   @override
-  Stream<Invitation> get invitations async* {
-    // yield* _db
-    //     .collection('invitations')
-    //     .doc('uid')
-    //     .collection('invites')
-    //     .snapshots()
-    //     .map((inv) => Invitation.fromJson(
-    //           inv.docChanges.first.doc.data(),
-    //         ));
+  Stream<List<Invitation>> getInvitationsStreamOnUid(String uid) {
+    return _db
+        .collection('invitations')
+        .doc(uid)
+        .collection('invites')
+        .snapshots()
+        .map(
+          (event) => _mapDocToInvitation(event.docs),
+        );
+  }
+
+  List<Invitation> _mapDocToInvitation(
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> data,
+  ) {
+    final invitations = <Invitation>[];
+
+    data.forEach((element) {
+      final json = element.data();
+      DateTime createdAt = (json['createdAt'] as Timestamp).toDate();
+      String senderUid = json['senderUid'];
+      invitations.add(
+        Invitation(createdAt, senderUid),
+      );
+    });
+    return invitations;
   }
 }

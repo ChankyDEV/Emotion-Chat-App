@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
-import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
 abstract class UserRepository {
   Stream<MyUser> get currentUser;
+
   Future<Either<Failure, MyUser>> signUp(
       {required EmailAddress emailAddress,
       required PhoneNumber phoneNumber,
@@ -26,5 +25,6 @@ abstract class UserRepository {
   Future<MyUser> getSignedInUser();
 
   Future<bool> logout();
+
   Future<bool> checkIfUserIsLoggedIn();
 }

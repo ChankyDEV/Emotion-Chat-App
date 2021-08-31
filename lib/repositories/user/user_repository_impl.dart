@@ -25,7 +25,9 @@ class UserRepositoryImpl implements UserRepository {
       required this.db});
 
   @override
-  Stream<MyUser> get currentUser => authService.currentUser.stream;
+  Stream<MyUser> get currentUser => authService.currentUser.map(
+        (dto) => dto.toDomain(),
+      );
 
   @override
   Future<MyUser> getSignedInUser() async {

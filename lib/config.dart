@@ -12,16 +12,16 @@ import 'package:emotion_chat/repositories/invitation/invitation_repository.dart'
 import 'package:emotion_chat/repositories/invitation/invitation_repository_impl.dart';
 import 'package:emotion_chat/repositories/user/user_repository.dart';
 import 'package:emotion_chat/repositories/user/user_repository_impl.dart';
-import 'package:emotion_chat/services/auth/auth_service_impl.dart';
 import 'package:emotion_chat/services/auth/auth_service.dart';
+import 'package:emotion_chat/services/auth/auth_service_impl.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
 import 'package:emotion_chat/services/image_picker/image_picker_service.dart';
 import 'package:emotion_chat/services/image_picker/image_picker_service_impl.dart';
-import 'package:emotion_chat/services/image_upload/image_upload_service_impl.dart';
 import 'package:emotion_chat/services/image_upload/image_upload_service.dart';
-import 'package:emotion_chat/services/local_db/local_database_service_impl.dart';
+import 'package:emotion_chat/services/image_upload/image_upload_service_impl.dart';
 import 'package:emotion_chat/services/local_db/local_database_service.dart';
+import 'package:emotion_chat/services/local_db/local_database_service_impl.dart';
 import 'package:emotion_chat/services/network/network_service.dart';
 import 'package:emotion_chat/services/network/network_service_impl.dart';
 import 'package:emotion_chat/services/permission/permission_service.dart';
@@ -63,7 +63,7 @@ class Config {
       ..registerSingleton<AuthService>(
         AuthServiceImpl(
           getItInstance.get<DatabaseService>(),
-          StreamController<MyUser>(),
+          StreamController<UserDTO>(),
         ),
       )
       ..registerSingleton<ImagePickerService>(ImagePickerServiceImpl())

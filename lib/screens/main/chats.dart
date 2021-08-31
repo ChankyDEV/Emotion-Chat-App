@@ -5,7 +5,20 @@ import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class Chats extends StatelessWidget {
+class Chats extends StatefulWidget {
+  @override
+  _ChatsState createState() => _ChatsState();
+}
+
+class _ChatsState extends State<Chats> {
+  late final Stream<List<Invitation>> invitations;
+
+  @override
+  void initState() {
+    _initialize();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,14 +34,23 @@ class Chats extends StatelessWidget {
               )),
         ],
       ),
-      // body: StreamBuilder(
-      //   stream: GetIt.I.get<InvitationRepository>().invitations,
-      //   builder: (context, snapshot) {
-      //     return Center(
-      //       child: Text((snapshot.data as Invitation).senderUid),
-      //     );
-      //   },
-      // ),
+      body: StreamBuilder(
+        stream: invitations,
+        builder: (context, snapshot) {
+          return Center(
+            child: Text((snapshot.data as List<Invitation>).first.senderUid),
+          );
+        },
+      ),
     );
+  }
+
+  void _initialize() async {
+    invitations = await GetIt.I.get<InvitationRepository>().invitations;
+    invitations.listen((event) {
+      event.forEach((element) {
+        print(element.createdAt);
+      });
+    });
   }
 }

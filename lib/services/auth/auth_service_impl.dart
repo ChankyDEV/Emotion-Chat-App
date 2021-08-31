@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthServiceImpl implements AuthService {
   final _auth = FirebaseAuth.instance;
-  final StreamController<MyUser> _currentUserController;
+  final StreamController<UserDTO> _currentUserController;
   final DatabaseService _db;
 
   AuthServiceImpl(
@@ -18,11 +18,13 @@ class AuthServiceImpl implements AuthService {
   );
 
   @override
-  StreamController<MyUser> get currentUser => _currentUserController;
+  Stream<UserDTO> get currentUser => _currentUserController.stream;
 
   @override
   Future<void> addInfoAboutUserToStream(MyUser user) async {
-    _currentUserController.add(user);
+    _currentUserController.add(
+      user.fromDomain(),
+    );
   }
 
   @override
