@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/models/core/failure.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
+import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 
 abstract class InvitationRepository {
   Future<Either<Failure, Unit>> sendInvitation(String uid);
@@ -10,5 +11,5 @@ abstract class InvitationRepository {
 
   Future<Either<Failure, Unit>> acceptInvitation(Invitation invitation);
 
-  Future<Either<NetworkFailure, Stream<List<Invitation>>>> get invitations;
+  Future<Either<NetworkFailure, Stream<List<Inviter>>>> get invitations;
 }

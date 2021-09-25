@@ -16,10 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ChatsEventTearOff {
   const _$ChatsEventTearOff();
 
-  _InvitationsNumberChanged invitationsNumberChanged(
-      String numberOfInvitations) {
+  _InvitationsNumberChanged invitationsNumberChanged(List<Inviter> invites) {
     return _InvitationsNumberChanged(
-      numberOfInvitations,
+      invites,
     );
   }
 
@@ -35,14 +34,13 @@ const $ChatsEvent = _$ChatsEventTearOff();
 mixin _$ChatsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String numberOfInvitations)
-        invitationsNumberChanged,
+    required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function() reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String numberOfInvitations)? invitationsNumberChanged,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function()? reset,
     required TResult orElse(),
   }) =>
@@ -84,7 +82,7 @@ abstract class _$InvitationsNumberChangedCopyWith<$Res> {
   factory _$InvitationsNumberChangedCopyWith(_InvitationsNumberChanged value,
           $Res Function(_InvitationsNumberChanged) then) =
       __$InvitationsNumberChangedCopyWithImpl<$Res>;
-  $Res call({String numberOfInvitations});
+  $Res call({List<Inviter> invites});
 }
 
 /// @nodoc
@@ -101,13 +99,13 @@ class __$InvitationsNumberChangedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? numberOfInvitations = freezed,
+    Object? invites = freezed,
   }) {
     return _then(_InvitationsNumberChanged(
-      numberOfInvitations == freezed
-          ? _value.numberOfInvitations
-          : numberOfInvitations // ignore: cast_nullable_to_non_nullable
-              as String,
+      invites == freezed
+          ? _value.invites
+          : invites // ignore: cast_nullable_to_non_nullable
+              as List<Inviter>,
     ));
   }
 }
@@ -115,29 +113,27 @@ class __$InvitationsNumberChangedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
-  const _$_InvitationsNumberChanged(this.numberOfInvitations);
+  const _$_InvitationsNumberChanged(this.invites);
 
   @override
-  final String numberOfInvitations;
+  final List<Inviter> invites;
 
   @override
   String toString() {
-    return 'ChatsEvent.invitationsNumberChanged(numberOfInvitations: $numberOfInvitations)';
+    return 'ChatsEvent.invitationsNumberChanged(invites: $invites)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _InvitationsNumberChanged &&
-            (identical(other.numberOfInvitations, numberOfInvitations) ||
-                const DeepCollectionEquality()
-                    .equals(other.numberOfInvitations, numberOfInvitations)));
+            (identical(other.invites, invites) ||
+                const DeepCollectionEquality().equals(other.invites, invites)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(numberOfInvitations);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(invites);
 
   @JsonKey(ignore: true)
   @override
@@ -148,22 +144,21 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String numberOfInvitations)
-        invitationsNumberChanged,
+    required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function() reset,
   }) {
-    return invitationsNumberChanged(numberOfInvitations);
+    return invitationsNumberChanged(invites);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String numberOfInvitations)? invitationsNumberChanged,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (invitationsNumberChanged != null) {
-      return invitationsNumberChanged(numberOfInvitations);
+      return invitationsNumberChanged(invites);
     }
     return orElse();
   }
@@ -193,10 +188,10 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
 }
 
 abstract class _InvitationsNumberChanged implements ChatsEvent {
-  const factory _InvitationsNumberChanged(String numberOfInvitations) =
+  const factory _InvitationsNumberChanged(List<Inviter> invites) =
       _$_InvitationsNumberChanged;
 
-  String get numberOfInvitations => throw _privateConstructorUsedError;
+  List<Inviter> get invites => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$InvitationsNumberChangedCopyWith<_InvitationsNumberChanged> get copyWith =>
       throw _privateConstructorUsedError;
@@ -239,8 +234,7 @@ class _$_Reset implements _Reset {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String numberOfInvitations)
-        invitationsNumberChanged,
+    required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function() reset,
   }) {
     return reset();
@@ -249,7 +243,7 @@ class _$_Reset implements _Reset {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String numberOfInvitations)? invitationsNumberChanged,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function()? reset,
     required TResult orElse(),
   }) {
@@ -291,9 +285,11 @@ abstract class _Reset implements ChatsEvent {
 class _$ChatsStateTearOff {
   const _$ChatsStateTearOff();
 
-  _Initial initial({required String numberOfInvitation}) {
+  _Initial initial(
+      {required String numberOfInviters, required List<Inviter> inviters}) {
     return _Initial(
-      numberOfInvitation: numberOfInvitation,
+      numberOfInviters: numberOfInviters,
+      inviters: inviters,
     );
   }
 }
@@ -303,16 +299,18 @@ const $ChatsState = _$ChatsStateTearOff();
 
 /// @nodoc
 mixin _$ChatsState {
-  String get numberOfInvitation => throw _privateConstructorUsedError;
+  String get numberOfInviters => throw _privateConstructorUsedError;
+  List<Inviter> get inviters => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String numberOfInvitation) initial,
+    required TResult Function(String numberOfInviters, List<Inviter> inviters)
+        initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String numberOfInvitation)? initial,
+    TResult Function(String numberOfInviters, List<Inviter> inviters)? initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -338,7 +336,7 @@ abstract class $ChatsStateCopyWith<$Res> {
   factory $ChatsStateCopyWith(
           ChatsState value, $Res Function(ChatsState) then) =
       _$ChatsStateCopyWithImpl<$Res>;
-  $Res call({String numberOfInvitation});
+  $Res call({String numberOfInviters, List<Inviter> inviters});
 }
 
 /// @nodoc
@@ -351,13 +349,18 @@ class _$ChatsStateCopyWithImpl<$Res> implements $ChatsStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? numberOfInvitation = freezed,
+    Object? numberOfInviters = freezed,
+    Object? inviters = freezed,
   }) {
     return _then(_value.copyWith(
-      numberOfInvitation: numberOfInvitation == freezed
-          ? _value.numberOfInvitation
-          : numberOfInvitation // ignore: cast_nullable_to_non_nullable
+      numberOfInviters: numberOfInviters == freezed
+          ? _value.numberOfInviters
+          : numberOfInviters // ignore: cast_nullable_to_non_nullable
               as String,
+      inviters: inviters == freezed
+          ? _value.inviters
+          : inviters // ignore: cast_nullable_to_non_nullable
+              as List<Inviter>,
     ));
   }
 }
@@ -367,7 +370,7 @@ abstract class _$InitialCopyWith<$Res> implements $ChatsStateCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
   @override
-  $Res call({String numberOfInvitation});
+  $Res call({String numberOfInviters, List<Inviter> inviters});
 }
 
 /// @nodoc
@@ -381,13 +384,18 @@ class __$InitialCopyWithImpl<$Res> extends _$ChatsStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? numberOfInvitation = freezed,
+    Object? numberOfInviters = freezed,
+    Object? inviters = freezed,
   }) {
     return _then(_Initial(
-      numberOfInvitation: numberOfInvitation == freezed
-          ? _value.numberOfInvitation
-          : numberOfInvitation // ignore: cast_nullable_to_non_nullable
+      numberOfInviters: numberOfInviters == freezed
+          ? _value.numberOfInviters
+          : numberOfInviters // ignore: cast_nullable_to_non_nullable
               as String,
+      inviters: inviters == freezed
+          ? _value.inviters
+          : inviters // ignore: cast_nullable_to_non_nullable
+              as List<Inviter>,
     ));
   }
 }
@@ -395,29 +403,35 @@ class __$InitialCopyWithImpl<$Res> extends _$ChatsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial({required this.numberOfInvitation});
+  const _$_Initial({required this.numberOfInviters, required this.inviters});
 
   @override
-  final String numberOfInvitation;
+  final String numberOfInviters;
+  @override
+  final List<Inviter> inviters;
 
   @override
   String toString() {
-    return 'ChatsState.initial(numberOfInvitation: $numberOfInvitation)';
+    return 'ChatsState.initial(numberOfInviters: $numberOfInviters, inviters: $inviters)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Initial &&
-            (identical(other.numberOfInvitation, numberOfInvitation) ||
+            (identical(other.numberOfInviters, numberOfInviters) ||
                 const DeepCollectionEquality()
-                    .equals(other.numberOfInvitation, numberOfInvitation)));
+                    .equals(other.numberOfInviters, numberOfInviters)) &&
+            (identical(other.inviters, inviters) ||
+                const DeepCollectionEquality()
+                    .equals(other.inviters, inviters)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(numberOfInvitation);
+      const DeepCollectionEquality().hash(numberOfInviters) ^
+      const DeepCollectionEquality().hash(inviters);
 
   @JsonKey(ignore: true)
   @override
@@ -427,19 +441,20 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String numberOfInvitation) initial,
+    required TResult Function(String numberOfInviters, List<Inviter> inviters)
+        initial,
   }) {
-    return initial(numberOfInvitation);
+    return initial(numberOfInviters, inviters);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String numberOfInvitation)? initial,
+    TResult Function(String numberOfInviters, List<Inviter> inviters)? initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(numberOfInvitation);
+      return initial(numberOfInviters, inviters);
     }
     return orElse();
   }
@@ -466,10 +481,14 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements ChatsState {
-  const factory _Initial({required String numberOfInvitation}) = _$_Initial;
+  const factory _Initial(
+      {required String numberOfInviters,
+      required List<Inviter> inviters}) = _$_Initial;
 
   @override
-  String get numberOfInvitation => throw _privateConstructorUsedError;
+  String get numberOfInviters => throw _privateConstructorUsedError;
+  @override
+  List<Inviter> get inviters => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$InitialCopyWith<_Initial> get copyWith =>

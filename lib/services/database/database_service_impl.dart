@@ -105,6 +105,7 @@ class DatabaseServiceImpl implements DatabaseService {
         .collection('invitations')
         .doc(uid)
         .collection('invites')
+        .orderBy('createdAt', descending: true)
         .snapshots()
         .map(
           (event) => _mapDocToInvitation(event.docs),

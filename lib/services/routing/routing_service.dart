@@ -1,18 +1,21 @@
 import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
+import 'package:emotion_chat/blocs/invitations/invitation_bloc.dart';
 import 'package:emotion_chat/constants/blocs.dart';
 import 'package:emotion_chat/constants/screens.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
+import 'package:emotion_chat/screens/main/invitations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class Screens {
+mixin Screens {
   static const initial = '/';
   static const authenticated = 'authenticated';
   static const unauthenticated = 'unauthenticated';
   static const additionalInfo = 'additionalInfo';
+  static const invitations = 'invitations';
 }
 
 class RoutingService {
@@ -36,6 +39,8 @@ class RoutingService {
         return unauthenticated();
       case Screens.additionalInfo:
         return additionalInfo();
+      case Screens.invitations:
+        return invitations();
       default:
         return wrapper();
     }
@@ -81,18 +86,30 @@ class RoutingService {
 
   MaterialPageRoute<Authenticated> authenticated() {
     return MaterialPageRoute(
-        builder: (context) => MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) => authCubit,
-                ),
-                BlocProvider(
-                  create: (context) => ChatsBloc(
-                    GetIt.I.get<InvitationRepository>(),
-                  )..listenOnInvitations(),
-                )
-              ],
-              child: Authenticated(),
-            ));
+      builder: (context) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => authCubit,
+          ),
+          BlocProvider(
+            create: (context) => ChatsBloc(
+              GetIt.I.get<InvitationRepository>(),
+            )..listenOnInvitations(),
+          )
+        ],
+        child: Authenticated(),
+      ),
+    );
+  }
+
+  MaterialPageRoute invitations() {
+    return MaterialPageRoute(
+      builder: (context) => BlocProvider(
+        create: (context) => InvitationBloc(
+          GetIt.I.get<InvitationRepository>(),
+        )..listenOnInvitations(),
+        child: Invitations(),
+      ),
+    );
   }
 }

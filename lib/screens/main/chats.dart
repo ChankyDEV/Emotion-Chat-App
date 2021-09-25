@@ -1,7 +1,10 @@
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
+import 'package:emotion_chat/data/models/invitation/invitation.dart';
+import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -20,7 +23,10 @@ class _ChatsState extends State<Chats> {
           appBar: AppBar(
             backgroundColor: cDarkGrey,
             elevation: 0,
-            actions: _buildActionIcons(state.numberOfInvitation),
+            actions: _buildActionIcons(
+              state.numberOfInviters,
+              state.inviters,
+            ),
             title: Text(
               'Messages',
               style: titleStyle,
@@ -32,13 +38,17 @@ class _ChatsState extends State<Chats> {
     );
   }
 
-  List<Widget> _buildActionIcons(String numberOfInvitations) {
+  List<Widget> _buildActionIcons(
+      String numberOfInvitations, List<Inviter> invitations) {
     return <Widget>[
       Padding(
         padding: const EdgeInsets.only(top: 4.0),
         child: _buildIconButton(
           onTap: () async {
-            // TODO: CHANGE SCREEN
+            await Navigator.of(context).pushNamed(
+              Screens.invitations,
+              arguments: invitations,
+            );
           },
           icon: Icons.person_add,
           hasNumericalAddition: numberOfInvitations != '0',

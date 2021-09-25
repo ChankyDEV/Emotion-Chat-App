@@ -3,6 +3,7 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/services.dart';
 import 'package:emotion_chat/data/models/core/failure.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
+import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 
@@ -41,15 +42,25 @@ class InvitationRepositoryImpl implements InvitationRepository {
   }
 
   @override
-  Future<Either<NetworkFailure, Stream<List<Invitation>>>>
-      get invitations async => _getInvitationsStream();
+  Future<Either<NetworkFailure, Stream<List<Inviter>>>> get invitations async =>
+      _getInvitationsStream();
 
-  Future<Either<NetworkFailure, Stream<List<Invitation>>>>
+  Future<Either<NetworkFailure, Stream<List<Inviter>>>>
       _getInvitationsStream() async {
     final hasInternetConnection = await network.isConnected;
     if (hasInternetConnection) {
       final user = await local.getUser();
-      return right(db.getInvitationsStreamOnUid(user.uid));
+      final invitationsStream = db.getInvitationsStreamOnUid(user.uid);
+      final invitersStream =
+          invitationsStream.asyncMap<List<Inviter>>((invitations) async {
+        final inviters = <Inviter>[];
+        await Future.forEach<Invitation>(invitations, (invite) async {
+          final inviteSender = await db.getUser(invite.senderUid);
+          inviters.add(Inviter(invite, inviteSender));
+        });
+        return inviters;
+      });
+      return right(invitersStream);
     } else {
       return left(
         NetworkFailure(message: 'user dont have internet connection'),
