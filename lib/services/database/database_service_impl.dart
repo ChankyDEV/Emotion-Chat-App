@@ -5,6 +5,13 @@ import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 
+mixin Collections {
+  static const users = 'users';
+  static const invitations = 'invitations';
+  static const invites = 'invites';
+  static const conversations = 'conversations';
+}
+
 class DatabaseServiceImpl implements DatabaseService {
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -17,7 +24,7 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<MyUser> getUser(String uid) async {
     try {
-      final response = await _db.collection('users').doc(uid).get();
+      final response = await _db.collection(Collections.users).doc(uid).get();
       return UserDTO.fromJson(response.data()).toDomain();
     } catch (e) {
       throw AuthException(message: 'Cant get user');
@@ -38,14 +45,14 @@ class DatabaseServiceImpl implements DatabaseService {
   }) async {
     try {
       await _db
-          .collection('users')
+          .collection(Collections.users)
           .doc(user.uid)
           .set(user.fromDomain().toJson());
       if (isFirstTime) {
         await _db
-            .collection('invitations')
+            .collection(Collections.invitations)
             .doc(user.uid)
-            .collection('invites')
+            .collection(Collections.invites)
             .add(
               Invitation.empty().toJson(),
             );
@@ -56,15 +63,41 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<String> findUserUidByEmail(String email) {
-    return Future.value('12345');
+  Future<String> findUserUidByEmail(String email) async {
+    final user = await _findUserByEmail(email);
+    return user.uid;
+  }
+
+  @override
+  Future<MyUser> findUserByEmail(String email) {
+    return _findUserByEmail(email);
+  }
+
+  Future<MyUser> _findUserByEmail(String email) async {
+    try {
+      final response = await _db
+          .collection(Collections.users)
+          .where('email', isEqualTo: email)
+          .get();
+      return UserDTO.fromJson(response.docs.first.data()).toDomain();
+    } catch (e) {
+      throw DatabaseException(message: 'Cant get user uid with this email');
+    }
   }
 
   @override
   Future<void> sendInvitation({
     required String from,
     required String to,
-  }) async {}
+  }) async {
+    await _db
+        .collection(Collections.invitations)
+        .doc(to)
+        .collection(Collections.invites)
+        .add(
+          Invitation(DateTime.now(), from).toJson(),
+        );
+  }
 
   @override
   Stream<List<Invitation>> getInvitationsStreamOnUid(String uid) {

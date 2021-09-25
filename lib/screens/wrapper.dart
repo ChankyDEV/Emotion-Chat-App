@@ -11,8 +11,6 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  final RoutingService _routingService = GetIt.I.get<RoutingService>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,16 +19,16 @@ class _WrapperState extends State<Wrapper> {
           if (!state.isLoading) {
             if (state.isLoggedIn) {
               if (state.canShowMoreInfoScreen) {
-                Navigator.of(context).pushNamed(
+                Navigator.of(context).pushReplacementNamed(
                   Screens.additionalInfo,
                 );
               } else {
-                Navigator.of(context).pushNamed(
+                Navigator.of(context).pushReplacementNamed(
                   Screens.authenticated,
                 );
               }
             } else {
-              Navigator.of(context).pushNamed(
+              Navigator.of(context).pushReplacementNamed(
                 Screens.unauthenticated,
               );
             }

@@ -21,12 +21,12 @@ import 'package:mockito/mockito.dart' as _i1;
 
 class _FakeMyPickedFile extends _i1.Fake implements _i2.MyPickedFile {}
 
-/// A class which mocks [IImagePickerService].
+/// A class which mocks [ImagePickerService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIImagePickerService extends _i1.Mock
+class MockImagePickerService extends _i1.Mock
     implements _i3.ImagePickerService {
-  MockIImagePickerService() {
+  MockImagePickerService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -42,12 +42,11 @@ class MockIImagePickerService extends _i1.Mock
           as _i4.Future<_i2.MyPickedFile>);
 }
 
-/// A class which mocks [IPermissionService].
+/// A class which mocks [PermissionService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIPermissionService extends _i1.Mock
-    implements _i5.PermissionService {
-  MockIPermissionService() {
+class MockPermissionService extends _i1.Mock implements _i5.PermissionService {
+  MockPermissionService() {
     _i1.throwOnMissingStub(this);
   }
 

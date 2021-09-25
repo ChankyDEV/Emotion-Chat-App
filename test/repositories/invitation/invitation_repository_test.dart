@@ -40,7 +40,7 @@ void main() {
     when(db.findUserUidByEmail(any)).thenAnswer((_) async => tReceiverUid);
     when(local.getUser()).thenAnswer((_) async => tUser);
 
-    final result = await repository.sendInvitationForEmail(tEmail);
+    final result = await repository.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
     verify(db.findUserUidByEmail(tEmail));
@@ -56,7 +56,7 @@ void main() {
     final noSavedUserFailure = Failure(message: 'Cant send invitation now');
     when(local.isUserSaved()).thenAnswer((_) async => false);
 
-    final result = await repository.sendInvitationForEmail(tEmail);
+    final result = await repository.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
     verifyNever(db.findUserUidByEmail(tEmail));
@@ -77,7 +77,7 @@ void main() {
           message: 'There is no user with particular email'),
     );
 
-    final result = await repository.sendInvitationForEmail(tEmail);
+    final result = await repository.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
     verify(db.findUserUidByEmail(tEmail));

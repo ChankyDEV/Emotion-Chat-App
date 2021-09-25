@@ -22,7 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
             isLoading: true,
             loggedOut: false,
           ),
-        ) {}
+        );
 
   void logout() async {
     final isLoggedOut = await authRepository.logout();

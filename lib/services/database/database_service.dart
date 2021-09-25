@@ -10,6 +10,8 @@ abstract class DatabaseService {
 
   Future<String> findUserUidByEmail(String email);
 
+  Future<MyUser> findUserByEmail(String email);
+
   Future<void> sendInvitation({
     required String from,
     required String to,

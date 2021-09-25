@@ -17,3 +17,4 @@ var whiteColor = Colors.white;
 const cDarkGrey = Color(0xFF1C1B1B);
 const cLightGrey = Color(0xFF878787);
 const cWhite = Color(0xFFFCFCFC);
+const cPurple = Colors.deepPurple;

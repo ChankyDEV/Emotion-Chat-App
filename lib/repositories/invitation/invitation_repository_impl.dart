@@ -16,15 +16,14 @@ class InvitationRepositoryImpl implements InvitationRepository {
   });
 
   @override
-  Future<Either<Failure, Unit>> sendInvitationForEmail(String email) async {
+  Future<Either<Failure, Unit>> sendInvitation(String uid) async {
     final isUserSaved = await local.isUserSaved();
     if (isUserSaved) {
       try {
-        final userToInvite = await db.findUserUidByEmail(email);
         final savedUser = await local.getUser();
         await db.sendInvitation(
           from: savedUser.uid,
-          to: userToInvite,
+          to: uid,
         );
         return right(unit);
       } on NoUserWithEmailException catch (e) {
@@ -40,11 +39,23 @@ class InvitationRepositoryImpl implements InvitationRepository {
   }
 
   @override
-  Future<Stream<List<Invitation>>> get invitations async => _getInvitationsStream();
+  Future<Stream<List<Invitation>>> get invitations async =>
+      _getInvitationsStream();
 
   Future<Stream<List<Invitation>>> _getInvitationsStream() async {
     final user = await local.getUser();
     return db.getInvitationsStreamOnUid(user.uid);
   }
 
+  @override
+  Future<Either<Failure, Unit>> acceptInvitation(Invitation invitation) {
+    // TODO: implement acceptInvitation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deleteInvitation(Invitation invitation) {
+    // TODO: implement deleteInvitation
+    throw UnimplementedError();
+  }
 }
