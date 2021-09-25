@@ -24,8 +24,11 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
 
   void listenOnInvitations() async {
     final invitations = await _invitationRepository.invitations;
-    _invitations = invitations.listen((invites) {
-      this.add(ChatsEvent.invitationsNumberChanged(invites.length.toString()));
+    invitations.fold((l) => l, (r) {
+      r.listen((invites) {
+        this.add(
+            ChatsEvent.invitationsNumberChanged(invites.length.toString()));
+      });
     });
   }
 

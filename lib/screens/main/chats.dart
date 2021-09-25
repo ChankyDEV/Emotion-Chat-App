@@ -46,9 +46,7 @@ class _ChatsState extends State<Chats> {
         ),
       ),
       IconButton(
-        onPressed: () {
-          GetIt.I.get<AuthCubit>().logout();
-        },
+        onPressed: () {},
         icon: Icon(
           Icons.edit,
           color: cWhite,

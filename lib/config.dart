@@ -74,9 +74,9 @@ class Config {
       ))
       ..registerSingleton<PermissionService>(PermissionServiceImpl())
       ..registerSingleton<InvitationRepository>(InvitationRepositoryImpl(
-        db: getItInstance.get<DatabaseService>(),
-        local: getItInstance.get<LocalDatabaseService>(),
-      ))
+          db: getItInstance.get<DatabaseService>(),
+          local: getItInstance.get<LocalDatabaseService>(),
+          network: getItInstance.get<NetworkService>()))
       ..registerSingleton<UserRepository>(
         UserRepositoryImpl(
           imageService: getItInstance.get<ImageUploadService>(),

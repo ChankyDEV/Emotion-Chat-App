@@ -9,10 +9,12 @@ import 'package:emotion_chat/services/database/database_service.dart';
 class InvitationRepositoryImpl implements InvitationRepository {
   final DatabaseService db;
   final LocalDatabaseService local;
+  final NetworkService network;
 
   InvitationRepositoryImpl({
     required this.db,
     required this.local,
+    required this.network,
   });
 
   @override
@@ -39,12 +41,20 @@ class InvitationRepositoryImpl implements InvitationRepository {
   }
 
   @override
-  Future<Stream<List<Invitation>>> get invitations async =>
-      _getInvitationsStream();
+  Future<Either<NetworkFailure, Stream<List<Invitation>>>>
+      get invitations async => _getInvitationsStream();
 
-  Future<Stream<List<Invitation>>> _getInvitationsStream() async {
-    final user = await local.getUser();
-    return db.getInvitationsStreamOnUid(user.uid);
+  Future<Either<NetworkFailure, Stream<List<Invitation>>>>
+      _getInvitationsStream() async {
+    final hasInternetConnection = await network.isConnected;
+    if (hasInternetConnection) {
+      final user = await local.getUser();
+      return right(db.getInvitationsStreamOnUid(user.uid));
+    } else {
+      return left(
+        NetworkFailure(message: 'user dont have internet connection'),
+      );
+    }
   }
 
   @override
