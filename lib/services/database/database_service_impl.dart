@@ -84,7 +84,7 @@ class DatabaseServiceImpl implements DatabaseService {
           .get();
       return UserDTO.fromJson(response.docs.first.data()).toDomain();
     } catch (e) {
-      throw DatabaseException(message: 'Cant get user uid with this email');
+      throw NoUserWithEmailException(message: 'Cant get user uid with this email');
     }
   }
 

@@ -41,6 +41,7 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
       accept: _accept,
       delete: _delete,
       invitationsNumberChanged: _invitationsNumberChanged,
+      sendInvitation: _sendInvitation,
     );
   }
 
@@ -83,5 +84,9 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
   Future<void> close() {
     _invitations.cancel();
     return super.close();
+  }
+
+  Stream<InvitationState> _sendInvitation(_SendInvitation e) async* {
+    await _repository.sendInvitation(e.email);
   }
 }

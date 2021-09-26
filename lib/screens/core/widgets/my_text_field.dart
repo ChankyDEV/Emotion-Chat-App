@@ -7,21 +7,21 @@ import 'package:get_it/get_it.dart';
 class MyTextField extends StatelessWidget {
   final String hint;
   final IconData prefixIcon;
-  final IconData suffixIcon;
+  final IconData? suffixIcon;
   final InputType inputType;
   final TextEditingController controller;
   final VoidCallback action;
   final bool isTextVisible;
   final TextInputAction textInputAction;
   final FocusScopeNode? formNode;
-  final VoidCallback onSubmitted;
+  final Function(String) onSubmitted;
 
   const MyTextField({
     Key? key,
     this.formNode,
     required this.hint,
     required this.prefixIcon,
-    required this.suffixIcon,
+    this.suffixIcon,
     required this.inputType,
     required this.controller,
     required this.action,
@@ -34,7 +34,7 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: TextFormField(
-        onFieldSubmitted: (_) => onSubmitted(),
+        onFieldSubmitted: (value) => onSubmitted(value),
         textInputAction: textInputAction,
         controller: controller,
         key: Key('emailOrPhone'),

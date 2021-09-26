@@ -10,4 +10,6 @@ class InvitationEvent with _$InvitationEvent {
 
   const factory InvitationEvent.invitationsNumberChanged(
       List<Inviter> invites) = _InvitationsNumberChanged;
+
+  const factory InvitationEvent.sendInvitation(String email) = _SendInvitation;
 }

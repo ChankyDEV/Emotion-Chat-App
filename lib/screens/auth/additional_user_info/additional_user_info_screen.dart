@@ -236,7 +236,7 @@ class _AdditionalUserInfoScreenState extends State<AdditionalUserInfoScreen> {
               },
               isTextVisible: true,
               textInputAction: TextInputAction.next,
-              onSubmitted: () => BlocProvider.of<AdditionalInfoBloc>(context)
+              onSubmitted: (_) => BlocProvider.of<AdditionalInfoBloc>(context)
                   .add(AdditionalInfoEvent.stepChanged()),
             ),
           ),

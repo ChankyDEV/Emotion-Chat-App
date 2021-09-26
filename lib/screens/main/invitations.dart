@@ -1,10 +1,13 @@
 import 'dart:ui';
 
 import 'package:emotion_chat/blocs/invitations/invitation_bloc.dart';
+import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,36 +21,73 @@ class Invitations extends StatelessWidget {
     return BlocBuilder<InvitationBloc, InvitationState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text('Invitations', style: titleStyle,),
-            backgroundColor: cDarkGrey,
-            elevation: 0,
-          ),
-          body: state.inviters.isNotEmpty
-              ? ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (ctx, ind) => _buildInvitationItem(
-                    ctx,
-                    ind,
-                    state.inviters,
-                  ),
-                  separatorBuilder: (_, __) {
-                    return Container(
-                      height: 20,
-                      color: cWhite.withOpacity(0.1),
-                    );
-                  },
-                  itemCount: state.numberOfInviters,
-                )
-              : Center(
-                  child: Text(
-                    'There is no invitation',
-                    style: titleStyle,
-                  ),
-                ),
-        );
+            appBar: AppBar(
+              title: Text(
+                'Invitations',
+                style: titleStyle,
+              ),
+              backgroundColor: cDarkGrey,
+              elevation: 0,
+            ),
+            body: Column(
+              children: [
+                _buildSendingInvitationTextField(context, state),
+                Expanded(child: _buildInvitationList(context, state)),
+              ],
+            ));
       },
     );
+  }
+
+  Widget _buildSendingInvitationTextField(
+    BuildContext context,
+    InvitationState state,
+  ) {
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.all(8.0),
+      child: MyTextField(
+        hint: 'Search and send invitation',
+        prefixIcon: Icons.search,
+        inputType: InputType.emailAddress,
+        controller: TextEditingController(),
+        action: () {},
+        isTextVisible: true,
+        textInputAction: TextInputAction.done,
+        onSubmitted: (value) {
+          // TODO: SEND INVITATION
+          BlocProvider.of<InvitationBloc>(context).add(InvitationEvent.sendInvitation(value));
+        },
+      ),
+    );
+  }
+
+  Widget _buildInvitationList(
+    BuildContext context,
+    InvitationState state,
+  ) {
+    return state.inviters.isNotEmpty
+        ? ListView.separated(
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (ctx, ind) => _buildInvitationItem(
+              ctx,
+              ind,
+              state.inviters,
+            ),
+            separatorBuilder: (_, __) {
+              return Container(
+                height: 20,
+                color: cWhite.withOpacity(0.1),
+              );
+            },
+            itemCount: state.numberOfInviters,
+          )
+        : Center(
+            child: Text(
+              'There is no invitation',
+              style: titleStyle,
+            ),
+          );
   }
 
   Widget _buildInvitationItem(

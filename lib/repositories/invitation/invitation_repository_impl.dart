@@ -19,10 +19,11 @@ class InvitationRepositoryImpl implements InvitationRepository {
   });
 
   @override
-  Future<Either<Failure, Unit>> sendInvitation(String uid) async {
+  Future<Either<Failure, Unit>> sendInvitation(String email) async {
     final isUserSaved = await local.isUserSaved();
     if (isUserSaved) {
       try {
+        final uid = await db.findUserUidByEmail(email);
         final savedUser = await local.getUser();
         await db.sendInvitation(
           from: savedUser.uid,

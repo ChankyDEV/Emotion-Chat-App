@@ -33,6 +33,12 @@ class _$InvitationEventTearOff {
       invites,
     );
   }
+
+  _SendInvitation sendInvitation(String email) {
+    return _SendInvitation(
+      email,
+    );
+  }
 }
 
 /// @nodoc
@@ -45,6 +51,7 @@ mixin _$InvitationEvent {
     required TResult Function(Invitation invitation) accept,
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
+    required TResult Function(String email) sendInvitation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,6 +59,7 @@ mixin _$InvitationEvent {
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,6 +69,7 @@ mixin _$InvitationEvent {
     required TResult Function(_DeleteInvitation value) delete,
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
+    required TResult Function(_SendInvitation value) sendInvitation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -68,6 +77,7 @@ mixin _$InvitationEvent {
     TResult Function(_AcceptInvitation value)? accept,
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -159,6 +169,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     required TResult Function(Invitation invitation) accept,
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
+    required TResult Function(String email) sendInvitation,
   }) {
     return accept(invitation);
   }
@@ -169,6 +180,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
     required TResult orElse(),
   }) {
     if (accept != null) {
@@ -184,6 +196,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     required TResult Function(_DeleteInvitation value) delete,
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
+    required TResult Function(_SendInvitation value) sendInvitation,
   }) {
     return accept(this);
   }
@@ -194,6 +207,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     TResult Function(_AcceptInvitation value)? accept,
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
     required TResult orElse(),
   }) {
     if (accept != null) {
@@ -281,6 +295,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     required TResult Function(Invitation invitation) accept,
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
+    required TResult Function(String email) sendInvitation,
   }) {
     return delete(invitation);
   }
@@ -291,6 +306,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -306,6 +322,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     required TResult Function(_DeleteInvitation value) delete,
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
+    required TResult Function(_SendInvitation value) sendInvitation,
   }) {
     return delete(this);
   }
@@ -316,6 +333,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     TResult Function(_AcceptInvitation value)? accept,
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -404,6 +422,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     required TResult Function(Invitation invitation) accept,
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
+    required TResult Function(String email) sendInvitation,
   }) {
     return invitationsNumberChanged(invites);
   }
@@ -414,6 +433,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
     required TResult orElse(),
   }) {
     if (invitationsNumberChanged != null) {
@@ -429,6 +449,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     required TResult Function(_DeleteInvitation value) delete,
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
+    required TResult Function(_SendInvitation value) sendInvitation,
   }) {
     return invitationsNumberChanged(this);
   }
@@ -439,6 +460,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     TResult Function(_AcceptInvitation value)? accept,
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
     required TResult orElse(),
   }) {
     if (invitationsNumberChanged != null) {
@@ -455,6 +477,131 @@ abstract class _InvitationsNumberChanged implements InvitationEvent {
   List<Inviter> get invites => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$InvitationsNumberChangedCopyWith<_InvitationsNumberChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$SendInvitationCopyWith<$Res> {
+  factory _$SendInvitationCopyWith(
+          _SendInvitation value, $Res Function(_SendInvitation) then) =
+      __$SendInvitationCopyWithImpl<$Res>;
+  $Res call({String email});
+}
+
+/// @nodoc
+class __$SendInvitationCopyWithImpl<$Res>
+    extends _$InvitationEventCopyWithImpl<$Res>
+    implements _$SendInvitationCopyWith<$Res> {
+  __$SendInvitationCopyWithImpl(
+      _SendInvitation _value, $Res Function(_SendInvitation) _then)
+      : super(_value, (v) => _then(v as _SendInvitation));
+
+  @override
+  _SendInvitation get _value => super._value as _SendInvitation;
+
+  @override
+  $Res call({
+    Object? email = freezed,
+  }) {
+    return _then(_SendInvitation(
+      email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SendInvitation implements _SendInvitation {
+  const _$_SendInvitation(this.email);
+
+  @override
+  final String email;
+
+  @override
+  String toString() {
+    return 'InvitationEvent.sendInvitation(email: $email)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SendInvitation &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(email);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SendInvitationCopyWith<_SendInvitation> get copyWith =>
+      __$SendInvitationCopyWithImpl<_SendInvitation>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Invitation invitation) accept,
+    required TResult Function(Invitation invitation) delete,
+    required TResult Function(List<Inviter> invites) invitationsNumberChanged,
+    required TResult Function(String email) sendInvitation,
+  }) {
+    return sendInvitation(email);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+    required TResult orElse(),
+  }) {
+    if (sendInvitation != null) {
+      return sendInvitation(email);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AcceptInvitation value) accept,
+    required TResult Function(_DeleteInvitation value) delete,
+    required TResult Function(_InvitationsNumberChanged value)
+        invitationsNumberChanged,
+    required TResult Function(_SendInvitation value) sendInvitation,
+  }) {
+    return sendInvitation(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
+    required TResult orElse(),
+  }) {
+    if (sendInvitation != null) {
+      return sendInvitation(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SendInvitation implements InvitationEvent {
+  const factory _SendInvitation(String email) = _$_SendInvitation;
+
+  String get email => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SendInvitationCopyWith<_SendInvitation> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
