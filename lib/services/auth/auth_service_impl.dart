@@ -71,7 +71,6 @@ class AuthServiceImpl implements AuthService {
       hasOwnImage: false,
       gender: Gender(value: GenderEnum.male),
       profileImage: ProfileImage.empty(),
-      contactsUIDS: [],
       uid: user.uid,
     );
   }

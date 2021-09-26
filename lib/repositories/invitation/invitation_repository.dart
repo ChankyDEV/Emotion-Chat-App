@@ -11,5 +11,5 @@ abstract class InvitationRepository {
 
   Future<Either<Failure, Unit>> acceptInvitation(Invitation invitation);
 
-  Future<Either<NetworkFailure, Stream<List<Inviter>>>> get invitations;
+  Future<Either<Failure, Stream<List<Inviter>>>> get invitations;
 }

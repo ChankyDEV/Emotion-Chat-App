@@ -153,7 +153,6 @@ class UserRepositoryImpl implements UserRepository {
           hasOwnImage: hasOwnImage,
           gender: gender,
           profileImage: ProfileImage(url: generatedImageUploadUrl),
-          contactsUIDS: user.contactsUIDS,
           uid: user.uid,
         );
         await db.updateUser(updatedUser);

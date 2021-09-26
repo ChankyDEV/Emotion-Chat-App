@@ -24,14 +24,13 @@ class UserDTOAdapter extends TypeAdapter<UserDTO> {
       name: fields[3] as String,
       gender: fields[5] as String,
       hasOwnImage: fields[6] as bool,
-      contactUids: (fields[7] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, UserDTO obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.uid)
       ..writeByte(1)
@@ -45,9 +44,7 @@ class UserDTOAdapter extends TypeAdapter<UserDTO> {
       ..writeByte(5)
       ..write(obj.gender)
       ..writeByte(6)
-      ..write(obj.hasOwnImage)
-      ..writeByte(7)
-      ..write(obj.contactUids);
+      ..write(obj.hasOwnImage);
   }
 
   @override

@@ -20,8 +20,6 @@ class UserDTO extends Equatable {
   final String gender;
   @HiveField(6)
   final bool hasOwnImage;
-  @HiveField(7)
-  final List<String> contactUids;
 
   UserDTO({
     required this.uid,
@@ -31,7 +29,6 @@ class UserDTO extends Equatable {
     required this.name,
     required this.gender,
     required this.hasOwnImage,
-    required this.contactUids,
   });
 
   @override
@@ -47,7 +44,6 @@ class UserDTO extends Equatable {
       profileImageUrl: json['profileImageUrl'],
       gender: json['gender'],
       hasOwnImage: json['hasOwnImage'],
-      contactUids: json['contactUids'].cast<String>(),
     );
   }
 
@@ -60,7 +56,6 @@ class UserDTO extends Equatable {
       'name': name,
       'gender': gender,
       'hasOwnImage': hasOwnImage,
-      'contactUids': contactUids,
     };
   }
 
@@ -72,7 +67,6 @@ class UserDTO extends Equatable {
       name: Name(value: name),
       hasOwnImage: hasOwnImage,
       gender: Gender.fromString(gender),
-      contactsUIDS: contactUids,
       profileImage: ProfileImage(url: profileImageUrl),
     );
   }

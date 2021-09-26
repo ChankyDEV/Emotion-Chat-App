@@ -24,8 +24,7 @@ class LocalDatabaseServiceImpl implements LocalDatabaseService {
   @override
   Future<void> removeUser() async {
     final userBox = await openOrGetBox('user');
-    final result =
-        await performActionOnLocalUser<int>(() => userBox.clear(), userBox);
+    await performActionOnLocalUser<int>(() => userBox.clear(), userBox);
   }
 
   @override

@@ -9,7 +9,6 @@ class MyUser extends Equatable {
   final ProfileImage profileImage;
   final Gender gender;
   final bool hasOwnImage;
-  final List<String> contactsUIDS;
 
   factory MyUser.empty() {
     return MyUser(
@@ -19,7 +18,6 @@ class MyUser extends Equatable {
       name: Name.empty(),
       gender: Gender.empty(),
       hasOwnImage: false,
-      contactsUIDS: [],
       uid: '',
     );
   }
@@ -33,7 +31,6 @@ class MyUser extends Equatable {
       name: name.toString(),
       gender: gender.toString(),
       hasOwnImage: hasOwnImage,
-      contactUids: contactsUIDS,
     );
   }
 
@@ -54,7 +51,6 @@ class MyUser extends Equatable {
     required this.hasOwnImage,
     required this.gender,
     required this.profileImage,
-    required this.contactsUIDS,
     required this.uid,
   });
 
@@ -66,7 +62,6 @@ class MyUser extends Equatable {
         hasOwnImage,
         gender.value,
         uid,
-        contactsUIDS,
         profileImage.url,
       ];
 
@@ -88,7 +83,6 @@ class MyUser extends Equatable {
       profileImage: profileImageUrl,
       gender: gender,
       hasOwnImage: hasOwnImage,
-      contactsUIDS: contactsUIDS,
     );
   }
 }

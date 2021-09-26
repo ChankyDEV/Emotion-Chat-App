@@ -18,20 +18,24 @@ class _ChatsState extends State<Chats> {
   Widget build(BuildContext context) {
     return BlocBuilder<ChatsBloc, ChatsState>(
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: cDarkGrey,
-            elevation: 0,
-            actions: _buildActionIcons(
-              state.numberOfInviters,
-              state.inviters,
+        return WillPopScope(
+          onWillPop: () => Future.value(false),
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: cDarkGrey,
+              elevation: 0,
+              actions: _buildActionIcons(
+                state.numberOfInviters,
+                state.inviters,
+              ),
+              title: Text(
+                'Messages',
+                style: titleStyle,
+              ),
             ),
-            title: Text(
-              'Messages',
-              style: titleStyle,
-            ),
+            body: Text('xD'),
           ),
-          body: Text('xD'),
         );
       },
     );

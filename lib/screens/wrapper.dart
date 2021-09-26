@@ -3,7 +3,6 @@ import 'package:emotion_chat/screens/core/loading_screen.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -19,16 +18,16 @@ class _WrapperState extends State<Wrapper> {
           if (!state.isLoading) {
             if (state.isLoggedIn) {
               if (state.canShowMoreInfoScreen) {
-                Navigator.of(context).pushReplacementNamed(
+                await Navigator.of(context).pushNamed(
                   Screens.additionalInfo,
                 );
               } else {
-                Navigator.of(context).pushReplacementNamed(
+                await Navigator.of(context).pushNamed(
                   Screens.authenticated,
                 );
               }
             } else {
-              Navigator.of(context).pushReplacementNamed(
+              await Navigator.of(context).pushNamed(
                 Screens.unauthenticated,
               );
             }
