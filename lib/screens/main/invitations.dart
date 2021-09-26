@@ -19,24 +19,32 @@ class Invitations extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            title: Text('Invitations', style: titleStyle,),
             backgroundColor: cDarkGrey,
             elevation: 0,
           ),
-          body: ListView.separated(
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (ctx, ind) => _buildInvitationItem(
-              ctx,
-              ind,
-              state.inviters,
-            ),
-            separatorBuilder: (_, __) {
-              return Container(
-                height: 20,
-                color: cWhite.withOpacity(0.1),
-              );
-            },
-            itemCount: state.numberOfInviters,
-          ),
+          body: state.inviters.isNotEmpty
+              ? ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (ctx, ind) => _buildInvitationItem(
+                    ctx,
+                    ind,
+                    state.inviters,
+                  ),
+                  separatorBuilder: (_, __) {
+                    return Container(
+                      height: 20,
+                      color: cWhite.withOpacity(0.1),
+                    );
+                  },
+                  itemCount: state.numberOfInviters,
+                )
+              : Center(
+                  child: Text(
+                    'There is no invitation',
+                    style: titleStyle,
+                  ),
+                ),
         );
       },
     );
