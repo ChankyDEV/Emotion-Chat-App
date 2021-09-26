@@ -54,10 +54,12 @@ class InvitationRepositoryImpl implements InvitationRepository {
         final invitersStream =
             invitationsStream.asyncMap<List<Inviter>>((invitations) async {
           final inviters = <Inviter>[];
-          if (inviters.length != 0) {
+          if (invitations.length != 0) {
             await Future.forEach<Invitation>(invitations, (invite) async {
-              final inviteSender = await db.getUser(invite.senderUid);
-              inviters.add(Inviter(invite, inviteSender));
+              if (invite.senderUid.isNotEmpty) {
+                final inviteSender = await db.getUser(invite.senderUid);
+                inviters.add(Inviter(invite, inviteSender));
+              }
             });
           }
           return inviters;

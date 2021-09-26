@@ -73,7 +73,6 @@ class MyUser extends Equatable {
     required ProfileImage profileImageUrl,
     required Gender gender,
     required bool hasOwnImage,
-    required List<String> contactsUIDS,
   }) {
     return MyUser(
       uid: uid,
