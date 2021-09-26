@@ -11,6 +11,8 @@ mixin Collections {
   static const invitations = 'invitations';
   static const invites = 'invites';
   static const conversations = 'conversations';
+  static const contacts = 'contacts';
+  static const friends = 'friends';
 }
 
 class DatabaseServiceImpl implements DatabaseService {
@@ -134,11 +136,33 @@ class DatabaseServiceImpl implements DatabaseService {
     String userUid,
     String invitationUid,
   ) async {
-    await _db
-        .collection(Collections.invitations)
-        .doc(userUid)
-        .collection(Collections.invites)
-        .doc(invitationUid)
-        .delete();
+    try {
+      await _db
+          .collection(Collections.invitations)
+          .doc(userUid)
+          .collection(Collections.invites)
+          .doc(invitationUid)
+          .delete();
+    } catch (e) {
+      throw DatabaseException(message: 'Cant delete invitation');
+    }
+  }
+
+  @override
+  Future<void> acceptInvitation(
+    String userUid,
+    String invitationSenderUid,
+  ) async {
+    try {
+      await _db
+          .collection(Collections.contacts)
+          .doc(userUid)
+          .collection(Collections.friends)
+          .add(
+            InvitationDTO(DateTime.now(), invitationSenderUid).toJson(),
+          );
+    } catch (e) {
+      throw DatabaseException(message: 'Cant accept invitation');
+    }
   }
 }

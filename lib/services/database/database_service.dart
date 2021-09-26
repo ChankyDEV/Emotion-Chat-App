@@ -23,4 +23,9 @@ abstract class DatabaseService {
     String userUid,
     String invitationUid,
   );
+
+  Future<void> acceptInvitation(
+    String userUid,
+    String invitationUid,
+  );
 }

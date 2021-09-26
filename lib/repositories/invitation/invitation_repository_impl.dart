@@ -69,9 +69,14 @@ class InvitationRepositoryImpl implements InvitationRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> acceptInvitation(Invitation invitation) {
-    // TODO: implement acceptInvitation
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> acceptInvitation(Invitation invitation) async {
+    try {
+      final user = await local.getUser();
+      await db.acceptInvitation(user.uid, invitation.senderUid);
+      return right(unit);
+    } catch (e) {
+      return left(DatabaseFailure('Cant accept invitation'));
+    }
   }
 
   @override

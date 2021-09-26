@@ -66,7 +66,18 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
     });
   }
 
-  Stream<InvitationState> _accept(_AcceptInvitation value) async* {}
+  Stream<InvitationState> _accept(_AcceptInvitation value) async* {
+    final failureOrUnit = await _repository.acceptInvitation(value.invitation);
+    yield failureOrUnit.fold<InvitationState>((_) => state, (r) {
+      state.inviters.removeWhere(
+        (element) => element.invitation.senderUid == value.invitation.senderUid,
+      );
+      return state.copyWith(
+        numberOfInviters: state.numberOfInviters - 1,
+        inviters: state.inviters,
+      );
+    });
+  }
 
   @override
   Future<void> close() {
