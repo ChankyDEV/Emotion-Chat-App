@@ -18,4 +18,9 @@ abstract class DatabaseService {
   });
 
   Stream<List<Invitation>> getInvitationsStreamOnUid(String uid);
+
+  Future<void> deleteInvitation(
+    String userUid,
+    String invitationUid,
+  );
 }

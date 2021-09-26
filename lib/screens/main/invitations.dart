@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:emotion_chat/blocs/invitations/invitation_bloc.dart';
+import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
@@ -50,26 +53,19 @@ class Invitations extends StatelessWidget {
       height: 80,
       child: Row(
         children: [
-          inviter.sender.hasOwnImage
-              ? Container(
-                  height: 70.0,
-                  width: 60.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(inviter.sender.profileImage.url),
-                      fit: BoxFit.fill,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                )
-              : Container(
-                  width: 60,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                ),
+          Container(
+            height: 70.0,
+            width: 60.0,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: inviter.sender.hasOwnImage
+                    ? NetworkImage(inviter.sender.profileImage.url)
+                    : AssetImage('assets/images/user.png') as ImageProvider,
+                fit: BoxFit.fitWidth,
+              ),
+              shape: BoxShape.circle,
+            ),
+          ),
           const SizedBox(
             width: 15,
           ),
@@ -79,18 +75,96 @@ class Invitations extends StatelessWidget {
             children: [
               Text(
                 inviter.sender.name.value,
-                style: titleStyle.copyWith(fontSize: 17.0),
+                style: titleStyle.copyWith(fontSize: 14.0),
               ),
-              const SizedBox(height: 5,),
+              const SizedBox(
+                height: 5,
+              ),
               Text(
                 inviter.sender.emailAddress.value,
-                style: bodyStyle.copyWith(fontSize: 12.0, color: cWhite.withOpacity(0.5)),
+                style: bodyStyle.copyWith(
+                    fontSize: 10.0, color: cWhite.withOpacity(0.5)),
               ),
             ],
-          )
-
+          ),
+          Expanded(child: const SizedBox()),
+          _buildAcceptDeclineButtons(
+            context,
+            width: 50,
+            height: 40,
+            onAccept: () => _accept(context, inviter.invitation),
+            onDecline: () => _decline(context, inviter.invitation),
+          ),
         ],
       ),
     );
   }
+
+  Widget _buildAcceptDeclineButtons(
+    BuildContext context, {
+    required double width,
+    required double height,
+    required VoidCallback onAccept,
+    required VoidCallback onDecline,
+  }) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: onAccept,
+          child: Container(
+            width: width,
+            height: height,
+            child: Icon(
+              Icons.done,
+              color: Colors.green,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              gradient: RadialGradient(
+                colors: [
+                  cWhite.withOpacity(0.1),
+                  cWhite.withOpacity(0.2),
+                ],
+                radius: 3.0,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        GestureDetector(
+          onTap: onDecline,
+          child: Container(
+            width: width,
+            height: height,
+            child: Icon(
+              Icons.clear,
+              color: Colors.red,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              gradient: RadialGradient(
+                colors: [
+                  cWhite.withOpacity(0.1),
+                  cWhite.withOpacity(0.2),
+                ],
+                radius: 3.0,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  void _accept(BuildContext context, Invitation invitation) =>
+      BlocProvider.of<InvitationBloc>(context).add(
+        InvitationEvent.accept(invitation),
+      );
+
+  void _decline(BuildContext context, Invitation invitation) =>
+      BlocProvider.of<InvitationBloc>(context).add(
+        InvitationEvent.delete(invitation),
+      );
 }

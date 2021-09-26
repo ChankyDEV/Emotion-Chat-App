@@ -1,8 +1,15 @@
 class Invitation {
+  String uid = '';
   final DateTime createdAt;
   final String senderUid;
 
   Invitation(
+    this.createdAt,
+    this.senderUid,
+  );
+
+  Invitation.withUid(
+    this.uid,
     this.createdAt,
     this.senderUid,
   );

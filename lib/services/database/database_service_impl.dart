@@ -3,6 +3,7 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
+import 'package:emotion_chat/data/models/invitation/invitation_dto.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 
 mixin Collections {
@@ -95,7 +96,7 @@ class DatabaseServiceImpl implements DatabaseService {
         .doc(to)
         .collection(Collections.invites)
         .add(
-          Invitation(DateTime.now(), from).toJson(),
+          InvitationDTO(DateTime.now(), from).toJson(),
         );
   }
 
@@ -119,12 +120,25 @@ class DatabaseServiceImpl implements DatabaseService {
 
     data.forEach((element) {
       final json = element.data();
+      String uid = element.id;
       DateTime createdAt = (json['createdAt'] as Timestamp).toDate();
       String senderUid = json['senderUid'];
       invitations.add(
-        Invitation(createdAt, senderUid),
+        Invitation.withUid(uid, createdAt, senderUid),
       );
     });
     return invitations;
+  }
+
+  Future<void> deleteInvitation(
+    String userUid,
+    String invitationUid,
+  ) async {
+    await _db
+        .collection(Collections.invitations)
+        .doc(userUid)
+        .collection(Collections.invites)
+        .doc(invitationUid)
+        .delete();
   }
 }

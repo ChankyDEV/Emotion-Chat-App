@@ -75,8 +75,13 @@ class InvitationRepositoryImpl implements InvitationRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteInvitation(Invitation invitation) {
-    // TODO: implement deleteInvitation
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> deleteInvitation(Invitation invitation) async {
+    try {
+      final user = await local.getUser();
+      await db.deleteInvitation(user.uid, invitation.uid);
+      return right(unit);
+    } catch (e) {
+      return left(DatabaseFailure('Cant delete invitation'));
+    }
   }
 }

@@ -53,7 +53,18 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
     );
   }
 
-  Stream<InvitationState> _delete(_DeleteInvitation value) async* {}
+  Stream<InvitationState> _delete(_DeleteInvitation value) async* {
+    final failureOrUnit = await _repository.deleteInvitation(value.invitation);
+    yield failureOrUnit.fold<InvitationState>((_) => state, (r) {
+      state.inviters.removeWhere(
+        (element) => element.invitation.senderUid == value.invitation.senderUid,
+      );
+      return state.copyWith(
+        numberOfInviters: state.numberOfInviters - 1,
+        inviters: state.inviters,
+      );
+    });
+  }
 
   Stream<InvitationState> _accept(_AcceptInvitation value) async* {}
 

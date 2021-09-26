@@ -1,6 +1,5 @@
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
-import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
@@ -82,40 +81,43 @@ class _ChatsState extends State<Chats> {
     bool hasNumericalAddition = false,
     String numericAddition = '',
   }) {
-    return Stack(
-      children: [
-        IconButton(
-          onPressed: onTap,
-          icon: Icon(
-            icon,
-            color: cWhite,
-            size: 18.0,
+    return GestureDetector(
+      onTap: onTap,
+      child: Stack(
+        children: [
+          IconButton(
+            onPressed: onTap,
+            icon: Icon(
+              icon,
+              color: cWhite,
+              size: 18.0,
+            ),
           ),
-        ),
-        hasNumericalAddition
-            ? Positioned(
-                top: 7,
-                right: 7,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 15,
-                  height: 15,
-                  child: Text(
-                    numericAddition,
-                    style: TextStyle(fontSize: 10.0),
-                  ),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: cPurple,
-                    border: Border.all(
-                      color: cDarkGrey,
-                      width: 1,
+          hasNumericalAddition
+              ? Positioned(
+                  top: 7,
+                  right: 7,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 15,
+                    height: 15,
+                    child: Text(
+                      numericAddition,
+                      style: TextStyle(fontSize: 10.0),
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: cPurple,
+                      border: Border.all(
+                        color: cDarkGrey,
+                        width: 1,
+                      ),
                     ),
                   ),
-                ),
-              )
-            : const SizedBox(),
-      ],
+                )
+              : const SizedBox(),
+        ],
+      ),
     );
   }
 }
