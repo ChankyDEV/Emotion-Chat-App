@@ -132,17 +132,9 @@ class DatabaseServiceImpl implements DatabaseService {
     return invitations;
   }
 
-  Future<void> deleteInvitation(
-    String userUid,
-    String invitationUid,
-  ) async {
+  Future<void> deleteInvitation(String userUid, Invitation invitation) async {
     try {
-      await _db
-          .collection(Collections.invitations)
-          .doc(userUid)
-          .collection(Collections.invites)
-          .doc(invitationUid)
-          .delete();
+      await _deleteInvitation(userUid, invitation);
     } catch (e) {
       throw DatabaseException(message: 'Cant delete invitation');
     }
@@ -151,7 +143,7 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<void> acceptInvitation(
     String userUid,
-    String invitationSenderUid,
+    Invitation invitation,
   ) async {
     try {
       await _db
@@ -159,10 +151,23 @@ class DatabaseServiceImpl implements DatabaseService {
           .doc(userUid)
           .collection(Collections.friends)
           .add(
-            InvitationDTO(DateTime.now(), invitationSenderUid).toJson(),
+            InvitationDTO(DateTime.now(), invitation.senderUid).toJson(),
           );
+      await _deleteInvitation(userUid, invitation);
     } catch (e) {
       throw DatabaseException(message: 'Cant accept invitation');
     }
+  }
+
+  Future<void> _deleteInvitation(
+    String userUid,
+    Invitation invitation,
+  ) async {
+    await _db
+        .collection(Collections.invitations)
+        .doc(userUid)
+        .collection(Collections.invites)
+        .doc(invitation.uid)
+        .delete();
   }
 }

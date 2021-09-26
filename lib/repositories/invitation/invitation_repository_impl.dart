@@ -79,7 +79,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
   Future<Either<Failure, Unit>> acceptInvitation(Invitation invitation) async {
     try {
       final user = await local.getUser();
-      await db.acceptInvitation(user.uid, invitation.senderUid);
+      await db.acceptInvitation(user.uid, invitation);
       return right(unit);
     } catch (e) {
       return left(DatabaseFailure('Cant accept invitation'));
@@ -90,7 +90,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
   Future<Either<Failure, Unit>> deleteInvitation(Invitation invitation) async {
     try {
       final user = await local.getUser();
-      await db.deleteInvitation(user.uid, invitation.uid);
+      await db.deleteInvitation(user.uid, invitation);
       return right(unit);
     } catch (e) {
       return left(DatabaseFailure('Cant delete invitation'));

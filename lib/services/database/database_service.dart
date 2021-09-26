@@ -21,11 +21,11 @@ abstract class DatabaseService {
 
   Future<void> deleteInvitation(
     String userUid,
-    String invitationUid,
+    Invitation invitation,
   );
 
   Future<void> acceptInvitation(
     String userUid,
-    String invitationUid,
+    Invitation invitation,
   );
 }
