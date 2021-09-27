@@ -28,4 +28,6 @@ abstract class DatabaseService {
     String userUid,
     Invitation invitation,
   );
+
+  Future<List<MyUser>> getAllFriends(String userUid);
 }

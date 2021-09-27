@@ -71,7 +71,7 @@ class _ChatsState extends State<Chats> {
           GetIt.I.get<AuthCubit>().logout();
         },
         icon: Icon(
-          Icons.settings,
+          Icons.logout,
           color: cWhite,
           size: 18.0,
         ),

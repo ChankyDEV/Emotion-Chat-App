@@ -86,7 +86,8 @@ class DatabaseServiceImpl implements DatabaseService {
       return UserDTO.fromJson(response.docs.first.data()).toDomain();
     } catch (e) {
       throw NoUserWithEmailException(
-          message: 'Cant get user uid with this email');
+        message: ErrorMessages.database.cantFindUserUid,
+      );
     }
   }
 
@@ -124,7 +125,7 @@ class DatabaseServiceImpl implements DatabaseService {
     required String to,
   }) async {
     try {
-      final response = await _db
+      final docsForInvitations = await _db
           .collection(Collections.invitations)
           .doc(to)
           .collection(Collections.invites)
@@ -133,7 +134,16 @@ class DatabaseServiceImpl implements DatabaseService {
             isEqualTo: from,
           )
           .get();
-      return response.size == 0;
+      final docsForFriends = await _db
+          .collection(Collections.contacts)
+          .doc(from)
+          .collection(Collections.friends)
+          .where(
+            'senderUid',
+            isEqualTo: to,
+          )
+          .get();
+      return docsForInvitations.size == 0 && docsForFriends.size == 0;
     } catch (e) {
       throw DatabaseException(message: 'Cant get data');
     }
@@ -206,5 +216,20 @@ class DatabaseServiceImpl implements DatabaseService {
         .collection(Collections.invites)
         .doc(invitation.uid)
         .delete();
+  }
+
+  @override
+  Future<List<MyUser>> getAllFriends(String userUid) async {
+    final uids = await _db
+        .collection(Collections.contacts)
+        .doc(userUid)
+        .collection(Collections.friends)
+        .get()
+        .then(
+          (value) => value.docs.map(
+            (e) => e.data()['senderUid'],
+          ),
+        );
+    return [];
   }
 }
