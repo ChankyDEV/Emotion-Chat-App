@@ -11,10 +11,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Invitations extends StatelessWidget {
+class Invitations extends StatefulWidget {
   const Invitations({
     Key? key,
   }) : super(key: key);
+
+  @override
+  _InvitationsState createState() => _InvitationsState();
+}
+
+class _InvitationsState extends State<Invitations> {
+  late final TextEditingController _invitationEmailController;
+
+  @override
+  void initState() {
+    _invitationEmailController = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +44,14 @@ class Invitations extends StatelessWidget {
             ),
             body: Column(
               children: [
-                _buildSendingInvitationTextField(context, state),
-                Expanded(child: _buildInvitationList(context, state)),
+                Expanded(
+                  flex: 2,
+                  child: _buildSendingInvitationTextField(context, state),
+                ),
+                Expanded(
+                  flex: 10,
+                  child: _buildInvitationList(context, state),
+                ),
               ],
             ));
       },
@@ -44,20 +63,23 @@ class Invitations extends StatelessWidget {
     InvitationState state,
   ) {
     return Container(
-      height: 100,
       padding: const EdgeInsets.all(8.0),
       child: MyTextField(
         hint: 'Search and send invitation',
         prefixIcon: Icons.search,
         inputType: InputType.emailAddress,
-        controller: TextEditingController(),
-        action: () {},
+        controller: _invitationEmailController,
+        action: () {
+          BlocProvider.of<InvitationBloc>(context).add(
+            InvitationEvent.sendInvitation(
+              _invitationEmailController.value.text,
+            ),
+          );
+        },
+        suffixIcon: Icons.send,
         isTextVisible: true,
         textInputAction: TextInputAction.done,
-        onSubmitted: (value) {
-          // TODO: SEND INVITATION
-          BlocProvider.of<InvitationBloc>(context).add(InvitationEvent.sendInvitation(value));
-        },
+        onSubmitted: (value) {},
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
+import 'package:emotion_chat/data/exceptions/error_messages.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_dto.dart';
@@ -84,7 +85,8 @@ class DatabaseServiceImpl implements DatabaseService {
           .get();
       return UserDTO.fromJson(response.docs.first.data()).toDomain();
     } catch (e) {
-      throw NoUserWithEmailException(message: 'Cant get user uid with this email');
+      throw NoUserWithEmailException(
+          message: 'Cant get user uid with this email');
     }
   }
 
@@ -93,13 +95,48 @@ class DatabaseServiceImpl implements DatabaseService {
     required String from,
     required String to,
   }) async {
-    await _db
-        .collection(Collections.invitations)
-        .doc(to)
-        .collection(Collections.invites)
-        .add(
-          InvitationDTO(DateTime.now(), from).toJson(),
-        );
+    final canSendInvitation = await _canSendInvitation(
+      from: from,
+      to: to,
+    );
+    if (canSendInvitation) {
+      await _db
+          .collection(Collections.invitations)
+          .doc(to)
+          .collection(Collections.invites)
+          .add(
+            InvitationDTO(DateTime.now(), from).toJson(),
+          )
+          .onError(
+            (_, __) => throw throw InvitationException(
+              message: ErrorMessages.invitation.sendingInvitationError,
+            ),
+          );
+    } else {
+      throw InvitationException(
+        message: ErrorMessages.invitation.alreadySentInvitation,
+      );
+    }
+  }
+
+  Future<bool> _canSendInvitation({
+    required String from,
+    required String to,
+  }) async {
+    try {
+      final response = await _db
+          .collection(Collections.invitations)
+          .doc(to)
+          .collection(Collections.invites)
+          .where(
+            'senderUid',
+            isEqualTo: from,
+          )
+          .get();
+      return response.size == 0;
+    } catch (e) {
+      throw DatabaseException(message: 'Cant get data');
+    }
   }
 
   @override

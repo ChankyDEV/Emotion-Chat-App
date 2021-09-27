@@ -39,7 +39,10 @@ class MyTextField extends StatelessWidget {
         controller: controller,
         key: Key('emailOrPhone'),
         style: const TextStyle(
-            color: cLightGrey, fontSize: 13, fontFamily: 'Lato'),
+          color: cLightGrey,
+          fontSize: 13,
+          fontFamily: 'Lato',
+        ),
         validator: (value) {
           final validator = GetIt.I.get<Validator>();
           return validator.validate(

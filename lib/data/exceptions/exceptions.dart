@@ -1,35 +1,33 @@
-class AuthException implements Exception {
+abstract class ExceptionWithMessage implements Exception {
   final String message;
 
-  AuthException({required this.message});
+  ExceptionWithMessage({required this.message});
 }
 
-class PermissionException implements Exception {
-  final String message;
-
-  PermissionException({required this.message});
+class AuthException extends ExceptionWithMessage {
+  AuthException({required String message}) : super(message: message);
 }
 
-class ImagePickException implements Exception {
-  final String message;
-
-  ImagePickException({required this.message});
+class PermissionException extends ExceptionWithMessage {
+  PermissionException({required String message}) : super(message: message);
 }
 
-class ImageUploadException implements Exception {
-  final String message;
-
-  ImageUploadException({required this.message});
+class ImagePickException extends ExceptionWithMessage {
+  ImagePickException({required String message}) : super(message: message);
 }
 
-class NoUserWithEmailException implements Exception {
-  final String message;
-
-  NoUserWithEmailException({required this.message});
+class ImageUploadException extends ExceptionWithMessage {
+  ImageUploadException({required String message}) : super(message: message);
 }
 
-class DatabaseException implements Exception {
-  final String message;
+class NoUserWithEmailException extends ExceptionWithMessage {
+  NoUserWithEmailException({required String message}) : super(message: message);
+}
 
-  DatabaseException({required this.message});
+class DatabaseException extends ExceptionWithMessage {
+  DatabaseException({required String message}) : super(message: message);
+}
+
+class InvitationException extends ExceptionWithMessage {
+  InvitationException({required String message}) : super(message: message);
 }

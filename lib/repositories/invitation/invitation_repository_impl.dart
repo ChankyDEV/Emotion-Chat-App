@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/services.dart';
+import 'package:emotion_chat/data/exceptions/error_messages.dart';
 import 'package:emotion_chat/data/models/core/failure.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
@@ -20,24 +21,31 @@ class InvitationRepositoryImpl implements InvitationRepository {
 
   @override
   Future<Either<Failure, Unit>> sendInvitation(String email) async {
-    final isUserSaved = await local.isUserSaved();
-    if (isUserSaved) {
-      try {
-        final uid = await db.findUserUidByEmail(email);
-        final savedUser = await local.getUser();
-        await db.sendInvitation(
-          from: savedUser.uid,
-          to: uid,
+    final hasInternetConnection = await network.isConnected;
+    if (hasInternetConnection) {
+      final isUserSaved = await local.isUserSaved();
+      if (isUserSaved) {
+        try {
+          final uid = await db.findUserUidByEmail(email);
+          final savedUser = await local.getUser();
+          await db.sendInvitation(
+            from: savedUser.uid,
+            to: uid,
+          );
+          return right(unit);
+        } on ExceptionWithMessage catch (e) {
+          return left(Failure(
+            message: e.message,
+          ));
+        }
+      } else {
+        return left(
+          Failure(message: 'Cant send invitation now'),
         );
-        return right(unit);
-      } on NoUserWithEmailException catch (e) {
-        return left(Failure(
-          message: e.message,
-        ));
       }
     } else {
       return left(
-        Failure(message: 'Cant send invitation now'),
+        Failure(message: ErrorMessages.internet.noConnection),
       );
     }
   }
