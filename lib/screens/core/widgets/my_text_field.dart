@@ -73,7 +73,10 @@ class MyTextField extends StatelessWidget {
               size: 16.0,
               color: cLightGrey,
             ),
-            onPressed: action,
+            onPressed: () {
+              action();
+              FocusScope.of(context).unfocus();
+            },
           ),
           errorStyle: const TextStyle(
               color: Colors.red, fontSize: 13, fontFamily: 'Lato'),
