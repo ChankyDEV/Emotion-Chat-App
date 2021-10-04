@@ -123,17 +123,20 @@ class _InvitationsState extends State<Invitations> {
       height: 80,
       child: Row(
         children: [
-          Container(
-            height: 70.0,
-            width: 60.0,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: inviter.sender.hasOwnImage
-                    ? NetworkImage(inviter.sender.profileImage.url)
-                    : AssetImage('assets/images/user.png') as ImageProvider,
-                fit: BoxFit.fitWidth,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Container(
+              height: 60.0,
+              width: 60.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: inviter.sender.hasOwnImage
+                      ? NetworkImage(inviter.sender.profileImage.url)
+                      : AssetImage('assets/images/user.png') as ImageProvider,
+                  fit: BoxFit.fill,
+                ),
+                shape: BoxShape.circle,
               ),
-              shape: BoxShape.circle,
             ),
           ),
           const SizedBox(

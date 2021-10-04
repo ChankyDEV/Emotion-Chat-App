@@ -1,6 +1,9 @@
 part of 'friends_bloc.dart';
 
-@immutable
-abstract class FriendsState {}
+@freezed
+class FriendsState with _$FriendsState {
+  const factory FriendsState.initial({
+    required List<ChatUser> friends,
+  }) = _Initial;
 
-class FriendsInitial extends FriendsState {}
+}

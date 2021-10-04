@@ -1,4 +1,7 @@
 part of 'friends_bloc.dart';
 
-@immutable
-abstract class FriendsEvent {}
+@freezed
+class FriendsEvent with _$FriendsEvent {
+  const factory FriendsEvent.friendsChanged(List<ChatUser> friends) =
+      _FriendsChanged;
+}

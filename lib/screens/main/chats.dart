@@ -34,7 +34,12 @@ class _ChatsState extends State<Chats> {
                 style: titleStyle,
               ),
             ),
-            body: Text('xD'),
+            body: Center(
+              child: Text(
+                'No active chats',
+                style: titleStyle,
+              ),
+            ),
           ),
         );
       },
@@ -42,8 +47,18 @@ class _ChatsState extends State<Chats> {
   }
 
   List<Widget> _buildActionIcons(
-      String numberOfInvitations, List<Inviter> invitations) {
+    String numberOfInvitations,
+    List<Inviter> invitations,
+  ) {
     return <Widget>[
+      IconButton(
+        onPressed: () {},
+        icon: Icon(
+          Icons.edit,
+          color: cWhite,
+          size: 18.0,
+        ),
+      ),
       Padding(
         padding: const EdgeInsets.only(top: 4.0),
         child: _buildIconButton(
@@ -59,19 +74,11 @@ class _ChatsState extends State<Chats> {
         ),
       ),
       IconButton(
-        onPressed: () {},
-        icon: Icon(
-          Icons.edit,
-          color: cWhite,
-          size: 18.0,
-        ),
-      ),
-      IconButton(
         onPressed: () {
           GetIt.I.get<AuthCubit>().logout();
         },
         icon: Icon(
-          Icons.logout,
+          Icons.settings,
           color: cWhite,
           size: 18.0,
         ),

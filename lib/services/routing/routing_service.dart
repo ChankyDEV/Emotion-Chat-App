@@ -3,6 +3,7 @@ import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
 import 'package:emotion_chat/blocs/invitations/invitation_bloc.dart';
 import 'package:emotion_chat/constants/blocs.dart';
 import 'package:emotion_chat/constants/screens.dart';
+import 'package:emotion_chat/repositories/friends/friends_repository.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
 import 'package:emotion_chat/screens/main/invitations.dart';
@@ -95,7 +96,12 @@ class RoutingService {
             create: (context) => ChatsBloc(
               GetIt.I.get<InvitationRepository>(),
             )..listenOnInvitations(),
-          )
+          ),
+          BlocProvider(
+            create: (context) => FriendsBloc(
+              GetIt.I.get<FriendsRepository>(),
+            )..getAllFriends(),
+          ),
         ],
         child: Authenticated(),
       ),
