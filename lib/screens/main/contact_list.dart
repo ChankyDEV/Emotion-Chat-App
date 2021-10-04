@@ -3,6 +3,7 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
 import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
+import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -97,51 +98,72 @@ class _ContactListState extends State<ContactList> {
       itemCount: friends.length,
       itemBuilder: (context, index) {
         final friend = friends[index];
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          height: 80,
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4.0),
-                child: Container(
-                  height: 60.0,
-                  width: 60.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: friend.hasOwnImage
-                            ? NetworkImage(friend.profileImage.url)
-                            : AssetImage('assets/images/user.png')
-                                as ImageProvider,
-                        fit: BoxFit.fill),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Active',
-                    style: titleStyle.copyWith(
-                      fontSize: 10.0,
-                      color: Colors.green,
-                      fontWeight: FontWeight.normal,
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              Screens.chat,
+              arguments: friend,
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            height: 80,
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4.0),
+                  child: Container(
+                    height: 60.0,
+                    width: 60.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: friend.hasOwnImage
+                              ? NetworkImage(friend.profileImage.url)
+                              : AssetImage('assets/images/user.png')
+                                  as ImageProvider,
+                          fit: BoxFit.fill),
                     ),
                   ),
-                  const SizedBox(
-                    height: 7,
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Active',
+                      style: titleStyle.copyWith(
+                        fontSize: 10.0,
+                        color: Colors.green,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    Text(
+                      friend.name.value,
+                      style: titleStyle.copyWith(fontSize: 14.0),
+                    ),
+                  ],
+                ),
+                Expanded(child: const SizedBox()),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      Screens.chat,
+                      arguments: friend,
+                    );
+                  },
+                  icon: Icon(
+                    Icons.message,
+                    color: cWhite,
                   ),
-                  Text(
-                    friend.name.value,
-                    style: titleStyle.copyWith(fontSize: 14.0),
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         );
       },
