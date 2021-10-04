@@ -65,25 +65,21 @@ class ActiveChat extends StatelessWidget {
         content: Content(value: 'Yes, im here!'),
         dateTime: DateTime.now().subtract(const Duration(seconds: 1)),
         senderID: '12345',
-        isRead: false,
       ),
       Message(
         content: Content(value: 'Are you there?'),
         dateTime: DateTime.now().subtract(const Duration(seconds: 5)),
         senderID: userToChatWith.uid,
-        isRead: false,
       ),
       Message(
         content: Content(value: 'Hello'),
         dateTime: DateTime.now().subtract(const Duration(seconds: 10)),
         senderID: userToChatWith.uid,
-        isRead: false,
       ),
       Message(
         content: Content(value: 'What u want?'),
         dateTime: DateTime.now(),
         senderID: '12345',
-        isRead: false,
       ),
     ];
 
