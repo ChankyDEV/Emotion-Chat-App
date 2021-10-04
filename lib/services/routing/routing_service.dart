@@ -2,10 +2,12 @@ import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
 import 'package:emotion_chat/blocs/invitations/invitation_bloc.dart';
 import 'package:emotion_chat/constants/blocs.dart';
+import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/screens.dart';
 import 'package:emotion_chat/repositories/friends/friends_repository.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
 import 'package:emotion_chat/screens/auth/additional_user_info/additional_user_info_screen.dart';
+import 'package:emotion_chat/screens/chat/active_chat.dart';
 import 'package:emotion_chat/screens/main/invitations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +19,7 @@ mixin Screens {
   static const unauthenticated = 'unauthenticated';
   static const additionalInfo = 'additionalInfo';
   static const invitations = 'invitations';
+  static const chat = 'chat';
 }
 
 class RoutingService {
@@ -42,6 +45,8 @@ class RoutingService {
         return additionalInfo();
       case Screens.invitations:
         return invitations();
+      case Screens.chat:
+        return chat(routeSettings.arguments);
       default:
         return wrapper();
     }
@@ -116,6 +121,15 @@ class RoutingService {
         )..listenOnInvitations(),
         child: Invitations(),
       ),
+    );
+  }
+
+  MaterialPageRoute chat(Object? arguments) {
+    final friend = arguments as ChatUser;
+    return MaterialPageRoute(
+      builder: (context) {
+        return ActiveChat(userToChatWith: friend);
+      },
     );
   }
 }
