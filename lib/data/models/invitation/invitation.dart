@@ -22,7 +22,10 @@ class Invitation {
   }
 
   Map<String, dynamic> toJson() {
-    return {'createdAt': createdAt, 'senderUid': senderUid};
+    return {
+      'createdAt': createdAt,
+      'senderUid': senderUid,
+    };
   }
 
   factory Invitation.empty() {

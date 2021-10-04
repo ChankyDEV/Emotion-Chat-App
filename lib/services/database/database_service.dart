@@ -30,4 +30,6 @@ abstract class DatabaseService {
   );
 
   Future<List<ChatUser>> getAllFriends(String userUid);
+
+  void getMessagesStreamFor(List<String> members);
 }

@@ -252,4 +252,21 @@ class DatabaseServiceImpl implements DatabaseService {
     final json = response.data();
     return UserDTO.fromJson(json).toDomain();
   }
+
+  void getMessagesStreamFor(List<String> members) async {
+    final queryResult = await _db
+        .collection(Collections.conversations)
+        .where('members', arrayContainsAny: members)
+        .get();
+    final docUuid = queryResult.docs.first.id;
+    _db
+        .collection(Collections.conversations)
+        .doc(docUuid)
+        .collection('messages')
+        .snapshots()
+        .listen((event) {
+      final json = event.docs.first.data();
+      var a = json;
+    });
+  }
 }
