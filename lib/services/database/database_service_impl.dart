@@ -20,13 +20,13 @@ class DatabaseServiceImpl implements DatabaseService {
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
   @override
-  Future<void> addUser(MyUser user) => _addOrUpdateUser(
+  Future<void> addUser(ChatUser user) => _addOrUpdateUser(
         user,
         onErrorMessage: 'Cant add user',
       );
 
   @override
-  Future<MyUser> getUser(String uid) async {
+  Future<ChatUser> getUser(String uid) async {
     try {
       final response = await _db.collection(Collections.users).doc(uid).get();
       return UserDTO.fromJson(response.data()).toDomain();
@@ -36,14 +36,14 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<void> updateUser(MyUser user) => _addOrUpdateUser(
+  Future<void> updateUser(ChatUser user) => _addOrUpdateUser(
         user,
         onErrorMessage: 'Cant update user',
         isFirstTime: false,
       );
 
   Future<void> _addOrUpdateUser(
-    MyUser user, {
+    ChatUser user, {
     String onErrorMessage = '',
     bool isFirstTime = true,
   }) async {
@@ -73,11 +73,11 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<MyUser> findUserByEmail(String email) {
+  Future<ChatUser> findUserByEmail(String email) {
     return _findUserByEmail(email);
   }
 
-  Future<MyUser> _findUserByEmail(String email) async {
+  Future<ChatUser> _findUserByEmail(String email) async {
     try {
       final response = await _db
           .collection(Collections.users)
@@ -143,7 +143,9 @@ class DatabaseServiceImpl implements DatabaseService {
             isEqualTo: to,
           )
           .get();
-      return docsForInvitations.size == 0 && docsForFriends.size == 0;
+      return docsForInvitations.size == 0 &&
+          docsForFriends.size == 0 &&
+          from != to;
     } catch (e) {
       throw DatabaseException(message: 'Cant get data');
     }
@@ -193,17 +195,22 @@ class DatabaseServiceImpl implements DatabaseService {
     Invitation invitation,
   ) async {
     try {
-      await _db
-          .collection(Collections.contacts)
-          .doc(userUid)
-          .collection(Collections.friends)
-          .add(
-            InvitationDTO(DateTime.now(), invitation.senderUid).toJson(),
-          );
+      await _addFriend(userUid, invitation.senderUid);
+      await _addFriend(invitation.senderUid, userUid);
       await _deleteInvitation(userUid, invitation);
     } catch (e) {
       throw DatabaseException(message: 'Cant accept invitation');
     }
+  }
+
+  Future<void> _addFriend(String userUuid, String friendUuid) async {
+    await _db
+        .collection(Collections.contacts)
+        .doc(userUuid)
+        .collection(Collections.friends)
+        .add(
+          InvitationDTO(DateTime.now(), friendUuid).toJson(),
+        );
   }
 
   Future<void> _deleteInvitation(
@@ -219,17 +226,30 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<List<MyUser>> getAllFriends(String userUid) async {
-    final uids = await _db
+  Future<List<ChatUser>> getAllFriends(String userUuid) async {
+    final List<String> uuids = await _db
         .collection(Collections.contacts)
-        .doc(userUid)
+        .doc(userUuid)
         .collection(Collections.friends)
         .get()
-        .then(
-          (value) => value.docs.map(
-            (e) => e.data()['senderUid'],
-          ),
-        );
-    return [];
+        .then((value) {
+      return value.docs.map<String>((e) {
+        final data = e.data();
+        return data['senderUid'];
+      }).toList();
+    });
+    final friends = <ChatUser>[];
+    await Future.forEach<String>(uuids, (uuid) async {
+      ChatUser friend = await findUserByUid(uuid);
+      friends.add(friend);
+    });
+
+    return friends;
+  }
+
+  Future<ChatUser> findUserByUid(String uuid) async {
+    final response = await _db.collection(Collections.users).doc(uuid).get();
+    final json = response.data();
+    return UserDTO.fromJson(json).toDomain();
   }
 }

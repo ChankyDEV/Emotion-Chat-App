@@ -21,7 +21,7 @@ class AuthServiceImpl implements AuthService {
   Stream<UserDTO> get currentUser => _currentUserController.stream;
 
   @override
-  Future<void> addInfoAboutUserToStream(MyUser user) async {
+  Future<void> addInfoAboutUserToStream(ChatUser user) async {
     _currentUserController.add(
       user.fromDomain(),
     );
@@ -33,13 +33,13 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<MyUser> getSignedInUser() async {
+  Future<ChatUser> getSignedInUser() async {
     final currentUserUid = _auth.currentUser!.uid;
     return _db.getUser(currentUserUid);
   }
 
   @override
-  Future<MyUser> signInWithEmail({
+  Future<ChatUser> signInWithEmail({
     required EmailAddress? emailAddress,
     required Password? password,
   }) async {
@@ -61,10 +61,10 @@ class AuthServiceImpl implements AuthService {
     }
   }
 
-  MyUser _fromFirebaseUser(
+  ChatUser _fromFirebaseUser(
       UserCredential userCredential, PhoneNumber? phoneNumber) {
     final user = userCredential.user;
-    return MyUser(
+    return ChatUser(
       phoneNumber: PhoneNumber(value: phoneNumber!.value.toString()),
       emailAddress: EmailAddress(value: user!.email.toString()),
       name: Name(value: ''),
@@ -76,7 +76,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<MyUser> signInWithPhoneNumber({
+  Future<ChatUser> signInWithPhoneNumber({
     required PhoneNumber? phoneNumber,
     required Password? password,
   }) {
@@ -84,7 +84,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<MyUser> signUpWithEmailAndPhone({
+  Future<ChatUser> signUpWithEmailAndPhone({
     required EmailAddress? emailAddress,
     required PhoneNumber? phoneNumber,
     required Password? password,

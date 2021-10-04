@@ -14,7 +14,7 @@ void main() {
   const tEmail = 'test@gmail.com';
   const tReceiverUid = '12345';
   const tSenderUid = '54321';
-  final tUser = MyUser(
+  final tUser = ChatUser(
     phoneNumber: PhoneNumber.empty(),
     emailAddress: EmailAddress.empty(),
     name: Name.empty(),

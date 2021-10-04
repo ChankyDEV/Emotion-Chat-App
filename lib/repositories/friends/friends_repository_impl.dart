@@ -18,7 +18,7 @@ class FriendsRepositoryImpl implements FriendsRepository {
   );
 
   @override
-  Future<Either<Failure, List<MyUser>>> getAllFriends() async {
+  Future<Either<Failure, List<ChatUser>>> getAllFriends() async {
     final hasConnection = await _network.isConnected;
     if (hasConnection) {
       final user = await _local.getUser();

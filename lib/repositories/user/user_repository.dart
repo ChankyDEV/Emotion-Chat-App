@@ -3,17 +3,17 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 
 abstract class UserRepository {
-  Stream<MyUser> get currentUser;
+  Stream<ChatUser> get currentUser;
 
-  Future<Either<Failure, MyUser>> signUp(
+  Future<Either<Failure, ChatUser>> signUp(
       {required EmailAddress emailAddress,
       required PhoneNumber phoneNumber,
       required Password password});
 
-  Future<Either<Failure, MyUser>> signInWithEmail(
+  Future<Either<Failure, ChatUser>> signInWithEmail(
       {required EmailAddress emailAddress, required Password password});
 
-  Future<Either<Failure, MyUser>> signInWithPhoneNumber(
+  Future<Either<Failure, ChatUser>> signInWithPhoneNumber(
       {required PhoneNumber phoneNumber, required Password password});
 
   Future<Either<Failure, Unit>> updateUserInfo(
@@ -22,7 +22,7 @@ abstract class UserRepository {
       required bool hasOwnImage,
       MyPickedFile? profileImage});
 
-  Future<MyUser> getSignedInUser();
+  Future<ChatUser> getSignedInUser();
 
   Future<bool> logout();
 

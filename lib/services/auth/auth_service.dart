@@ -3,20 +3,20 @@ import 'dart:async';
 import 'package:emotion_chat/constants/data.dart';
 
 abstract class AuthService {
-  Future<MyUser> signUpWithEmailAndPhone(
+  Future<ChatUser> signUpWithEmailAndPhone(
       {required EmailAddress? emailAddress,
       required PhoneNumber? phoneNumber,
       required Password? password});
 
-  Future<MyUser> signInWithEmail(
+  Future<ChatUser> signInWithEmail(
       {required EmailAddress? emailAddress, required Password? password});
 
-  Future<MyUser> signInWithPhoneNumber(
+  Future<ChatUser> signInWithPhoneNumber(
       {required PhoneNumber? phoneNumber, required Password? password});
 
-  Future<MyUser> getSignedInUser();
+  Future<ChatUser> getSignedInUser();
 
-  Future<void> addInfoAboutUserToStream(MyUser user);
+  Future<void> addInfoAboutUserToStream(ChatUser user);
 
   Stream<UserDTO> get currentUser;
 

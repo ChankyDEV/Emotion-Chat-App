@@ -1,7 +1,7 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:equatable/equatable.dart';
 
-class MyUser extends Equatable {
+class ChatUser extends Equatable {
   final String uid;
   final PhoneNumber phoneNumber;
   final EmailAddress emailAddress;
@@ -10,8 +10,8 @@ class MyUser extends Equatable {
   final Gender gender;
   final bool hasOwnImage;
 
-  factory MyUser.empty() {
-    return MyUser(
+  factory ChatUser.empty() {
+    return ChatUser(
       emailAddress: EmailAddress.empty(),
       phoneNumber: PhoneNumber.empty(),
       profileImage: ProfileImage.empty(),
@@ -44,7 +44,7 @@ class MyUser extends Equatable {
     return false;
   }
 
-  MyUser({
+  ChatUser({
     required this.phoneNumber,
     required this.emailAddress,
     required this.name,
@@ -65,7 +65,7 @@ class MyUser extends Equatable {
         profileImage.url,
       ];
 
-  MyUser copyWith({
+  ChatUser copyWith({
     required String uid,
     required PhoneNumber phoneNumber,
     required EmailAddress emailAddress,
@@ -74,7 +74,7 @@ class MyUser extends Equatable {
     required Gender gender,
     required bool hasOwnImage,
   }) {
-    return MyUser(
+    return ChatUser(
       uid: uid,
       phoneNumber: phoneNumber,
       emailAddress: emailAddress,

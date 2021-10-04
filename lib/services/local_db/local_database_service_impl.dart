@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 
 class LocalDatabaseServiceImpl implements LocalDatabaseService {
   @override
-  Future<MyUser> getUser() async {
+  Future<ChatUser> getUser() async {
     final userBox = await openOrGetBox('user');
     final userDto = await performActionOnLocalUser<UserDTO>(
         () => userBox.get('user'), userBox);
@@ -14,7 +14,7 @@ class LocalDatabaseServiceImpl implements LocalDatabaseService {
   }
 
   @override
-  Future<void> saveUser(MyUser user) async {
+  Future<void> saveUser(ChatUser user) async {
     final userBox = await openOrGetBox('user');
     final result = await performActionOnLocalUser<void>(
         () => userBox.put('user', user.fromDomain()), userBox);

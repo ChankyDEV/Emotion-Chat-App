@@ -37,11 +37,11 @@ class MockLocalDatabaseService extends Mock implements LocalDatabaseService {
   }
 
   @override
-  Future<MyUser> getUser() {
+  Future<ChatUser> getUser() {
     return super.noSuchMethod(
       Invocation.method(#getUser, null),
-      returnValueForMissingStub: Future.value(MyUser.empty()),
-      returnValue: Future.value(MyUser.empty()),
+      returnValueForMissingStub: Future.value(ChatUser.empty()),
+      returnValue: Future.value(ChatUser.empty()),
     );
   }
 }

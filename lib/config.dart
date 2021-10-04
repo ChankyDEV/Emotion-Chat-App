@@ -6,6 +6,8 @@ import 'package:emotion_chat/blocs/auth_form/auth_form_bloc.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
 import 'package:emotion_chat/helpers/validator.dart';
+import 'package:emotion_chat/repositories/friends/friends_repository.dart';
+import 'package:emotion_chat/repositories/friends/friends_repository_impl.dart';
 import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
 import 'package:emotion_chat/repositories/image_picker/image_picker_repository.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
@@ -90,6 +92,13 @@ class Config {
         ImagePickerRepository(
             imagePickerService: getItInstance.get<ImagePickerService>(),
             permissionHandler: getItInstance.get<PermissionService>()),
+      )
+      ..registerSingleton<FriendsRepository>(
+        FriendsRepositoryImpl(
+          getItInstance.get<DatabaseService>(),
+          getItInstance.get<LocalDatabaseService>(),
+          getItInstance.get<NetworkService>(),
+        ),
       );
   }
 

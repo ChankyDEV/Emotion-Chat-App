@@ -135,7 +135,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
   }
 
   AuthFormState _stateFromAuthResult(
-      Either<Failure, MyUser> result, AuthFormState state) {
+      Either<Failure, ChatUser> result, AuthFormState state) {
     if (result.isLeft()) {
       var failure;
       result.fold((l) => failure = l, (_) => _);

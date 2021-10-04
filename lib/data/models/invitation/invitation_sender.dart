@@ -3,7 +3,7 @@ import 'package:emotion_chat/data/models/invitation/invitation.dart';
 
 class Inviter {
   final Invitation invitation;
-  final MyUser sender;
+  final ChatUser sender;
 
   Inviter(this.invitation, this.sender);
 }

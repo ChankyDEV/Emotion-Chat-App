@@ -115,7 +115,7 @@ void main() {
     });
   });
 
-  final tuser = MyUser(
+  final tuser = ChatUser(
       uid: '12345',
       profileImage: ProfileImage(url: '12345'),
       emailAddress: emailAddress,
@@ -185,7 +185,7 @@ void main() {
     final tname = Name(value: 'kamil');
     final tgender = Gender(value: GenderEnum.male);
     final thasOwnImage = false;
-    final testUser = MyUser(
+    final testUser = ChatUser(
       name: tname,
       gender: tgender,
       profileImage: ProfileImage(url: '12345'),

@@ -25,17 +25,17 @@ class UserRepositoryImpl implements UserRepository {
       required this.db});
 
   @override
-  Stream<MyUser> get currentUser => authService.currentUser.map(
+  Stream<ChatUser> get currentUser => authService.currentUser.map(
         (dto) => dto.toDomain(),
       );
 
   @override
-  Future<MyUser> getSignedInUser() async {
+  Future<ChatUser> getSignedInUser() async {
     return await localDatabaseService.getUser();
   }
 
   @override
-  Future<Either<Failure, MyUser>> signInWithEmail({
+  Future<Either<Failure, ChatUser>> signInWithEmail({
     required EmailAddress emailAddress,
     required Password password,
   }) async {
@@ -49,7 +49,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, MyUser>> signInWithPhoneNumber({
+  Future<Either<Failure, ChatUser>> signInWithPhoneNumber({
     required PhoneNumber phoneNumber,
     required Password password,
   }) async {
@@ -63,7 +63,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, MyUser>> signUp(
+  Future<Either<Failure, ChatUser>> signUp(
       {required EmailAddress emailAddress,
       required PhoneNumber phoneNumber,
       required Password password}) async {
@@ -76,13 +76,13 @@ class UserRepositoryImpl implements UserRepository {
     );
   }
 
-  Future<Either<Failure, MyUser>> _performAuthAction(
+  Future<Either<Failure, ChatUser>> _performAuthAction(
     Function authAction,
     bool isSignUpAction,
   ) async {
     if (await networkService.isConnected) {
       try {
-        final user = await authAction() as MyUser;
+        final user = await authAction() as ChatUser;
         if (isSignUpAction) {
           await db.addUser(user);
         }
@@ -103,7 +103,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<bool> logout() async {
     try {
       await localDatabaseService.removeUser();
-      authService.addInfoAboutUserToStream(MyUser.empty());
+      authService.addInfoAboutUserToStream(ChatUser.empty());
       return true;
     } on AuthException catch (e) {
       print(e.message);
@@ -121,11 +121,11 @@ class UserRepositoryImpl implements UserRepository {
         return true;
       } on AuthException catch (e) {
         print(e);
-        authService.addInfoAboutUserToStream(MyUser.empty());
+        authService.addInfoAboutUserToStream(ChatUser.empty());
         return false;
       }
     } else {
-      authService.addInfoAboutUserToStream(MyUser.empty());
+      authService.addInfoAboutUserToStream(ChatUser.empty());
       return false;
     }
   }
@@ -138,7 +138,7 @@ class UserRepositoryImpl implements UserRepository {
       MyPickedFile? profileImage}) async {
     if (await networkService.isConnected) {
       try {
-        MyUser user = await authService.getSignedInUser();
+        ChatUser user = await authService.getSignedInUser();
         String generatedImageUploadUrl = "";
         if (hasOwnImage) {
           await imageService.uploadProfileImage(
@@ -146,7 +146,7 @@ class UserRepositoryImpl implements UserRepository {
           generatedImageUploadUrl =
               await imageService.getProfileImageUrl(uid: user.uid);
         }
-        final updatedUser = MyUser(
+        final updatedUser = ChatUser(
           phoneNumber: user.phoneNumber,
           emailAddress: user.emailAddress,
           name: name,

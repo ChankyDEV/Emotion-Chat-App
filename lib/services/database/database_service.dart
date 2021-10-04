@@ -2,15 +2,15 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
 
 abstract class DatabaseService {
-  Future<void> addUser(MyUser user);
+  Future<void> addUser(ChatUser user);
 
-  Future<void> updateUser(MyUser user);
+  Future<void> updateUser(ChatUser user);
 
-  Future<MyUser> getUser(String uid);
+  Future<ChatUser> getUser(String uid);
 
   Future<String> findUserUidByEmail(String email);
 
-  Future<MyUser> findUserByEmail(String email);
+  Future<ChatUser> findUserByEmail(String email);
 
   Future<void> sendInvitation({
     required String from,
@@ -29,5 +29,5 @@ abstract class DatabaseService {
     Invitation invitation,
   );
 
-  Future<List<MyUser>> getAllFriends(String userUid);
+  Future<List<ChatUser>> getAllFriends(String userUid);
 }

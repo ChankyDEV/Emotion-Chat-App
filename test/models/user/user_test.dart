@@ -10,7 +10,7 @@ void main() {
   const phone = PhoneNumber(value: '796262965');
   const gender = Gender(value: GenderEnum.male);
   const name = Name(value: 'Kamil');
-  final user = MyUser(
+  final user = ChatUser(
       uid: '12345',
       emailAddress: email,
       phoneNumber: phone,

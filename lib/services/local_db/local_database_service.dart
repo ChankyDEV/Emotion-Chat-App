@@ -1,8 +1,8 @@
 import 'package:emotion_chat/constants/data.dart';
 
 abstract class LocalDatabaseService {
-  Future<void> saveUser(MyUser user);
-  Future<MyUser> getUser();
+  Future<void> saveUser(ChatUser user);
+  Future<ChatUser> getUser();
   Future<bool> isUserSaved();
   Future<void> removeUser();
 }
