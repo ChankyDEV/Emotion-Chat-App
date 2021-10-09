@@ -21,18 +21,32 @@ class ChatRepositoryImpl implements ChatRepository {
     required String messageReceiverUuid,
   }) async {
     final uuid = (await _local.getUser()).uid;
-    _db.getMessagesStreamFor([
-      uuid,
-      messageReceiverUuid,
-    ]);
+    try {
+      final stream = await _db.getMessagesStreamFor([
+        uuid,
+        messageReceiverUuid,
+      ]);
+      return right(stream);
+    } catch (e) {
+      return left(Failure(message: 'message'));
+    }
   }
 
   @override
   Future<Either<Failure, Unit>> sendMessage({
     required String messageContent,
     required String messageReceiverUuid,
-  }) {
-    // TODO: implement sendMessage
-    throw UnimplementedError();
+  }) async {
+    final uuid = (await _local.getUser()).uid;
+    try {
+      await _db.sendMessage(
+        from: uuid,
+        to: messageReceiverUuid,
+        message: messageContent,
+      );
+      return right(unit);
+    } catch (e) {
+      return left(Failure(message: 'message'));
+    }
   }
 }

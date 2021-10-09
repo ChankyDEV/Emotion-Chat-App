@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
+import 'package:emotion_chat/data/data_transfer_objects/messages/message_dto.dart';
 import 'package:emotion_chat/data/exceptions/error_messages.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
@@ -14,6 +15,7 @@ mixin Collections {
   static const conversations = 'conversations';
   static const contacts = 'contacts';
   static const friends = 'friends';
+  static const messages = 'messages';
 }
 
 class DatabaseServiceImpl implements DatabaseService {
@@ -253,20 +255,77 @@ class DatabaseServiceImpl implements DatabaseService {
     return UserDTO.fromJson(json).toDomain();
   }
 
-  void getMessagesStreamFor(List<String> members) async {
-    final queryResult = await _db
+  Future<Stream<List<Message>>> getMessagesStreamFor(
+    List<String> members,
+  ) async {
+    String conversationUid = await _getConversationUid(members);
+    if (conversationUid.isEmpty) {
+      conversationUid = await _createConversation(members[0], members[1]);
+    }
+    return _db
         .collection(Collections.conversations)
-        .where('members', arrayContainsAny: members)
-        .get();
-    final docUuid = queryResult.docs.first.id;
-    _db
-        .collection(Collections.conversations)
-        .doc(docUuid)
-        .collection('messages')
+        .doc(conversationUid)
+        .collection(Collections.messages)
+        .orderBy('createdAt', descending: true)
         .snapshots()
-        .listen((event) {
-      final json = event.docs.first.data();
-      var a = json;
+        .map(_mapToMessage);
+  }
+
+  List<Message> _mapToMessage(QuerySnapshot<Map<String, dynamic>> snapshot) {
+    List<MessageDTO> messages = <MessageDTO>[];
+    snapshot.docs.forEach((json) {
+      Map<String, dynamic> jsonMap = {
+        'content': json['content'],
+        'createdAt': (json['createdAt'] as Timestamp).toDate(),
+        'senderUid': json['senderUid'],
+      };
+      messages.add(MessageDTO.fromJson(jsonMap));
     });
+    return messages;
+  }
+
+  @override
+  Future<void> sendMessage({
+    required String from,
+    required String to,
+    required String message,
+  }) async {
+    String conversationUid = await _getConversationUid(<String>[from, to]);
+    final msg = <String, dynamic>{
+      'content': message,
+      'createdAt': DateTime.now(),
+      'senderUid': from,
+    };
+    if (conversationUid.isEmpty) {
+      conversationUid = await _createConversation(from, to);
+    }
+    await _db
+        .collection(Collections.conversations)
+        .doc(conversationUid)
+        .collection(Collections.messages)
+        .add(msg);
+  }
+
+  Future<String> _createConversation(
+    String firstMember,
+    String secondMember,
+  ) async {
+    final doc = await _db.collection(Collections.conversations).add({
+      'members': [firstMember, secondMember],
+    });
+    return doc.id;
+  }
+
+  Future<String> _getConversationUid(List<String> members) async {
+    QuerySnapshot<Map<String, dynamic>> queryResult = await _db
+        .collection(Collections.conversations)
+        .where('members', isEqualTo: [members[0], members[1]]).get();
+    if (queryResult.docs.length == 0) {
+      queryResult = await _db
+          .collection(Collections.conversations)
+          .where('members', isEqualTo: [members[1], members[0]]).get();
+    }
+    var a = queryResult;
+    return queryResult.docs.length > 0 ? queryResult.docs.first.id : '';
   }
 }

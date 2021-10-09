@@ -1,13 +1,13 @@
 import 'package:emotion_chat/constants/data.dart';
 
 class Message {
-  final String senderID;
+  final String senderUid;
   final Content content;
-  final DateTime dateTime;
+  final DateTime createdAt;
 
   Message({
     required this.content,
-    required this.dateTime,
-    required this.senderID,
+    required this.createdAt,
+    required this.senderUid,
   });
 }

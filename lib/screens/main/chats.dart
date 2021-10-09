@@ -17,12 +17,6 @@ class Chats extends StatefulWidget {
 class _ChatsState extends State<Chats> {
 
   @override
-  void initState() {
-    GetIt.I.get<DatabaseService>().getMessagesStreamFor(['123','12345']);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChatsBloc, ChatsState>(
       builder: (context, state) {

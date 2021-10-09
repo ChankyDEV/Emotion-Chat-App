@@ -101,7 +101,7 @@ class _ContactListState extends State<ContactList> {
         return GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(
-              Screens.chat,
+              Screens.activeChat,
               arguments: friend,
             );
           },
@@ -153,7 +153,7 @@ class _ContactListState extends State<ContactList> {
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(
-                      Screens.chat,
+                      Screens.activeChat,
                       arguments: friend,
                     );
                   },
