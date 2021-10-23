@@ -80,6 +80,11 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
   }
 
   Stream<ChatsState> _conversationsChanged(_ConversationsChanged value) async* {
+    value.conversations.sort((x, y) {
+      return y.lastMessage.createdAt.compareTo(
+        x.lastMessage.createdAt,
+      );
+    });
     yield state.copyWith(
       conversations: value.conversations,
       numberOfConversations: value.conversations.length,
