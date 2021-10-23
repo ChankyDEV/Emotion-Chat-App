@@ -102,7 +102,8 @@ class RoutingService {
           BlocProvider(
             create: (context) => ChatsBloc(
               GetIt.I.get<InvitationRepository>(),
-            )..listenOnInvitations(),
+              GetIt.I.get<ChatRepository>(),
+            )..startListening(),
           ),
           BlocProvider(
             create: (context) => FriendsBloc(
@@ -133,7 +134,7 @@ class RoutingService {
         return BlocProvider(
           create: (context) => ActiveChatBloc(
             GetIt.I.get<ChatRepository>(),
-            friend.uid,
+            friend.uuid,
           )..startListeningForMessages(),
           child: ActiveChat(userToChatWith: friend),
         );

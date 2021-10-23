@@ -113,15 +113,34 @@ class _ContactListState extends State<ContactList> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
                   child: Container(
-                    height: 60.0,
-                    width: 60.0,
+                    height: 40.0,
+                    width: 40.0,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: friend.hasOwnImage
-                              ? NetworkImage(friend.profileImage.url)
-                              : AssetImage('assets/images/user.png')
-                                  as ImageProvider,
-                          fit: BoxFit.fill),
+                        image: friend.hasOwnImage
+                            ? Image.network(
+                                friend.profileImage.url,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: cWhite,
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : 0,
+                                    ),
+                                  );
+                                },
+                              ).image
+                            : AssetImage('assets/images/user.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
@@ -160,6 +179,7 @@ class _ContactListState extends State<ContactList> {
                   icon: Icon(
                     Icons.message,
                     color: cWhite,
+                    size: 18,
                   ),
                 ),
               ],

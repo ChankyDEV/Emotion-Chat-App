@@ -23,7 +23,7 @@ void main() {
     gender: tGender,
     hasOwnImage: tHasOwnImage,
     profileImage: tProfileImage,
-    uid: tUid,
+    uuid: tUid,
   );
 
   late MockAuthService authService;
@@ -171,7 +171,7 @@ void main() {
     });
   });
   final tUserUpdated = ChatUser(
-    uid: tUid,
+    uuid: tUid,
     emailAddress: tEmail,
     phoneNumber: tPhone,
     name: Name(value: 'kamil'),
@@ -180,7 +180,7 @@ void main() {
     profileImage: tProfileImage,
   );
   final tUserUpdatedWithImage = ChatUser(
-    uid: tUid,
+    uuid: tUid,
     emailAddress: tEmail,
     phoneNumber: tPhone,
     name: Name(value: 'kamil'),

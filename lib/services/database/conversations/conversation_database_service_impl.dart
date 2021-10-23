@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotion_chat/data/data_transfer_objects/messages/message_dto.dart';
+import 'package:emotion_chat/data/models/conversation/conversation.dart';
 import 'package:emotion_chat/data/models/conversation/message.dart';
 import 'package:emotion_chat/services/database/conversations/conversation_database_service.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
@@ -70,9 +71,11 @@ class ConversationDatabaseImpl implements ConversationDatabase {
   }
 
   Future<String> _getConversationUid(List<String> members) async {
-    QuerySnapshot<Map<String, dynamic>> queryResult = await _db
-        .collection(Collections.conversations)
-        .where('members', isEqualTo: [members[0], members[1]]).get();
+    QuerySnapshot<Map<String, dynamic>> queryResult =
+        await _db.collection(Collections.conversations).where(
+      'members',
+      isEqualTo: [members[0], members[1]],
+    ).get();
     if (queryResult.docs.length == 0) {
       queryResult = await _db
           .collection(Collections.conversations)
@@ -80,5 +83,54 @@ class ConversationDatabaseImpl implements ConversationDatabase {
     }
     var a = queryResult;
     return queryResult.docs.length > 0 ? queryResult.docs.first.id : '';
+  }
+
+  @override
+  Future<Stream<List<Conversation>>> getConversationStream(
+    String uuid, {
+    required Function onFindUser,
+  }) async {
+    return _db
+        .collection(Collections.conversations)
+        .where(
+          'members',
+          arrayContainsAny: [uuid],
+        )
+        .snapshots()
+        .asyncMap(
+          (event) async => _mapToConversations(
+            event,
+            uuid,
+            onFindUser,
+          ),
+        );
+  }
+
+  Future<List<Conversation>> _mapToConversations(
+    QuerySnapshot<Map<String, dynamic>> snapshots,
+    String userUuid,
+    Function onFindUser,
+  ) async {
+    final conversations = <Conversation>[];
+    await Future.forEach<QueryDocumentSnapshot<Map<String, dynamic>>>(
+        snapshots.docs, (snapshot) async {
+      final json = snapshot.data();
+      final members = <String>[json['members'][0], json['members'][1]];
+      final friendUserUuid =
+          members.firstWhere((element) => element != userUuid);
+      final friend = await onFindUser(friendUserUuid);
+      final stream = await getMessagesStreamFor(members);
+      final messages = await stream.first;
+      if (messages.length > 0) {
+        conversations.add(
+          Conversation(
+            uuid: snapshot.id,
+            friend: friend,
+            lastMessage: messages.first,
+          ),
+        );
+      }
+    });
+    return conversations;
   }
 }

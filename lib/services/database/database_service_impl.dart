@@ -111,4 +111,12 @@ class DatabaseServiceImpl implements DatabaseService {
       message: message,
     );
   }
+
+  @override
+  Future<Stream<List<Conversation>>> getConversationStream(String uuid) async {
+    return await _conversationDatabase.getConversationStream(
+      uuid,
+      onFindUser: _userDatabase.findUserByUuid,
+    );
+  }
 }

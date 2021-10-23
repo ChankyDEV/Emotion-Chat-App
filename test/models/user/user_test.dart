@@ -12,7 +12,7 @@ void main() {
   const gender = Gender(value: GenderEnum.male);
   const name = Name(value: 'Kamil');
   final user = ChatUser(
-    uid: '12345',
+    uuid: '12345',
     emailAddress: email,
     phoneNumber: phone,
     profileImage: ProfileImage(url: 'http://12345.pl'),

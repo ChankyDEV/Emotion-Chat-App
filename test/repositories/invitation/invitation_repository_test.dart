@@ -22,7 +22,7 @@ void main() {
     hasOwnImage: false,
     gender: Gender.empty(),
     profileImage: ProfileImage(url: 'https://123.com'),
-    uid: tSenderUid,
+    uuid: tSenderUid,
   );
   setUpAll(() {
     db = MockDatabaseService();
@@ -49,7 +49,7 @@ void main() {
     verify(db.findUserUuidByEmail(tEmail));
     verify(local.getUser());
     verify(db.sendInvitation(
-      from: tUser.uid,
+      from: tUser.uuid,
       to: tReceiverUuid,
     ));
     expect(result, right(unit));
@@ -66,7 +66,7 @@ void main() {
     verifyNever(db.findUserUuidByEmail(tEmail));
     verifyNever(local.getUser());
     verifyNever(db.sendInvitation(
-      from: tUser.uid,
+      from: tUser.uuid,
       to: tReceiverUuid,
     ));
     expect(result, left(noSavedUserFailure));
@@ -88,7 +88,7 @@ void main() {
     verify(db.findUserUuidByEmail(tEmail));
     verifyNever(local.getUser());
     verifyNever(db.sendInvitation(
-      from: tUser.uid,
+      from: tUser.uuid,
       to: tReceiverUuid,
     ));
     expect(result, left(noUserWithEmailFailure));

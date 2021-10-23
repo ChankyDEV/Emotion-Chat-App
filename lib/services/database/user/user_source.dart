@@ -26,7 +26,7 @@ class UserDatabaseImpl implements UserDatabase {
   @override
   Future<String> findUserUuidByEmail(String email) async {
     final user = await _findUserByEmail(email);
-    return user.uid;
+    return user.uuid;
   }
 
   @override
@@ -87,12 +87,12 @@ class UserDatabaseImpl implements UserDatabase {
     try {
       await _db
           .collection(Collections.users)
-          .doc(user.uid)
+          .doc(user.uuid)
           .set(user.fromDomain().toJson());
       if (isFirstTime) {
         await _db
             .collection(Collections.invitations)
-            .doc(user.uid)
+            .doc(user.uuid)
             .collection(Collections.invites)
             .add(
               Invitation.empty().toJson(),

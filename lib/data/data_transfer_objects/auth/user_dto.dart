@@ -61,7 +61,7 @@ class UserDTO extends Equatable {
 
   ChatUser toDomain() {
     return ChatUser(
-      uid: uid,
+      uuid: uid,
       emailAddress: EmailAddress(value: emailAddress),
       phoneNumber: PhoneNumber(value: phoneNumber),
       name: Name(value: name),

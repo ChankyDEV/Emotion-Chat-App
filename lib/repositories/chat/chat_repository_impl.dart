@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/services.dart';
+import 'package:emotion_chat/data/models/conversation/conversation.dart';
 import 'package:emotion_chat/data/models/conversation/message.dart';
 import 'package:emotion_chat/data/models/core/failure.dart';
 import 'package:emotion_chat/repositories/chat/chat_repository.dart';
@@ -20,7 +21,7 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<Either<Failure, Stream<List<Message>>>> getMessagesStream({
     required String messageReceiverUuid,
   }) async {
-    final uuid = (await _local.getUser()).uid;
+    final uuid = (await _local.getUser()).uuid;
     try {
       final stream = await _db.getMessagesStreamFor([
         uuid,
@@ -37,7 +38,7 @@ class ChatRepositoryImpl implements ChatRepository {
     required String messageContent,
     required String messageReceiverUuid,
   }) async {
-    final uuid = (await _local.getUser()).uid;
+    final uuid = (await _local.getUser()).uuid;
     try {
       await _db.sendMessage(
         from: uuid,
@@ -45,6 +46,21 @@ class ChatRepositoryImpl implements ChatRepository {
         message: messageContent,
       );
       return right(unit);
+    } catch (e) {
+      return left(Failure(message: 'message'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Stream<List<Conversation>>>> get conversations =>
+      _getConversationStream();
+
+  Future<Either<Failure, Stream<List<Conversation>>>>
+      _getConversationStream() async {
+    try {
+      final user = await _local.getUser();
+      final stream = await _db.getConversationStream(user.uuid);
+      return right(stream);
     } catch (e) {
       return left(Failure(message: 'message'));
     }

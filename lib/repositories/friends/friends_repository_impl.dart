@@ -22,7 +22,7 @@ class FriendsRepositoryImpl implements FriendsRepository {
     final hasConnection = await _network.isConnected;
     if (hasConnection) {
       final user = await _local.getUser();
-      final friends = await _db.getAllFriends(user.uid);
+      final friends = await _db.getAllFriends(user.uuid);
       return right(friends);
     } else {
       return left(

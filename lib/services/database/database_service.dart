@@ -10,6 +10,8 @@ abstract class DatabaseService {
 
   Future<Stream<List<Message>>> getMessagesStreamFor(List<String> members);
 
+  Future<Stream<List<Conversation>>> getConversationStream(String uuid);
+
   Future<void> sendMessage({
     required String from,
     required String to,

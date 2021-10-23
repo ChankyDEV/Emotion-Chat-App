@@ -142,9 +142,9 @@ class UserRepositoryImpl implements UserRepository {
         String generatedImageUploadUrl = "";
         if (hasOwnImage) {
           await imageService.uploadProfileImage(
-              profileImage: profileImage, uid: user.uid);
+              profileImage: profileImage, uid: user.uuid);
           generatedImageUploadUrl =
-              await imageService.getProfileImageUrl(uid: user.uid);
+              await imageService.getProfileImageUrl(uid: user.uuid);
         }
         final updatedUser = ChatUser(
           phoneNumber: user.phoneNumber,
@@ -153,7 +153,7 @@ class UserRepositoryImpl implements UserRepository {
           hasOwnImage: hasOwnImage,
           gender: gender,
           profileImage: ProfileImage(url: generatedImageUploadUrl),
-          uid: user.uid,
+          uuid: user.uuid,
         );
         await db.updateUser(updatedUser);
         await localDatabaseService.saveUser(updatedUser);

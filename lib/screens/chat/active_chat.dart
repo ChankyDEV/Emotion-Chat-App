@@ -54,26 +54,37 @@ class _ActiveChatState extends State<ActiveChat> {
   Widget _buildTitle() {
     return Row(
       children: [
-        Container(
-          height: 35.0,
-          width: 35.0,
-          decoration: BoxDecoration(
-            image: widget.userToChatWith.hasOwnImage
-                ? DecorationImage(
+        widget.userToChatWith.hasOwnImage
+            ? Container(
+                height: 35.0,
+                width: 35.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
                     image: NetworkImage(widget.userToChatWith.profileImage.url),
                     fit: BoxFit.fill,
-                  )
-                : null,
-            shape: BoxShape.circle,
-          ),
-        ),
-        const SizedBox(
-          width: 10,
+                  ),
+                  shape: BoxShape.circle,
+                ),
+              )
+            : const SizedBox(),
+        SizedBox(
+          width: widget.userToChatWith.hasOwnImage ? 10 : 0,
         ),
         Text(
           widget.userToChatWith.name.value,
           style: bodyStyle.copyWith(fontSize: 12.0),
         ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'Sad/Other',
+                style: bodyStyle.copyWith(fontSize: 12.0),
+              )
+            ],
+          ),
+        )
       ],
     );
   }
@@ -85,7 +96,7 @@ class _ActiveChatState extends State<ActiveChat> {
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-          alignment: messages[index].senderUid != widget.userToChatWith.uid
+          alignment: messages[index].senderUid != widget.userToChatWith.uuid
               ? Alignment.centerRight
               : Alignment.centerLeft,
           child: Container(

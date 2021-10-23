@@ -29,7 +29,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
           final receiverUuid = await db.findUserUuidByEmail(email);
           final savedUser = await local.getUser();
           await db.sendInvitation(
-            from: savedUser.uid,
+            from: savedUser.uuid,
             to: receiverUuid,
           );
           return right(unit);
@@ -59,7 +59,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
     if (hasInternetConnection) {
       try {
         final user = await local.getUser();
-        final invitationsStream = db.getInvitationsStreamOnUid(user.uid);
+        final invitationsStream = db.getInvitationsStreamOnUid(user.uuid);
         final invitersStream =
             invitationsStream.asyncMap<List<Inviter>>((invitations) async {
           final inviters = <Inviter>[];
@@ -88,7 +88,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
   Future<Either<Failure, Unit>> acceptInvitation(Invitation invitation) async {
     try {
       final user = await local.getUser();
-      await db.acceptInvitation(user.uid, invitation);
+      await db.acceptInvitation(user.uuid, invitation);
       return right(unit);
     } catch (e) {
       return left(DatabaseFailure('Cant accept invitation'));
@@ -99,7 +99,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
   Future<Either<Failure, Unit>> deleteInvitation(Invitation invitation) async {
     try {
       final user = await local.getUser();
-      await db.deleteInvitation(user.uid, invitation);
+      await db.deleteInvitation(user.uuid, invitation);
       return right(unit);
     } catch (e) {
       return left(DatabaseFailure('Cant delete invitation'));
