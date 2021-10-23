@@ -178,7 +178,7 @@ class _ChatsState extends State<Chats> {
   Widget _buildConversationItem(Conversation conversation) => UserListItem(
         user: conversation.friend,
         name: conversation.friend.name.value,
-        status: 'Active',
+        isActive: true,
         message: conversation.lastMessage.content.value,
         time: conversation.lastMessage.createdAt,
       );

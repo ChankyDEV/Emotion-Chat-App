@@ -109,7 +109,7 @@ class _ContactListState extends State<ContactList> {
           child: UserListItem(
             user: friend,
             name: friend.name.value,
-            status: 'Active',
+            isActive: true,
           ),
         );
       },
