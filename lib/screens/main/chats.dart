@@ -1,9 +1,10 @@
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
+import 'package:emotion_chat/data/models/conversation/conversation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
-import 'package:emotion_chat/services/database/database_service.dart';
+import 'package:emotion_chat/screens/utils/user_list_item.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,11 @@ class Chats extends StatefulWidget {
 }
 
 class _ChatsState extends State<Chats> {
+  @override
+  void didChangeDependencies() {
+    BlocProvider.of<ChatsBloc>(context).add(ChatsEvent.refresh());
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +43,17 @@ class _ChatsState extends State<Chats> {
               ),
             ),
             body: Center(
-              child: Text(
-                'No active chats',
-                style: titleStyle,
-              ),
+              child: state.numberOfConversations > 0
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: _buildConversations(
+                        state.conversations,
+                      ),
+                    )
+                  : Text(
+                      'No active chats',
+                      style: titleStyle,
+                    ),
             ),
           ),
         );
@@ -133,4 +146,40 @@ class _ChatsState extends State<Chats> {
       ),
     );
   }
+
+  Widget _buildConversations(List<Conversation> conversations) {
+    return ListView.separated(
+      itemCount: conversations.length,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () async {
+            await Navigator.of(context).pushNamed(
+              Screens.activeChat,
+              arguments: conversations[index].friend,
+            );
+            BlocProvider.of<ChatsBloc>(context).add(ChatsEvent.refresh());
+          },
+          child: _buildConversationItem(
+            conversations[index],
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider(
+          color: cWhite.withOpacity(0.2),
+          thickness: 1.5,
+          indent: 16,
+          endIndent: 12,
+        );
+      },
+    );
+  }
+
+  Widget _buildConversationItem(Conversation conversation) => UserListItem(
+        user: conversation.friend,
+        name: conversation.friend.name.value,
+        status: 'Active',
+        message: conversation.lastMessage.content.value,
+        time: conversation.lastMessage.createdAt,
+      );
 }

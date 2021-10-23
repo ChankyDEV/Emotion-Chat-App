@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/repositories/chat/chat_repository.dart';
 import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
@@ -22,6 +23,8 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
           ChatsState.initial(
             numberOfInviters: '0',
             inviters: <Inviter>[],
+            conversations: <Conversation>[],
+            numberOfConversations: 0,
           ),
         );
 
@@ -30,7 +33,7 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
     final conversations = await _chatRepository.conversations;
     invitations.fold((l) => l, (r) {
       _invitations = r.listen((inviters) {
-        this.add(
+        add(
           ChatsEvent.invitationsNumberChanged(inviters),
         );
       });
@@ -39,9 +42,9 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
       (l) => l,
       (r) => r.listen(
         (conversations) {
-          conversations.forEach((element) {
-            print(element.toString());
-          });
+          add(
+            ChatsEvent.conversationsChanged(conversations),
+          );
         },
       ),
     );
@@ -52,6 +55,8 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
     yield* event.map(
       invitationsNumberChanged: _invitationsNumberChanged,
       reset: _reset,
+      conversationsChanged: _conversationsChanged,
+      refresh: _refresh,
     );
   }
 
@@ -72,5 +77,26 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
   Future<void> close() {
     _invitations.cancel();
     return super.close();
+  }
+
+  Stream<ChatsState> _conversationsChanged(_ConversationsChanged value) async* {
+    yield state.copyWith(
+      conversations: value.conversations,
+      numberOfConversations: value.conversations.length,
+    );
+  }
+
+  Stream<ChatsState> _refresh(_Refresh value) async* {
+    final conversations = await _chatRepository.conversations;
+    conversations.fold(
+      (l) => l,
+      (r) => r.listen(
+        (conversations) {
+          add(
+            ChatsEvent.conversationsChanged(conversations),
+          );
+        },
+      ),
+    );
   }
 }

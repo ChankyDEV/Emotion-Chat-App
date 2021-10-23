@@ -5,5 +5,7 @@ class ChatsState with _$ChatsState {
   const factory ChatsState.initial({
     required String numberOfInviters,
     required List<Inviter> inviters,
+    required List<Conversation> conversations,
+    required int numberOfConversations,
   }) = _Initial;
 }
