@@ -1,4 +1,5 @@
 import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/data/extensions/num_extension.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
 import 'package:emotion_chat/screens/utils/UserProfileImage.dart';
@@ -90,7 +91,7 @@ class UserListItem extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               child: Text(
-                '${time!.hour}:${time!.minute}',
+                '${time!.hour.toTwoDigitsString()}:${time!.minute.toTwoDigitsString()}',
                 style: bodyStyle.copyWith(
                   fontSize: 11.0,
                   color: cWhite,
