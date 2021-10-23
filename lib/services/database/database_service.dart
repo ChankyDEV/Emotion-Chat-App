@@ -8,9 +8,13 @@ abstract class DatabaseService {
 
   Future<ChatUser> getUser(String uid);
 
-  Future<String> findUserUidByEmail(String email);
+  Future<Stream<List<Message>>> getMessagesStreamFor(List<String> members);
 
-  Future<ChatUser> findUserByEmail(String email);
+  Future<void> sendMessage({
+    required String from,
+    required String to,
+    required String message,
+  });
 
   Future<void> sendInvitation({
     required String from,
@@ -31,11 +35,9 @@ abstract class DatabaseService {
 
   Future<List<ChatUser>> getAllFriends(String userUid);
 
-  Future<Stream<List<Message>>> getMessagesStreamFor(List<String> members);
+  Future<ChatUser> findUserByUuid(uuid);
 
-  Future<void> sendMessage({
-    required String from,
-    required String to,
-    required String message,
-  });
+  Future<String> findUserUuidByEmail(String email);
+
+  Future<ChatUser> findUserByEmail(String email);
 }

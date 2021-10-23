@@ -5,6 +5,5 @@
     "name":"Kamil",
     "hasOwnImage": false,
     "gender":"GenderEnum.male",
-    "profileImageUrl":"http://12345.pl",
-    "contactUids":["one", "two"]
+    "profileImageUrl":"http://12345.pl"
 }

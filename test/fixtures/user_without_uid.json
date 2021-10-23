@@ -5,6 +5,5 @@
     "name":"Kamil",
     "profileImageUrl":"12345",
     "hasOwnImage": false,
-    "gender":"GenderEnum.male",
-    "contactUids":["one", "two"]
+    "gender":"GenderEnum.male"
 }

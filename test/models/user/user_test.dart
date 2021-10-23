@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:convert' as convert;
+
 import 'package:emotion_chat/constants/data.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'dart:convert' as convert;
 
 import '../../fixtures/fixture_reader.dart';
 
@@ -11,23 +12,23 @@ void main() {
   const gender = Gender(value: GenderEnum.male);
   const name = Name(value: 'Kamil');
   final user = ChatUser(
-      uid: '12345',
-      emailAddress: email,
-      phoneNumber: phone,
-      profileImage: ProfileImage(url: 'http://12345.pl'),
-      gender: gender,
-      hasOwnImage: false,
-      name: name,
-      contactsUIDS: ['one', 'two']);
+    uid: '12345',
+    emailAddress: email,
+    phoneNumber: phone,
+    profileImage: ProfileImage(url: 'http://12345.pl'),
+    gender: gender,
+    hasOwnImage: false,
+    name: name,
+  );
   final userDTO = UserDTO(
-      uid: '12345',
-      emailAddress: email.value,
-      phoneNumber: phone.value,
-      profileImageUrl: 'http://12345.pl',
-      gender: 'GenderEnum.male',
-      hasOwnImage: false,
-      name: 'Kamil',
-      contactUids: ['one', 'two']);
+    uid: '12345',
+    emailAddress: email.value,
+    phoneNumber: phone.value,
+    profileImageUrl: 'http://12345.pl',
+    gender: 'GenderEnum.male',
+    hasOwnImage: false,
+    name: 'Kamil',
+  );
 
   group('fromJson', () {
     test('should return User from json format', () {

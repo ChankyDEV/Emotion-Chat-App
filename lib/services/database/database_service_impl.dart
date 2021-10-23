@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
-import 'package:emotion_chat/data/data_transfer_objects/messages/message_dto.dart';
-import 'package:emotion_chat/data/exceptions/error_messages.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
-import 'package:emotion_chat/data/models/invitation/invitation_dto.dart';
+import 'package:emotion_chat/services/database/conversations/conversation_database_service.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
+import 'package:emotion_chat/services/database/friends/invitation_database_service.dart';
+import 'package:emotion_chat/services/database/user/user_source.dart';
 
 mixin Collections {
   static const users = 'users';
@@ -19,78 +17,56 @@ mixin Collections {
 }
 
 class DatabaseServiceImpl implements DatabaseService {
-  FirebaseFirestore _db = FirebaseFirestore.instance;
+  late final FriendsDatabase _friendsDatabase;
+  late final ConversationDatabase _conversationDatabase;
+  late final UserDatabase _userDatabase;
 
-  @override
-  Future<void> addUser(ChatUser user) => _addOrUpdateUser(
-        user,
-        onErrorMessage: 'Cant add user',
-      );
-
-  @override
-  Future<ChatUser> getUser(String uid) async {
-    try {
-      final response = await _db.collection(Collections.users).doc(uid).get();
-      return UserDTO.fromJson(response.data()).toDomain();
-    } catch (e) {
-      throw AuthException(message: 'Cant get user');
-    }
+  DatabaseServiceImpl({
+    required FriendsDatabase friends,
+    required ConversationDatabase conversations,
+    required UserDatabase users,
+  }) {
+    this._friendsDatabase = friends;
+    this._conversationDatabase = conversations;
+    this._userDatabase = users;
   }
 
   @override
-  Future<void> updateUser(ChatUser user) => _addOrUpdateUser(
-        user,
-        onErrorMessage: 'Cant update user',
-        isFirstTime: false,
-      );
-
-  Future<void> _addOrUpdateUser(
-    ChatUser user, {
-    String onErrorMessage = '',
-    bool isFirstTime = true,
-  }) async {
-    try {
-      await _db
-          .collection(Collections.users)
-          .doc(user.uid)
-          .set(user.fromDomain().toJson());
-      if (isFirstTime) {
-        await _db
-            .collection(Collections.invitations)
-            .doc(user.uid)
-            .collection(Collections.invites)
-            .add(
-              Invitation.empty().toJson(),
-            );
-      }
-    } catch (e) {
-      throw AuthException(message: onErrorMessage);
-    }
+  Future<void> addUser(ChatUser user) async {
+    await _userDatabase.addUser(user);
   }
 
   @override
-  Future<String> findUserUidByEmail(String email) async {
-    final user = await _findUserByEmail(email);
-    return user.uid;
+  Future<ChatUser> getUser(String uuid) async {
+    return await _userDatabase.getUser(uuid);
   }
 
   @override
-  Future<ChatUser> findUserByEmail(String email) {
-    return _findUserByEmail(email);
+  Future<void> updateUser(ChatUser user) async {
+    await _userDatabase.addUser(user);
   }
 
-  Future<ChatUser> _findUserByEmail(String email) async {
-    try {
-      final response = await _db
-          .collection(Collections.users)
-          .where('email', isEqualTo: email)
-          .get();
-      return UserDTO.fromJson(response.docs.first.data()).toDomain();
-    } catch (e) {
-      throw NoUserWithEmailException(
-        message: ErrorMessages.database.cantFindUserUid,
-      );
-    }
+  @override
+  Future<void> acceptInvitation(String userUuid, Invitation invitation) async {
+    await _friendsDatabase.acceptInvitation(userUuid, invitation);
+  }
+
+  @override
+  Future<void> deleteInvitation(String userUid, Invitation invitation) async {
+    await _friendsDatabase.deleteInvitation(userUid, invitation);
+  }
+
+  @override
+  Future<List<ChatUser>> getAllFriends(String userUid) async {
+    return await _friendsDatabase.getAllFriends(
+      userUid,
+      onFindUser: _userDatabase.findUserByUuid,
+    );
+  }
+
+  @override
+  Stream<List<Invitation>> getInvitationsStreamOnUid(String uid) {
+    return _friendsDatabase.getInvitationsStreamOnUid(uid);
   }
 
   @override
@@ -98,190 +74,29 @@ class DatabaseServiceImpl implements DatabaseService {
     required String from,
     required String to,
   }) async {
-    final canSendInvitation = await _canSendInvitation(
-      from: from,
-      to: to,
-    );
-    if (canSendInvitation) {
-      await _db
-          .collection(Collections.invitations)
-          .doc(to)
-          .collection(Collections.invites)
-          .add(
-            InvitationDTO(DateTime.now(), from).toJson(),
-          )
-          .onError(
-            (_, __) => throw throw InvitationException(
-              message: ErrorMessages.invitation.sendingInvitationError,
-            ),
-          );
-    } else {
-      throw InvitationException(
-        message: ErrorMessages.invitation.alreadySentInvitation,
-      );
-    }
-  }
-
-  Future<bool> _canSendInvitation({
-    required String from,
-    required String to,
-  }) async {
-    try {
-      final docsForInvitations = await _db
-          .collection(Collections.invitations)
-          .doc(to)
-          .collection(Collections.invites)
-          .where(
-            'senderUid',
-            isEqualTo: from,
-          )
-          .get();
-      final docsForFriends = await _db
-          .collection(Collections.contacts)
-          .doc(from)
-          .collection(Collections.friends)
-          .where(
-            'senderUid',
-            isEqualTo: to,
-          )
-          .get();
-      return docsForInvitations.size == 0 &&
-          docsForFriends.size == 0 &&
-          from != to;
-    } catch (e) {
-      throw DatabaseException(message: 'Cant get data');
-    }
+    await _friendsDatabase.sendInvitation(from: from, to: to);
   }
 
   @override
-  Stream<List<Invitation>> getInvitationsStreamOnUid(String uid) {
-    return _db
-        .collection('invitations')
-        .doc(uid)
-        .collection('invites')
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(
-          (event) => _mapDocToInvitation(event.docs),
-        );
-  }
-
-  List<Invitation> _mapDocToInvitation(
-    List<QueryDocumentSnapshot<Map<String, dynamic>>> data,
-  ) {
-    final invitations = <Invitation>[];
-
-    data.forEach((element) {
-      final json = element.data();
-      String uid = element.id;
-      DateTime createdAt = (json['createdAt'] as Timestamp).toDate();
-      String senderUid = json['senderUid'];
-      invitations.add(
-        Invitation.withUid(uid, createdAt, senderUid),
-      );
-    });
-    return invitations;
-  }
-
-  Future<void> deleteInvitation(String userUid, Invitation invitation) async {
-    try {
-      await _deleteInvitation(userUid, invitation);
-    } catch (e) {
-      throw DatabaseException(message: 'Cant delete invitation');
-    }
+  Future<ChatUser> findUserByEmail(String email) async {
+    return await _userDatabase.findUserByEmail(email);
   }
 
   @override
-  Future<void> acceptInvitation(
-    String userUid,
-    Invitation invitation,
-  ) async {
-    try {
-      await _addFriend(userUid, invitation.senderUid);
-      await _addFriend(invitation.senderUid, userUid);
-      await _deleteInvitation(userUid, invitation);
-    } catch (e) {
-      throw DatabaseException(message: 'Cant accept invitation');
-    }
-  }
-
-  Future<void> _addFriend(String userUuid, String friendUuid) async {
-    await _db
-        .collection(Collections.contacts)
-        .doc(userUuid)
-        .collection(Collections.friends)
-        .add(
-          InvitationDTO(DateTime.now(), friendUuid).toJson(),
-        );
-  }
-
-  Future<void> _deleteInvitation(
-    String userUid,
-    Invitation invitation,
-  ) async {
-    await _db
-        .collection(Collections.invitations)
-        .doc(userUid)
-        .collection(Collections.invites)
-        .doc(invitation.uid)
-        .delete();
+  Future<ChatUser> findUserByUuid(uuid) async {
+    return await _userDatabase.findUserByUuid(uuid);
   }
 
   @override
-  Future<List<ChatUser>> getAllFriends(String userUuid) async {
-    final List<String> uuids = await _db
-        .collection(Collections.contacts)
-        .doc(userUuid)
-        .collection(Collections.friends)
-        .get()
-        .then((value) {
-      return value.docs.map<String>((e) {
-        final data = e.data();
-        return data['senderUid'];
-      }).toList();
-    });
-    final friends = <ChatUser>[];
-    await Future.forEach<String>(uuids, (uuid) async {
-      ChatUser friend = await findUserByUid(uuid);
-      friends.add(friend);
-    });
-
-    return friends;
+  Future<String> findUserUuidByEmail(String email) async {
+    return await _userDatabase.findUserUuidByEmail(email);
   }
 
-  Future<ChatUser> findUserByUid(String uuid) async {
-    final response = await _db.collection(Collections.users).doc(uuid).get();
-    final json = response.data();
-    return UserDTO.fromJson(json).toDomain();
-  }
-
+  @override
   Future<Stream<List<Message>>> getMessagesStreamFor(
     List<String> members,
   ) async {
-    String conversationUid = await _getConversationUid(members);
-    if (conversationUid.isEmpty) {
-      conversationUid = await _createConversation(members[0], members[1]);
-    }
-    return _db
-        .collection(Collections.conversations)
-        .doc(conversationUid)
-        .collection(Collections.messages)
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(_mapToMessage);
-  }
-
-  List<Message> _mapToMessage(QuerySnapshot<Map<String, dynamic>> snapshot) {
-    List<MessageDTO> messages = <MessageDTO>[];
-    snapshot.docs.forEach((json) {
-      Map<String, dynamic> jsonMap = {
-        'content': json['content'],
-        'createdAt': (json['createdAt'] as Timestamp).toDate(),
-        'senderUid': json['senderUid'],
-      };
-      messages.add(MessageDTO.fromJson(jsonMap));
-    });
-    return messages;
+    return await _conversationDatabase.getMessagesStreamFor(members);
   }
 
   @override
@@ -290,42 +105,10 @@ class DatabaseServiceImpl implements DatabaseService {
     required String to,
     required String message,
   }) async {
-    String conversationUid = await _getConversationUid(<String>[from, to]);
-    final msg = <String, dynamic>{
-      'content': message,
-      'createdAt': DateTime.now(),
-      'senderUid': from,
-    };
-    if (conversationUid.isEmpty) {
-      conversationUid = await _createConversation(from, to);
-    }
-    await _db
-        .collection(Collections.conversations)
-        .doc(conversationUid)
-        .collection(Collections.messages)
-        .add(msg);
-  }
-
-  Future<String> _createConversation(
-    String firstMember,
-    String secondMember,
-  ) async {
-    final doc = await _db.collection(Collections.conversations).add({
-      'members': [firstMember, secondMember],
-    });
-    return doc.id;
-  }
-
-  Future<String> _getConversationUid(List<String> members) async {
-    QuerySnapshot<Map<String, dynamic>> queryResult = await _db
-        .collection(Collections.conversations)
-        .where('members', isEqualTo: [members[0], members[1]]).get();
-    if (queryResult.docs.length == 0) {
-      queryResult = await _db
-          .collection(Collections.conversations)
-          .where('members', isEqualTo: [members[1], members[0]]).get();
-    }
-    var a = queryResult;
-    return queryResult.docs.length > 0 ? queryResult.docs.first.id : '';
+    await _conversationDatabase.sendMessage(
+      from: from,
+      to: to,
+      message: message,
+    );
   }
 }

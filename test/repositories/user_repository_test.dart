@@ -22,7 +22,6 @@ void main() {
     name: tName,
     gender: tGender,
     hasOwnImage: tHasOwnImage,
-    contactsUIDS: tContactUids,
     profileImage: tProfileImage,
     uid: tUid,
   );
@@ -47,256 +46,264 @@ void main() {
         networkService: networkService);
   });
 
-  group('If device has internet connection', () {
-    setUp(() {
+  group('sign up', () {
+    test(
+        'should return empty user with specific credentials when user signUp successfully',
+        () async {
       when(networkService.isConnected).thenAnswer((_) async => true);
+      when(authService.signUpWithEmailAndPhone(
+              emailAddress: anyNamed('emailAddress'),
+              phoneNumber: anyNamed('phoneNumber'),
+              password: anyNamed('password')))
+          .thenAnswer((_) async => tUser);
+      final result = await repository.signUp(
+          emailAddress: tEmail, phoneNumber: tPhone, password: tPassword);
+      verify(authService.signUpWithEmailAndPhone(
+          emailAddress: tEmail, phoneNumber: tPhone, password: tPassword));
+      verify(localDatabaseService.saveUser(tUser));
+      verify(authService.addInfoAboutUserToStream(tUser));
+
+      expect(result, right(tUser));
     });
 
-    group('sign up', () {
-      test(
-          'should return empty user with specific credentials when user signUp succesfully',
-          () async {
-        when(authService.signUpWithEmailAndPhone(
-                emailAddress: anyNamed('emailAddress'),
-                phoneNumber: anyNamed('phoneNumber'),
-                password: anyNamed('password')))
-            .thenAnswer((_) async => tUser);
-        final result = await repository.signUp(
-            emailAddress: tEmail, phoneNumber: tPhone, password: tPassword);
-        verify(authService.signUpWithEmailAndPhone(
-            emailAddress: tEmail, phoneNumber: tPhone, password: tPassword));
-        verify(localDatabaseService.saveUser(tUser));
-        verify(authService.addInfoAboutUserToStream(tUser));
-
-        expect(result, right(tUser));
-      });
-
-      test(
-          'should return AuthFailure with specific message when user signUp unsuccesfully',
-          () async {
-        when(authService.signUpWithEmailAndPhone(
-                emailAddress: anyNamed('emailAddress'),
-                phoneNumber: anyNamed('phoneNumber'),
-                password: anyNamed('password')))
-            .thenThrow(AuthException(
-                message: 'There is some problem with signing in'));
-        final result = await repository.signUp(
-            emailAddress: tEmail, phoneNumber: tPhone, password: tPassword);
-
-        verify(authService.signUpWithEmailAndPhone(
-            emailAddress: tEmail, phoneNumber: tPhone, password: tPassword));
-        verifyZeroInteractions(localDatabaseService);
-        verifyNoMoreInteractions(authService);
-
-        expect(
-            result,
-            left(
-                AuthFailure(message: 'There is some problem with signing in')));
-      });
-    });
-    group('sign in email', () {
-      test(
-          'should return empty user with specific credentials when user sign in email succesfully',
-          () async {
-        when(authService.signInWithEmail(
-                emailAddress: anyNamed('emailAddress'),
-                password: anyNamed('password')))
-            .thenAnswer((_) async => tUser);
-        final result = await repository.signInWithEmail(
-            emailAddress: tEmail, password: tPassword);
-        verify(authService.signInWithEmail(
-            emailAddress: tEmail, password: tPassword));
-        verify(localDatabaseService.saveUser(tUser));
-        verify(authService.addInfoAboutUserToStream(tUser));
-
-        expect(result, right(tUser));
-      });
-
-      test(
-          'should return AuthFailure with specific message when user sign in email unsuccesfully',
-          () async {
-        when(authService.signInWithEmail(
-                emailAddress: anyNamed('emailAddress'),
-                password: anyNamed('password')))
-            .thenThrow(AuthException(
-                message: 'There is some problem with signing in'));
-        final result = await repository.signInWithEmail(
-            emailAddress: tEmail, password: tPassword);
-
-        verify(authService.signInWithEmail(
-            emailAddress: tEmail, password: tPassword));
-        verifyZeroInteractions(localDatabaseService);
-        verifyNoMoreInteractions(authService);
-
-        expect(
-            result,
-            left(
-                AuthFailure(message: 'There is some problem with signing in')));
-      });
-    });
-    group('sign in phone', () {
-      test(
-          'should return empty user with specific credentials when user sign in phone succesfully',
-          () async {
-        when(authService.signInWithPhoneNumber(
-                phoneNumber: anyNamed('phoneNumber'),
-                password: anyNamed('password')))
-            .thenAnswer((_) async => tUser);
-        final result = await repository.signInWithPhoneNumber(
-            phoneNumber: tPhone, password: tPassword);
-        verify(authService.signInWithPhoneNumber(
-            phoneNumber: tPhone, password: tPassword));
-        verify(localDatabaseService.saveUser(tUser));
-        verify(authService.addInfoAboutUserToStream(tUser));
-
-        expect(result, right(tUser));
-      });
-
-      test(
-          'should return AuthFailure with specific message when user sign in phone unsuccesfully',
-          () async {
-        when(authService.signInWithPhoneNumber(
-                phoneNumber: anyNamed('phoneNumber'),
-                password: anyNamed('password')))
-            .thenThrow(AuthException(
-                message: 'There is some problem with signing in'));
-        final result = await repository.signInWithPhoneNumber(
-            phoneNumber: tPhone, password: tPassword);
-
-        verify(authService.signInWithPhoneNumber(
-            phoneNumber: tPhone, password: tPassword));
-        verifyZeroInteractions(localDatabaseService);
-        verifyNoMoreInteractions(authService);
-
-        expect(
-            result,
-            left(
-                AuthFailure(message: 'There is some problem with signing in')));
-      });
-    });
-    group('update user info', () {
-      final tUserUpdated = ChatUser(
-        uid: tUid,
-        emailAddress: tEmail,
-        phoneNumber: tPhone,
-        name: Name(value: 'kamil'),
-        gender: tGender,
-        contactsUIDS: tContactUids,
-        hasOwnImage: false,
-        profileImage: tProfileImage,
+    test(
+        'should return AuthFailure with specific message when user signUp unsuccessfully',
+        () async {
+      when(networkService.isConnected).thenAnswer((_) async => true);
+      when(
+        authService.signUpWithEmailAndPhone(
+          emailAddress: anyNamed('emailAddress'),
+          phoneNumber: anyNamed('phoneNumber'),
+          password: anyNamed('password'),
+        ),
+      ).thenThrow(
+        AuthException(message: 'There is some problem with signing in'),
       );
-      final tUserUpdatedWithImage = ChatUser(
-        uid: tUid,
-        emailAddress: tEmail,
-        phoneNumber: tPhone,
-        name: Name(value: 'kamil'),
-        gender: tGender,
-        contactsUIDS: tContactUids,
-        hasOwnImage: true,
-        profileImage: tProfileImage,
+      final result = await repository.signUp(
+          emailAddress: tEmail, phoneNumber: tPhone, password: tPassword);
+
+      verify(
+        authService.signUpWithEmailAndPhone(
+            emailAddress: tEmail, phoneNumber: tPhone, password: tPassword),
       );
-      test(
-          'should return unit when user updates his info without profileImage succesffully',
-          () async {
-        when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
+      verifyNoMoreInteractions(authService);
 
-        final result = await repository.updateUserInfo(
-            name: Name(value: 'kamil'),
-            gender: tGender,
-            hasOwnImage: tHasOwnImage);
-
-        verify(authService.getSignedInUser());
-        verify(localDatabaseService.saveUser(tUserUpdated));
-        verify(authService.addInfoAboutUserToStream(tUserUpdated));
-        expect(result, right(unit));
-      });
-      test(
-          'should return unit when user updates his info with profileImage succesffully',
-          () async {
-        when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-
-        final result = await repository.updateUserInfo(
-            name: Name(value: 'kamil'), gender: tGender, hasOwnImage: true);
-
-        verify(authService.getSignedInUser());
-        verify(localDatabaseService.saveUser(tUserUpdatedWithImage));
-        verify(authService.addInfoAboutUserToStream(tUserUpdatedWithImage));
-        expect(result, right(unit));
-      });
-
-      test(
-          'should return AuthFailure when there is problem with generating upload url',
-          () async {
-        when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-
-        final result = await repository.updateUserInfo(
-            name: Name(value: 'kamil'), gender: tGender, hasOwnImage: true);
-        verify(authService.getSignedInUser());
-
-        verifyNoMoreInteractions(authService);
-        verifyZeroInteractions(localDatabaseService);
-        expect(
-            result,
-            equals(left(AuthFailure(
-                message: 'error occured while generating upload url'))));
-      });
-
-      test('should return AuthFailure when there is problem with updating info',
-          () async {
-        when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-
-        final result = await repository.updateUserInfo(
-            name: Name(value: 'kamil'), gender: tGender, hasOwnImage: true);
-        verify(authService.getSignedInUser());
-
-        verifyNoMoreInteractions(authService);
-        verifyZeroInteractions(localDatabaseService);
-        expect(
-            result,
-            equals(left(
-                AuthFailure(message: 'error occured while updating info'))));
-      });
+      expect(result,
+          left(AuthFailure(message: 'There is some problem with signing in')));
     });
+  });
+  group('sign in email', () {
+    test(
+        'should return empty user with specific credentials when user sign in email successfully',
+        () async {
+      when(networkService.isConnected).thenAnswer((_) async => true);
+      when(authService.signInWithEmail(
+              emailAddress: anyNamed('emailAddress'),
+              password: anyNamed('password')))
+          .thenAnswer((_) async => tUser);
+      final result = await repository.signInWithEmail(
+          emailAddress: tEmail, password: tPassword);
+      verify(authService.signInWithEmail(
+          emailAddress: tEmail, password: tPassword));
+      verify(localDatabaseService.saveUser(tUser));
+      verify(authService.addInfoAboutUserToStream(tUser));
+
+      expect(result, right(tUser));
+    });
+
+    test(
+        'should return AuthFailure with specific message when user sign in email unsuccessfully',
+        () async {
+      when(networkService.isConnected).thenAnswer((_) async => true);
+      when(authService.signInWithEmail(
+              emailAddress: anyNamed('emailAddress'),
+              password: anyNamed('password')))
+          .thenThrow(
+              AuthException(message: 'There is some problem with signing in'));
+      final result = await repository.signInWithEmail(
+          emailAddress: tEmail, password: tPassword);
+
+      verify(authService.signInWithEmail(
+          emailAddress: tEmail, password: tPassword));
+      verifyNoMoreInteractions(authService);
+
+      expect(result,
+          left(AuthFailure(message: 'There is some problem with signing in')));
+    });
+  });
+  group('sign in phone', () {
+    test(
+        'should return empty user with specific credentials when user sign in phone successfully',
+        () async {
+      when(networkService.isConnected).thenAnswer((_) async => true);
+      when(authService.signInWithPhoneNumber(
+              phoneNumber: anyNamed('phoneNumber'),
+              password: anyNamed('password')))
+          .thenAnswer((_) async => tUser);
+      final result = await repository.signInWithPhoneNumber(
+          phoneNumber: tPhone, password: tPassword);
+      verify(authService.signInWithPhoneNumber(
+          phoneNumber: tPhone, password: tPassword));
+      verify(localDatabaseService.saveUser(tUser));
+      verify(authService.addInfoAboutUserToStream(tUser));
+
+      expect(result, right(tUser));
+    });
+
+    test(
+        'should return AuthFailure with specific message when user sign in phone unsuccessfully',
+        () async {
+      when(networkService.isConnected).thenAnswer((_) async => true);
+      when(authService.signInWithPhoneNumber(
+              phoneNumber: anyNamed('phoneNumber'),
+              password: anyNamed('password')))
+          .thenThrow(
+              AuthException(message: 'There is some problem with signing in'));
+      final result = await repository.signInWithPhoneNumber(
+          phoneNumber: tPhone, password: tPassword);
+
+      verify(authService.signInWithPhoneNumber(
+          phoneNumber: tPhone, password: tPassword));
+      verifyNoMoreInteractions(authService);
+
+      expect(result,
+          left(AuthFailure(message: 'There is some problem with signing in')));
+    });
+  });
+  final tUserUpdated = ChatUser(
+    uid: tUid,
+    emailAddress: tEmail,
+    phoneNumber: tPhone,
+    name: Name(value: 'kamil'),
+    gender: tGender,
+    hasOwnImage: false,
+    profileImage: tProfileImage,
+  );
+  final tUserUpdatedWithImage = ChatUser(
+    uid: tUid,
+    emailAddress: tEmail,
+    phoneNumber: tPhone,
+    name: Name(value: 'kamil'),
+    gender: tGender,
+    hasOwnImage: true,
+    profileImage: tProfileImage,
+  );
+  test(
+      'update user info should return unit when user updates his info without profileImage successfully',
+      () async {
+    when(networkService.isConnected).thenAnswer((_) async => true);
+    when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
+
+    final result = await repository.updateUserInfo(
+        name: Name(value: 'kamil'), gender: tGender, hasOwnImage: tHasOwnImage);
+
+    verify(authService.getSignedInUser());
+    verify(localDatabaseService.saveUser(tUserUpdated));
+    verify(authService.addInfoAboutUserToStream(tUserUpdated));
+    expect(result, right(unit));
+  });
+  test(
+      'update user info should return unit when user updates his info with profileImage successfully',
+      () async {
+    when(networkService.isConnected).thenAnswer((_) async => true);
+    when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
+
+    final result = await repository.updateUserInfo(
+        name: Name(value: 'kamil'), gender: tGender, hasOwnImage: true);
+
+    verify(authService.getSignedInUser());
+    verify(localDatabaseService.saveUser(tUserUpdatedWithImage));
+    verify(authService.addInfoAboutUserToStream(tUserUpdatedWithImage));
+    expect(result, right(unit));
+  });
+
+  test(
+      'update user info should return AuthFailure when there is problem with generating upload url',
+      () async {
+    when(networkService.isConnected).thenAnswer((_) async => true);
+    when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
+    when(imageUploadService.getProfileImageUrl(uid: anyNamed('uid'))).thenThrow(
+      AuthException(message: 'error occurred while generating upload url'),
+    );
+
+    final result = await repository.updateUserInfo(
+      name: Name(value: 'kamil'),
+      gender: tGender,
+      hasOwnImage: true,
+    );
+    verify(authService.getSignedInUser());
+    expect(
+      result,
+      equals(
+        left(
+          AuthFailure(message: 'error occurred while generating upload url'),
+        ),
+      ),
+    );
+  });
+
+  test(
+      'update user info should return AuthFailure when there is problem with updating info',
+      () async {
+    when(networkService.isConnected).thenAnswer((_) async => true);
+    when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
+    when(imageUploadService.getProfileImageUrl(uid: anyNamed('uid')))
+        .thenAnswer((_) async => '');
+    when(dbService.updateUser(any)).thenThrow(
+      AuthException(message: 'error occurred while updating info'),
+    );
+
+    final result = await repository.updateUserInfo(
+      name: Name(value: 'kamil'),
+      gender: tGender,
+      hasOwnImage: true,
+    );
+    verify(authService.getSignedInUser());
+    expect(
+      result,
+      equals(
+        left(
+          AuthFailure(message: 'error occurred while updating info'),
+        ),
+      ),
+    );
   });
 
   group('If device has not internet connection', () {
     setUp(() {
       when(networkService.isConnected).thenAnswer((_) async => false);
     });
-    test('sign up should return NetworkFalure', () async {
+    test('sign up should return NetworkFailure', () async {
       final result = await repository.signUp(
           emailAddress: tEmail, phoneNumber: tPhone, password: tPassword);
       expect(result, left(NetworkFailure(message: 'No internet connection')));
     });
-    test('sign in email should return NetworkFalure', () async {
+    test('sign in email should return NetworkFailure', () async {
       final result = await repository.signInWithEmail(
           emailAddress: tEmail, password: tPassword);
       expect(result, left(NetworkFailure(message: 'No internet connection')));
     });
-    test('sign in phone should return NetworkFalure', () async {
+    test('sign in phone should return NetworkFailure', () async {
       final result = await repository.signInWithPhoneNumber(
           phoneNumber: tPhone, password: tPassword);
       expect(result, left(NetworkFailure(message: 'No internet connection')));
     });
   });
-
-  group('logout', () {
-    test('should return true if user logs out succesffully', () async {
-      when(localDatabaseService.removeUser()).thenAnswer((_) async => _);
-      final result = await repository.logout();
-      verify(localDatabaseService.removeUser());
-      verify(authService.addInfoAboutUserToStream(ChatUser.empty()));
-      expect(result, true);
-    });
-    test('should return false if user logs out unsuccesffully', () async {
-      when(localDatabaseService.removeUser())
-          .thenThrow(AuthException(message: 'cant remove user'));
-      final result = await repository.logout();
-      verify(localDatabaseService.removeUser());
-      verifyZeroInteractions(authService);
-      expect(result, false);
-    });
+  test('logout should return true if user logs out successfully', () async {
+    when(localDatabaseService.removeUser()).thenAnswer((_) async => _);
+    final result = await repository.logout();
+    verify(localDatabaseService.removeUser());
+    verify(authService.addInfoAboutUserToStream(ChatUser.empty()));
+    expect(result, true);
   });
+  test('logout should return false if user logs out unsuccessfully', () async {
+    when(localDatabaseService.removeUser())
+        .thenThrow(AuthException(message: 'cant remove user'));
+    final result = await repository.logout();
+    verify(localDatabaseService.removeUser());
+    expect(result, false);
+  });
+
   group('check if user is logged in', () {
     test(
         'should return true when user is saved and user can get it successfully',

@@ -18,8 +18,11 @@ import 'package:emotion_chat/repositories/user/user_repository.dart';
 import 'package:emotion_chat/repositories/user/user_repository_impl.dart';
 import 'package:emotion_chat/services/auth/auth_service.dart';
 import 'package:emotion_chat/services/auth/auth_service_impl.dart';
+import 'package:emotion_chat/services/database/conversations/conversation_database_service_impl.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
+import 'package:emotion_chat/services/database/friends/invitation_database_service_impl.dart';
+import 'package:emotion_chat/services/database/user/user_source.dart';
 import 'package:emotion_chat/services/image_picker/image_picker_service.dart';
 import 'package:emotion_chat/services/image_picker/image_picker_service_impl.dart';
 import 'package:emotion_chat/services/image_upload/image_upload_service.dart';
@@ -63,7 +66,13 @@ class Config {
   Future<void> _registerServices() async {
     getItInstance
       ..registerSingleton<Validator>(Validator())
-      ..registerSingleton<DatabaseService>(DatabaseServiceImpl())
+      ..registerSingleton<DatabaseService>(
+        DatabaseServiceImpl(
+          friends: FriendsDatabaseImpl(),
+          conversations: ConversationDatabaseImpl(),
+          users: UserDatabaseImpl(),
+        ),
+      )
       ..registerSingleton<AuthService>(
         AuthServiceImpl(
           getItInstance.get<DatabaseService>(),

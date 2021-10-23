@@ -26,11 +26,11 @@ class InvitationRepositoryImpl implements InvitationRepository {
       final isUserSaved = await local.isUserSaved();
       if (isUserSaved) {
         try {
-          final uid = await db.findUserUidByEmail(email);
+          final receiverUuid = await db.findUserUuidByEmail(email);
           final savedUser = await local.getUser();
           await db.sendInvitation(
             from: savedUser.uid,
-            to: uid,
+            to: receiverUuid,
           );
           return right(unit);
         } on ExceptionWithMessage catch (e) {

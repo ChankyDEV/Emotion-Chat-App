@@ -7,7 +7,6 @@
         "profileImageUrl":"12345",
         "name":"kamil",
         "gender":"GenderEnum.male",
-        "hasOwnImage": false,
-        "contactUids":["empty"]
+        "hasOwnImage": false
     }
 }

@@ -13,13 +13,13 @@ import 'image_picker_repository_test.mocks.dart';
 @GenerateMocks([ImagePickerService, PermissionService])
 void main() {
   late ImagePickerRepository imagePickerRepository;
-  late MockIImagePickerService mockImagePickerService;
-  late MockIPermissionService mockPermissionHandler;
+  late MockImagePickerService mockImagePickerService;
+  late MockPermissionService mockPermissionHandler;
 
   setUp(() {
     TestWidgetsFlutterBinding.ensureInitialized();
-    mockImagePickerService = MockIImagePickerService();
-    mockPermissionHandler = MockIPermissionService();
+    mockImagePickerService = MockImagePickerService();
+    mockPermissionHandler = MockPermissionService();
     imagePickerRepository = ImagePickerRepository(
         imagePickerService: mockImagePickerService,
         permissionHandler: mockPermissionHandler);
