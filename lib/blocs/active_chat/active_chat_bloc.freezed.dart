@@ -27,6 +27,10 @@ class _$ActiveChatEventTearOff {
       message,
     );
   }
+
+  OnScrollToEnd onScrollToEnd() {
+    return const OnScrollToEnd();
+  }
 }
 
 /// @nodoc
@@ -38,12 +42,14 @@ mixin _$ActiveChatEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Message> messages) showMessages,
     required TResult Function(String message) sendMessage,
+    required TResult Function() onScrollToEnd,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Message> messages)? showMessages,
     TResult Function(String message)? sendMessage,
+    TResult Function()? onScrollToEnd,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,12 +57,14 @@ mixin _$ActiveChatEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ShowMessages value) showMessages,
     required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnScrollToEnd value) onScrollToEnd,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShowMessages value)? showMessages,
     TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnScrollToEnd value)? onScrollToEnd,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -147,6 +155,7 @@ class _$ShowMessages implements ShowMessages {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Message> messages) showMessages,
     required TResult Function(String message) sendMessage,
+    required TResult Function() onScrollToEnd,
   }) {
     return showMessages(messages);
   }
@@ -156,6 +165,7 @@ class _$ShowMessages implements ShowMessages {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Message> messages)? showMessages,
     TResult Function(String message)? sendMessage,
+    TResult Function()? onScrollToEnd,
     required TResult orElse(),
   }) {
     if (showMessages != null) {
@@ -169,6 +179,7 @@ class _$ShowMessages implements ShowMessages {
   TResult map<TResult extends Object?>({
     required TResult Function(ShowMessages value) showMessages,
     required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnScrollToEnd value) onScrollToEnd,
   }) {
     return showMessages(this);
   }
@@ -178,6 +189,7 @@ class _$ShowMessages implements ShowMessages {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShowMessages value)? showMessages,
     TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnScrollToEnd value)? onScrollToEnd,
     required TResult orElse(),
   }) {
     if (showMessages != null) {
@@ -263,6 +275,7 @@ class _$SendMessage implements SendMessage {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Message> messages) showMessages,
     required TResult Function(String message) sendMessage,
+    required TResult Function() onScrollToEnd,
   }) {
     return sendMessage(message);
   }
@@ -272,6 +285,7 @@ class _$SendMessage implements SendMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Message> messages)? showMessages,
     TResult Function(String message)? sendMessage,
+    TResult Function()? onScrollToEnd,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
@@ -285,6 +299,7 @@ class _$SendMessage implements SendMessage {
   TResult map<TResult extends Object?>({
     required TResult Function(ShowMessages value) showMessages,
     required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnScrollToEnd value) onScrollToEnd,
   }) {
     return sendMessage(this);
   }
@@ -294,6 +309,7 @@ class _$SendMessage implements SendMessage {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShowMessages value)? showMessages,
     TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnScrollToEnd value)? onScrollToEnd,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
@@ -310,6 +326,96 @@ abstract class SendMessage implements ActiveChatEvent {
   @JsonKey(ignore: true)
   $SendMessageCopyWith<SendMessage> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OnScrollToEndCopyWith<$Res> {
+  factory $OnScrollToEndCopyWith(
+          OnScrollToEnd value, $Res Function(OnScrollToEnd) then) =
+      _$OnScrollToEndCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$OnScrollToEndCopyWithImpl<$Res>
+    extends _$ActiveChatEventCopyWithImpl<$Res>
+    implements $OnScrollToEndCopyWith<$Res> {
+  _$OnScrollToEndCopyWithImpl(
+      OnScrollToEnd _value, $Res Function(OnScrollToEnd) _then)
+      : super(_value, (v) => _then(v as OnScrollToEnd));
+
+  @override
+  OnScrollToEnd get _value => super._value as OnScrollToEnd;
+}
+
+/// @nodoc
+
+class _$OnScrollToEnd implements OnScrollToEnd {
+  const _$OnScrollToEnd();
+
+  @override
+  String toString() {
+    return 'ActiveChatEvent.onScrollToEnd()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is OnScrollToEnd);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<Message> messages) showMessages,
+    required TResult Function(String message) sendMessage,
+    required TResult Function() onScrollToEnd,
+  }) {
+    return onScrollToEnd();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<Message> messages)? showMessages,
+    TResult Function(String message)? sendMessage,
+    TResult Function()? onScrollToEnd,
+    required TResult orElse(),
+  }) {
+    if (onScrollToEnd != null) {
+      return onScrollToEnd();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ShowMessages value) showMessages,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnScrollToEnd value) onScrollToEnd,
+  }) {
+    return onScrollToEnd(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ShowMessages value)? showMessages,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    required TResult orElse(),
+  }) {
+    if (onScrollToEnd != null) {
+      return onScrollToEnd(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnScrollToEnd implements ActiveChatEvent {
+  const factory OnScrollToEnd() = _$OnScrollToEnd;
 }
 
 /// @nodoc

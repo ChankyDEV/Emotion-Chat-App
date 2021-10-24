@@ -11,6 +11,7 @@ class ConversationDatabaseImpl implements ConversationDatabase {
   @override
   Future<Stream<List<Message>>> getMessagesStreamFor(
     List<String> members,
+    int limit,
   ) async {
     String conversationUid = await _getConversationUid(members);
     if (conversationUid.isEmpty) {
@@ -21,6 +22,7 @@ class ConversationDatabaseImpl implements ConversationDatabase {
         .doc(conversationUid)
         .collection(Collections.messages)
         .orderBy('createdAt', descending: true)
+        .limit(limit)
         .snapshots()
         .map(_mapToMessage);
   }
@@ -119,7 +121,7 @@ class ConversationDatabaseImpl implements ConversationDatabase {
       final friendUserUuid =
           members.firstWhere((element) => element != userUuid);
       final friend = await onFindUser(friendUserUuid);
-      final stream = await getMessagesStreamFor(members);
+      final stream = await getMessagesStreamFor(members, 2);
       final messages = await stream.first;
       if (messages.length > 0) {
         conversations.add(

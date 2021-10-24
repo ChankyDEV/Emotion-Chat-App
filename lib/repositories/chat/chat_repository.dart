@@ -9,6 +9,7 @@ abstract class ChatRepository {
 
   Future<Either<Failure, Stream<List<Message>>>> getMessagesStream({
     required String messageReceiverUuid,
+    required int limit,
   });
 
   Future<Either<Failure, Stream<List<Conversation>>>> get conversations;

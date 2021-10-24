@@ -6,30 +6,33 @@ import 'package:emotion_chat/repositories/chat/chat_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'active_chat_bloc.freezed.dart';
-
 part 'active_chat_event.dart';
-
 part 'active_chat_state.dart';
 
 class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
   final ChatRepository _repository;
-  final String friendUid;
-  late final StreamSubscription<List<Message>> messageSub;
+  final String _friendUid;
+  late StreamSubscription<List<Message>> _messageSub;
+  int limit = 20;
 
   ActiveChatBloc(
     this._repository,
-    this.friendUid,
-  ) : super(ActiveChatState.initial(
-          messages: <Message>[],
-          numberOfMessages: 0,
-          hasError: false,
-        ));
+    this._friendUid,
+  ) : super(
+          ActiveChatState.initial(
+            messages: <Message>[],
+            numberOfMessages: 0,
+            hasError: false,
+          ),
+        );
 
-  Future<void> startListeningForMessages() async {
-    final streamOrFailure =
-        await _repository.getMessagesStream(messageReceiverUuid: friendUid);
+  Future<void> startListeningForMessages(int? newLimit) async {
+    final streamOrFailure = await _repository.getMessagesStream(
+      messageReceiverUuid: _friendUid,
+      limit: newLimit ?? limit,
+    );
     streamOrFailure.fold((f) => f, (stream) {
-      messageSub = stream.listen((messages) {
+      _messageSub = stream.listen((messages) {
         this.add(ActiveChatEvent.showMessages(messages));
       });
     });
@@ -37,7 +40,11 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
 
   @override
   Stream<ActiveChatState> mapEventToState(ActiveChatEvent event) async* {
-    yield* event.map(showMessages: _showMessages, sendMessage: sendMessage);
+    yield* event.map(
+      showMessages: _showMessages,
+      sendMessage: sendMessage,
+      onScrollToEnd: onScrollToEnd,
+    );
   }
 
   Stream<ActiveChatState> _showMessages(
@@ -51,7 +58,7 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
 
   @override
   Future<void> close() {
-    messageSub.cancel();
+    _messageSub.cancel();
     return super.close();
   }
 
@@ -59,12 +66,17 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
     if (sendMessageEvent.message.length > 0) {
       final messageSentOrFailure = await _repository.sendMessage(
         messageContent: sendMessageEvent.message,
-        messageReceiverUuid: friendUid,
+        messageReceiverUuid: _friendUid,
       );
 
       messageSentOrFailure.fold((l) => l, (r) {
         print('Message has been sent');
       });
     }
+  }
+
+  Stream<ActiveChatState> onScrollToEnd(OnScrollToEnd value) async* {
+    await _messageSub.cancel();
+    await startListeningForMessages(limit += 20);
   }
 }

@@ -135,7 +135,7 @@ class RoutingService {
           create: (context) => ActiveChatBloc(
             GetIt.I.get<ChatRepository>(),
             friend.uuid,
-          )..startListeningForMessages(),
+          )..startListeningForMessages(null),
           child: ActiveChat(userToChatWith: friend),
         );
       },

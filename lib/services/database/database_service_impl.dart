@@ -95,8 +95,12 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<Stream<List<Message>>> getMessagesStreamFor(
     List<String> members,
+    int limit,
   ) async {
-    return await _conversationDatabase.getMessagesStreamFor(members);
+    return await _conversationDatabase.getMessagesStreamFor(
+      members,
+      limit,
+    );
   }
 
   @override

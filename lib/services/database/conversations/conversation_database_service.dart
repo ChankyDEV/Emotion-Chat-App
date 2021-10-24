@@ -2,7 +2,10 @@ import 'package:emotion_chat/data/models/conversation/conversation.dart';
 import 'package:emotion_chat/data/models/conversation/message.dart';
 
 abstract class ConversationDatabase {
-  Future<Stream<List<Message>>> getMessagesStreamFor(List<String> members);
+  Future<Stream<List<Message>>> getMessagesStreamFor(
+    List<String> members,
+    int limit,
+  );
 
   Future<void> sendMessage({
     required String from,

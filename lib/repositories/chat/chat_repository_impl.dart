@@ -20,13 +20,17 @@ class ChatRepositoryImpl implements ChatRepository {
   @override
   Future<Either<Failure, Stream<List<Message>>>> getMessagesStream({
     required String messageReceiverUuid,
+    required int limit,
   }) async {
     final uuid = (await _local.getUser()).uuid;
     try {
-      final stream = await _db.getMessagesStreamFor([
-        uuid,
-        messageReceiverUuid,
-      ]);
+      final stream = await _db.getMessagesStreamFor(
+        [
+          uuid,
+          messageReceiverUuid,
+        ],
+        limit,
+      );
       return right(stream);
     } catch (e) {
       return left(Failure(message: 'message'));

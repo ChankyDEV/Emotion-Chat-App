@@ -8,7 +8,10 @@ abstract class DatabaseService {
 
   Future<ChatUser> getUser(String uid);
 
-  Future<Stream<List<Message>>> getMessagesStreamFor(List<String> members);
+  Future<Stream<List<Message>>> getMessagesStreamFor(
+    List<String> members,
+    int limit,
+  );
 
   Future<Stream<List<Conversation>>> getConversationStream(String uuid);
 

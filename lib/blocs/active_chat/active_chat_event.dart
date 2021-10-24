@@ -6,6 +6,7 @@ class ActiveChatEvent with _$ActiveChatEvent {
     List<Message> messages,
   ) = ShowMessages;
 
-  const factory ActiveChatEvent.sendMessage(String message) =
-  SendMessage;
+  const factory ActiveChatEvent.sendMessage(String message) = SendMessage;
+
+  const factory ActiveChatEvent.onScrollToEnd() = OnScrollToEnd;
 }
