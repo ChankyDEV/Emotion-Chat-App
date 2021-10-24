@@ -21,9 +21,15 @@ class FriendsRepositoryImpl implements FriendsRepository {
   Future<Either<Failure, List<ChatUser>>> getAllFriends() async {
     final hasConnection = await _network.isConnected;
     if (hasConnection) {
-      final user = await _local.getUser();
-      final friends = await _db.getAllFriends(user.uuid);
-      return right(friends);
+      try {
+        final user = await _local.getUser();
+        final friends = await _db.getAllFriends(user.uuid);
+        return right(friends);
+      } catch (e) {
+        return left(
+          Failure(message: 'some err'),
+        );
+      }
     } else {
       return left(
         Failure(message: ErrorMessages.internet.noConnection),
