@@ -1,6 +1,8 @@
+import 'package:emotion_chat/screens/abstractions/custom_stateful_widget.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/main/chats.dart';
 import 'package:emotion_chat/screens/main/contact_list.dart';
+import 'package:emotion_chat/screens/utils/labeled_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class Authenticated extends StatefulWidget {
@@ -12,7 +14,7 @@ class Authenticated extends StatefulWidget {
   _AuthenticatedState createState() => _AuthenticatedState();
 }
 
-class _AuthenticatedState extends State<Authenticated> {
+class _AuthenticatedState extends CustomState<Authenticated> {
   late final PageController pageController;
   late int currentPage;
 
@@ -40,7 +42,7 @@ class _AuthenticatedState extends State<Authenticated> {
       body: Column(
         children: [
           Expanded(
-            flex: 12,
+            flex: 13,
             child: PageView(
               controller: pageController,
               children: [
@@ -50,32 +52,48 @@ class _AuthenticatedState extends State<Authenticated> {
             ),
           ),
           Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: IconButton(
-                      onPressed: () {
-                        pageController.jumpToPage(0);
-                      },
-                      icon: Icon(Icons.chat,
-                          color: currentPage == 0 ? whiteColor : mBlack),
-                    ),
-                  ),
-                  Expanded(
-                    child: IconButton(
-                      onPressed: () {
-                        pageController.jumpToPage(1);
-                      },
-                      icon: Icon(Icons.people,
-                          color: currentPage == 1 ? whiteColor : mBlack),
-                    ),
-                  ),
-                ],
-              ))
+            flex: 1,
+            child: Container(
+              width: screenWidth * 0.6,
+              child: _buildIcons(),
+              decoration: BoxDecoration(
+                color: cWhite.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          )
         ],
       ),
+    );
+  }
+
+  Row _buildIcons() {
+    return Row(
+      children: [
+        Expanded(
+          child: LabeledIconButton(
+            onPressed: () => pageController.jumpToPage(0),
+            icon: Icons.chat,
+            color: cWhite,
+            noActiveColor: cDarkGrey,
+            label: 'Chats',
+            colorChangeCondition: currentPage == 0,
+          ),
+        ),
+        Expanded(
+          child: LabeledIconButton(
+            onPressed: () => pageController.jumpToPage(1),
+            icon: Icons.people,
+            color: cWhite,
+            noActiveColor: cDarkGrey,
+            label: 'Friends',
+            colorChangeCondition: currentPage == 1,
+          ),
+        ),
+      ],
     );
   }
 }
