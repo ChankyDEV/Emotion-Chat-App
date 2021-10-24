@@ -40,7 +40,7 @@ class _ActiveChatState extends State<ActiveChat> {
           return Column(
             children: [
               Expanded(
-                flex: 7,
+                flex: 9,
                 child: _buildMessages(state.messages),
               ),
               _buildTextInput(),
@@ -96,7 +96,7 @@ class _ActiveChatState extends State<ActiveChat> {
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-          alignment: messages[index].senderUid != widget.userToChatWith.uuid
+          alignment: isActualUserMessage(messages, index)
               ? Alignment.centerRight
               : Alignment.centerLeft,
           child: Container(
@@ -105,10 +105,14 @@ class _ActiveChatState extends State<ActiveChat> {
               messages[index].content.value,
               style: bodyStyle.copyWith(
                 fontWeight: FontWeight.normal,
+                fontSize: 13.0,
+                fontStyle: FontStyle.normal,
               ),
             ),
             decoration: BoxDecoration(
-              color: cLightGrey,
+              color: isActualUserMessage(messages, index)
+                  ? cPurple.withOpacity(0.5)
+                  : darkAccentColor,
               borderRadius: BorderRadius.circular(4.0),
             ),
           ),
@@ -116,6 +120,9 @@ class _ActiveChatState extends State<ActiveChat> {
       },
     );
   }
+
+  bool isActualUserMessage(List<Message> messages, int index) =>
+      messages[index].senderUid != widget.userToChatWith.uuid;
 
   Widget _buildTextInput() {
     return Row(
@@ -126,8 +133,7 @@ class _ActiveChatState extends State<ActiveChat> {
         Expanded(
           flex: 10,
           child: Container(
-            height: 80,
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: MyTextField(
               hint: 'Aa...',
               inputType: InputType.emailAddress,

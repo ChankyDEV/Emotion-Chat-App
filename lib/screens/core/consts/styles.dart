@@ -10,12 +10,12 @@ var titleStyle = TextStyle(
 var bodyStyle = TextStyle(
     color: whiteColor,
     fontSize: 16.0,
-    fontStyle: FontStyle.italic,
+    fontStyle: FontStyle.normal,
     fontFamily: 'OpenSans',
     fontWeight: FontWeight.w600);
 
 const textFormStyle = TextStyle(
   fontSize: 14.0,
-  fontStyle: FontStyle.italic,
+  fontStyle: FontStyle.normal,
   fontFamily: 'OpenSans',
 );
