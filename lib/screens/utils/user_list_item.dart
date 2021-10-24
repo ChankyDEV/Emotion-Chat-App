@@ -2,7 +2,7 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/data/extensions/num_extension.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
-import 'package:emotion_chat/screens/utils/UserProfileImage.dart';
+import 'package:emotion_chat/screens/utils/user_profile_image.dart';
 import 'package:flutter/material.dart';
 
 class UserListItem extends StatelessWidget {

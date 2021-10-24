@@ -548,12 +548,14 @@ class _$ChatsStateTearOff {
       {required String numberOfInviters,
       required List<Inviter> inviters,
       required List<Conversation> conversations,
-      required int numberOfConversations}) {
+      required int numberOfConversations,
+      required bool loading}) {
     return _Initial(
       numberOfInviters: numberOfInviters,
       inviters: inviters,
       conversations: conversations,
       numberOfConversations: numberOfConversations,
+      loading: loading,
     );
   }
 }
@@ -567,18 +569,27 @@ mixin _$ChatsState {
   List<Inviter> get inviters => throw _privateConstructorUsedError;
   List<Conversation> get conversations => throw _privateConstructorUsedError;
   int get numberOfConversations => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String numberOfInviters, List<Inviter> inviters,
-            List<Conversation> conversations, int numberOfConversations)
+    required TResult Function(
+            String numberOfInviters,
+            List<Inviter> inviters,
+            List<Conversation> conversations,
+            int numberOfConversations,
+            bool loading)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String numberOfInviters, List<Inviter> inviters,
-            List<Conversation> conversations, int numberOfConversations)?
+    TResult Function(
+            String numberOfInviters,
+            List<Inviter> inviters,
+            List<Conversation> conversations,
+            int numberOfConversations,
+            bool loading)?
         initial,
     required TResult orElse(),
   }) =>
@@ -609,7 +620,8 @@ abstract class $ChatsStateCopyWith<$Res> {
       {String numberOfInviters,
       List<Inviter> inviters,
       List<Conversation> conversations,
-      int numberOfConversations});
+      int numberOfConversations,
+      bool loading});
 }
 
 /// @nodoc
@@ -626,6 +638,7 @@ class _$ChatsStateCopyWithImpl<$Res> implements $ChatsStateCopyWith<$Res> {
     Object? inviters = freezed,
     Object? conversations = freezed,
     Object? numberOfConversations = freezed,
+    Object? loading = freezed,
   }) {
     return _then(_value.copyWith(
       numberOfInviters: numberOfInviters == freezed
@@ -644,6 +657,10 @@ class _$ChatsStateCopyWithImpl<$Res> implements $ChatsStateCopyWith<$Res> {
           ? _value.numberOfConversations
           : numberOfConversations // ignore: cast_nullable_to_non_nullable
               as int,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -657,7 +674,8 @@ abstract class _$InitialCopyWith<$Res> implements $ChatsStateCopyWith<$Res> {
       {String numberOfInviters,
       List<Inviter> inviters,
       List<Conversation> conversations,
-      int numberOfConversations});
+      int numberOfConversations,
+      bool loading});
 }
 
 /// @nodoc
@@ -675,6 +693,7 @@ class __$InitialCopyWithImpl<$Res> extends _$ChatsStateCopyWithImpl<$Res>
     Object? inviters = freezed,
     Object? conversations = freezed,
     Object? numberOfConversations = freezed,
+    Object? loading = freezed,
   }) {
     return _then(_Initial(
       numberOfInviters: numberOfInviters == freezed
@@ -693,6 +712,10 @@ class __$InitialCopyWithImpl<$Res> extends _$ChatsStateCopyWithImpl<$Res>
           ? _value.numberOfConversations
           : numberOfConversations // ignore: cast_nullable_to_non_nullable
               as int,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -704,7 +727,8 @@ class _$_Initial implements _Initial {
       {required this.numberOfInviters,
       required this.inviters,
       required this.conversations,
-      required this.numberOfConversations});
+      required this.numberOfConversations,
+      required this.loading});
 
   @override
   final String numberOfInviters;
@@ -714,10 +738,12 @@ class _$_Initial implements _Initial {
   final List<Conversation> conversations;
   @override
   final int numberOfConversations;
+  @override
+  final bool loading;
 
   @override
   String toString() {
-    return 'ChatsState.initial(numberOfInviters: $numberOfInviters, inviters: $inviters, conversations: $conversations, numberOfConversations: $numberOfConversations)';
+    return 'ChatsState.initial(numberOfInviters: $numberOfInviters, inviters: $inviters, conversations: $conversations, numberOfConversations: $numberOfConversations, loading: $loading)';
   }
 
   @override
@@ -735,7 +761,9 @@ class _$_Initial implements _Initial {
                     .equals(other.conversations, conversations)) &&
             (identical(other.numberOfConversations, numberOfConversations) ||
                 const DeepCollectionEquality().equals(
-                    other.numberOfConversations, numberOfConversations)));
+                    other.numberOfConversations, numberOfConversations)) &&
+            (identical(other.loading, loading) ||
+                const DeepCollectionEquality().equals(other.loading, loading)));
   }
 
   @override
@@ -744,7 +772,8 @@ class _$_Initial implements _Initial {
       const DeepCollectionEquality().hash(numberOfInviters) ^
       const DeepCollectionEquality().hash(inviters) ^
       const DeepCollectionEquality().hash(conversations) ^
-      const DeepCollectionEquality().hash(numberOfConversations);
+      const DeepCollectionEquality().hash(numberOfConversations) ^
+      const DeepCollectionEquality().hash(loading);
 
   @JsonKey(ignore: true)
   @override
@@ -754,25 +783,33 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String numberOfInviters, List<Inviter> inviters,
-            List<Conversation> conversations, int numberOfConversations)
+    required TResult Function(
+            String numberOfInviters,
+            List<Inviter> inviters,
+            List<Conversation> conversations,
+            int numberOfConversations,
+            bool loading)
         initial,
   }) {
-    return initial(
-        numberOfInviters, inviters, conversations, numberOfConversations);
+    return initial(numberOfInviters, inviters, conversations,
+        numberOfConversations, loading);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String numberOfInviters, List<Inviter> inviters,
-            List<Conversation> conversations, int numberOfConversations)?
+    TResult Function(
+            String numberOfInviters,
+            List<Inviter> inviters,
+            List<Conversation> conversations,
+            int numberOfConversations,
+            bool loading)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(
-          numberOfInviters, inviters, conversations, numberOfConversations);
+      return initial(numberOfInviters, inviters, conversations,
+          numberOfConversations, loading);
     }
     return orElse();
   }
@@ -803,7 +840,8 @@ abstract class _Initial implements ChatsState {
       {required String numberOfInviters,
       required List<Inviter> inviters,
       required List<Conversation> conversations,
-      required int numberOfConversations}) = _$_Initial;
+      required int numberOfConversations,
+      required bool loading}) = _$_Initial;
 
   @override
   String get numberOfInviters => throw _privateConstructorUsedError;
@@ -813,6 +851,8 @@ abstract class _Initial implements ChatsState {
   List<Conversation> get conversations => throw _privateConstructorUsedError;
   @override
   int get numberOfConversations => throw _privateConstructorUsedError;
+  @override
+  bool get loading => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$InitialCopyWith<_Initial> get copyWith =>

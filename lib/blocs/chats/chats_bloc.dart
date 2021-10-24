@@ -25,6 +25,7 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
             inviters: <Inviter>[],
             conversations: <Conversation>[],
             numberOfConversations: 0,
+            loading: true,
           ),
         );
 
@@ -88,10 +89,14 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
     yield state.copyWith(
       conversations: value.conversations,
       numberOfConversations: value.conversations.length,
+      loading: false,
     );
   }
 
   Stream<ChatsState> _refresh(_Refresh value) async* {
+    yield state.copyWith(
+      loading: true,
+    );
     final conversations = await _chatRepository.conversations;
     conversations.fold(
       (l) => l,

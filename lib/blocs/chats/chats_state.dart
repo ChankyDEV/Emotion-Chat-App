@@ -7,5 +7,6 @@ class ChatsState with _$ChatsState {
     required List<Inviter> inviters,
     required List<Conversation> conversations,
     required int numberOfConversations,
+    required bool loading,
   }) = _Initial;
 }
