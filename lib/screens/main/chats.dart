@@ -1,9 +1,11 @@
 import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
+import 'package:emotion_chat/blocs/network/network_bloc.dart';
 import 'package:emotion_chat/data/models/conversation/conversation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/screens/core/no_internet_connection_screen.dart';
 import 'package:emotion_chat/screens/utils/loading.dart';
 import 'package:emotion_chat/screens/utils/user_list_item.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
@@ -25,40 +27,46 @@ class _ChatsState extends State<Chats> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatsBloc, ChatsState>(
-      builder: (context, state) {
-        return WillPopScope(
-          onWillPop: () => Future.value(false),
-          child: state.loading
-              ? Loading()
-              : Scaffold(
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: cDarkGrey,
-                    elevation: 0,
-                    actions: _buildActionIcons(
-                      state.numberOfInviters,
-                      state.inviters,
-                    ),
-                    title: Text(
-                      'Messages',
-                      style: titleStyle,
-                    ),
-                  ),
-                  body: Center(
-                    child: state.numberOfConversations > 0
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 24.0),
-                            child: _buildConversations(
-                              state.conversations,
+    return BlocBuilder<NetworkBloc, NetworkState>(
+      builder: (context, networkState) {
+        return BlocBuilder<ChatsBloc, ChatsState>(
+          builder: (context, state) {
+            return WillPopScope(
+              onWillPop: () => Future.value(false),
+              child: state.loading
+                  ? Loading()
+                  : networkState.hasInternetConnection
+                      ? Scaffold(
+                          appBar: AppBar(
+                            automaticallyImplyLeading: false,
+                            backgroundColor: cDarkGrey,
+                            elevation: 0,
+                            actions: _buildActionIcons(
+                              state.numberOfInviters,
+                              state.inviters,
                             ),
-                          )
-                        : Text(
-                            'No active chats',
-                            style: titleStyle,
+                            title: Text(
+                              'Messages',
+                              style: titleStyle,
+                            ),
                           ),
-                  ),
-                ),
+                          body: Center(
+                            child: state.numberOfConversations > 0
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 24.0),
+                                    child: _buildConversations(
+                                      state.conversations,
+                                    ),
+                                  )
+                                : Text(
+                                    'No active chats',
+                                    style: titleStyle,
+                                  ),
+                          ),
+                        )
+                      : NoInternetConnectionScreen(),
+            );
+          },
         );
       },
     );

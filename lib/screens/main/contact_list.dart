@@ -1,7 +1,9 @@
+import 'package:emotion_chat/blocs/network/network_bloc.dart';
 import 'package:emotion_chat/constants/blocs.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/screens/core/no_internet_connection_screen.dart';
 import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
 import 'package:emotion_chat/screens/utils/user_list_item.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
@@ -21,37 +23,43 @@ class _ContactListState extends State<ContactList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FriendsBloc, FriendsState>(
-      builder: (context, state) {
-        return WillPopScope(
-          onWillPop: () => Future.value(false),
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: cDarkGrey,
-              elevation: 0,
-              actions: _buildActionIcons(),
-              title: Text(
-                'Friends',
-                style: titleStyle,
-              ),
-            ),
-            body: Column(
-              children: [
-                // Expanded(
-                //   flex: 1,
-                //   child: const SizedBox(), //_buildSearchBar(),
-                // ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  flex: 10,
-                  child: _buildFriends(state.friends),
-                ),
-              ],
-            ),
-          ),
+    return BlocBuilder<NetworkBloc, NetworkState>(
+      builder: (context, networkState) {
+        return BlocBuilder<FriendsBloc, FriendsState>(
+          builder: (context, state) {
+            return WillPopScope(
+              onWillPop: () => Future.value(false),
+              child: networkState.hasInternetConnection
+                  ? Scaffold(
+                      appBar: AppBar(
+                        automaticallyImplyLeading: false,
+                        backgroundColor: cDarkGrey,
+                        elevation: 0,
+                        actions: _buildActionIcons(),
+                        title: Text(
+                          'Friends',
+                          style: titleStyle,
+                        ),
+                      ),
+                      body: Column(
+                        children: [
+                          // Expanded(
+                          //   flex: 1,
+                          //   child: const SizedBox(), //_buildSearchBar(),
+                          // ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Expanded(
+                            flex: 10,
+                            child: _buildFriends(state.friends),
+                          ),
+                        ],
+                      ),
+                    )
+                  : NoInternetConnectionScreen(),
+            );
+          },
         );
       },
     );

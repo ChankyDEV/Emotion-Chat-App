@@ -1,5 +1,6 @@
-import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
+import 'package:emotion_chat/blocs/network/network_bloc.dart';
 import 'package:emotion_chat/config.dart';
+import 'package:emotion_chat/constants/services.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +22,15 @@ class AppConfig extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: routing.onGenerateRoute,
-      initialRoute: '/',
-      theme: ThemeData(
-        scaffoldBackgroundColor: cDarkGrey,
+    return BlocProvider(
+      create: (context) => NetworkBloc(GetIt.I.get<NetworkService>()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: routing.onGenerateRoute,
+        initialRoute: '/',
+        theme: ThemeData(
+          scaffoldBackgroundColor: cDarkGrey,
+        ),
       ),
     );
   }
