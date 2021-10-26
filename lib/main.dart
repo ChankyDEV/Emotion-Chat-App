@@ -2,6 +2,7 @@ import 'package:emotion_chat/blocs/network/network_bloc.dart';
 import 'package:emotion_chat/config.dart';
 import 'package:emotion_chat/constants/services.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
+import 'package:emotion_chat/services/utils/logger/logger.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ void main() async {
   await Firebase.initializeApp();
   final cfg = Config();
   await cfg.setup();
+  GetIt.I.get<ChatLogger>().info('Application has been configured');
   runApp(AppConfig());
 }
 

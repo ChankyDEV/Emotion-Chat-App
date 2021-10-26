@@ -6,9 +6,13 @@ import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/data/models/invitation/invitation_dto.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
 import 'package:emotion_chat/services/database/friends/invitation_database_service.dart';
+import 'package:emotion_chat/services/utils/logger/logger.dart';
 
 class FriendsDatabaseImpl implements FriendsDatabase {
   FirebaseFirestore _db = FirebaseFirestore.instance;
+  final ChatLogger _logger;
+
+  FriendsDatabaseImpl(this._logger);
 
   @override
   Future<void> sendInvitation({
@@ -30,12 +34,17 @@ class FriendsDatabaseImpl implements FriendsDatabase {
               from,
             ).toJson(),
           )
-          .onError(
-            (_, __) => throw InvitationException(
-              message: ErrorMessages.invitation.sendingInvitationError,
-            ),
-          );
+          .onError((_, __) {
+        _logger.error(
+          'Error occurred while trying to send invitation from [$from]  to [$to]',
+        );
+        throw InvitationException(
+          message: ErrorMessages.invitation.sendingInvitationError,
+        );
+      });
+      _logger.info('Send invitation from [$from] to [$to]');
     } else {
+      _logger.warning('User [$from] already send an invitation to [$to]');
       throw InvitationException(
         message: ErrorMessages.invitation.alreadySentInvitation,
       );
@@ -69,6 +78,8 @@ class FriendsDatabaseImpl implements FriendsDatabase {
           docsForFriends.size == 0 &&
           from != to;
     } catch (e) {
+      _logger.error(
+          'Error occurred while trying to get data if user can send invitation from [$from] to [$to]');
       throw DatabaseException(message: ErrorMessages.database.cantGetData);
     }
   }
@@ -107,9 +118,18 @@ class FriendsDatabaseImpl implements FriendsDatabase {
   }
 
   Future<void> deleteInvitation(String userUid, Invitation invitation) async {
+    _logger.info(
+      'Try to delete invitation from sender [${invitation.senderUid}] to user [$userUid]',
+    );
     try {
       await _deleteInvitation(userUid, invitation);
+      _logger.info(
+        'Deleted invitation from sender [${invitation.senderUid}] to user [$userUid]',
+      );
     } catch (e) {
+      _logger.error(
+        'Error occurred while deleting invitation from sender [${invitation.senderUid}] to user [$userUid]',
+      );
       throw DatabaseException(message: 'Cant delete invitation');
     }
   }
@@ -120,10 +140,19 @@ class FriendsDatabaseImpl implements FriendsDatabase {
     Invitation invitation,
   ) async {
     try {
+      _logger.info(
+        'Try to accept invitation from sender [${invitation.senderUid}] to user [$userUid]',
+      );
       await _addFriend(userUid, invitation.senderUid);
       await _addFriend(invitation.senderUid, userUid);
       await _deleteInvitation(userUid, invitation);
+      _logger.info(
+        'Accepted invitation from sender [${invitation.senderUid}] to user [$userUid]',
+      );
     } catch (e) {
+      _logger.error(
+        'Error occurred while accepting invitation from sender [${invitation.senderUid}] to user [$userUid]',
+      );
       throw DatabaseException(message: 'Cant accept invitation');
     }
   }
@@ -155,24 +184,30 @@ class FriendsDatabaseImpl implements FriendsDatabase {
     String userUuid, {
     required Function onFindUser,
   }) async {
-    final List<String> uuids = await _db
-        .collection(Collections.contacts)
-        .doc(userUuid)
-        .collection(Collections.friends)
-        .get()
-        .then((value) {
-      return value.docs.map<String>((e) {
-        final data = e.data();
-        return data['senderUid'];
-      }).toList();
-    });
-    final friends = <ChatUser>[];
-    await Future.forEach<String>(uuids, (uuid) async {
-      ChatUser friend = await onFindUser(uuid);
-      friends.add(friend);
-    });
-
-    return friends;
+    _logger.info('Try to get all friends for user [$userUuid]');
+    try {
+      final List<String> uuids = await _db
+          .collection(Collections.contacts)
+          .doc(userUuid)
+          .collection(Collections.friends)
+          .get()
+          .then((value) {
+        return value.docs.map<String>((e) {
+          final data = e.data();
+          return data['senderUid'];
+        }).toList();
+      });
+      final friends = <ChatUser>[];
+      await Future.forEach<String>(uuids, (uuid) async {
+        ChatUser friend = await onFindUser(uuid);
+        friends.add(friend);
+      });
+      return friends;
+    } catch (e) {
+      _logger.error(
+          'Error occurred while trying to get all friends for user [$userUuid]');
+      throw DatabaseException(message: 'Cant get all friends');
+    }
   }
 }
 

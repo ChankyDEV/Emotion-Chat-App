@@ -34,17 +34,30 @@ import 'package:emotion_chat/services/network/network_service_impl.dart';
 import 'package:emotion_chat/services/permission/permission_service.dart';
 import 'package:emotion_chat/services/permission/permission_service_impl.dart';
 import 'package:emotion_chat/services/routing/routing_service.dart';
+import 'package:emotion_chat/services/utils/logger/logger.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class Config {
   final getItInstance = GetIt.instance;
 
   Future<void> setup() async {
+    _configureLogger();
     await configureLocalStorage();
     await configureDependencies();
+  }
+
+  void _configureLogger() {
+    getItInstance.registerSingleton<ChatLogger>(
+      ChatLoggerImpl(
+        Logger(
+          printer: PrettyPrinter(),
+        ),
+      ),
+    );
   }
 
   Future<void> configureDependencies() async {
@@ -64,11 +77,12 @@ class Config {
   }
 
   Future<void> _registerServices() async {
+    final logger = getItInstance.get<ChatLogger>();
     getItInstance
       ..registerSingleton<Validator>(Validator())
       ..registerSingleton<DatabaseService>(
         DatabaseServiceImpl(
-          friends: FriendsDatabaseImpl(),
+          friends: FriendsDatabaseImpl(logger),
           conversations: ConversationDatabaseImpl(),
           users: UserDatabaseImpl(),
         ),
