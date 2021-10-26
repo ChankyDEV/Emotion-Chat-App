@@ -83,7 +83,7 @@ class Config {
       ..registerSingleton<DatabaseService>(
         DatabaseServiceImpl(
           friends: FriendsDatabaseImpl(logger),
-          conversations: ConversationDatabaseImpl(),
+          conversations: ConversationDatabaseImpl(logger),
           users: UserDatabaseImpl(logger),
         ),
       )

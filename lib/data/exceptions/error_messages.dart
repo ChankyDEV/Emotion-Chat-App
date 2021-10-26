@@ -22,4 +22,5 @@ class DatabaseMessages {
   const DatabaseMessages._();
   final cantGetData = 'Cant get data from particular collection';
   final cantFindUserUid = 'Cant get user uid with this email';
+  final cantAddData = 'Cant add data to particular collection';
 }
