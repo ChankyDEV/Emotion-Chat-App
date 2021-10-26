@@ -84,7 +84,7 @@ class Config {
         DatabaseServiceImpl(
           friends: FriendsDatabaseImpl(logger),
           conversations: ConversationDatabaseImpl(),
-          users: UserDatabaseImpl(),
+          users: UserDatabaseImpl(logger),
         ),
       )
       ..registerSingleton<AuthService>(

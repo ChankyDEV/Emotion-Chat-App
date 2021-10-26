@@ -5,6 +5,7 @@ import 'package:emotion_chat/data/exceptions/exceptions.dart';
 import 'package:emotion_chat/data/models/auth/user.dart';
 import 'package:emotion_chat/data/models/invitation/invitation.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
+import 'package:emotion_chat/services/utils/logger/logger.dart';
 
 abstract class UserDatabase {
   Future<ChatUser> findUserByUuid(uuid);
@@ -22,15 +23,20 @@ abstract class UserDatabase {
 
 class UserDatabaseImpl implements UserDatabase {
   FirebaseFirestore _db = FirebaseFirestore.instance;
+  final ChatLogger _logger;
+
+  UserDatabaseImpl(this._logger);
 
   @override
   Future<String> findUserUuidByEmail(String email) async {
+    _logger.info('Try to find user uuid by email [$email]');
     final user = await _findUserByEmail(email);
     return user.uuid;
   }
 
   @override
   Future<ChatUser> findUserByEmail(String email) async {
+    _logger.info('Try to find user by email [$email]');
     return _findUserByEmail(email);
   }
 
@@ -40,8 +46,11 @@ class UserDatabaseImpl implements UserDatabase {
           .collection(Collections.users)
           .where('email', isEqualTo: email)
           .get();
-      return UserDTO.fromJson(response.docs.first.data()).toDomain();
+      final user = UserDTO.fromJson(response.docs.first.data()).toDomain();
+      _logger.info('Got user ${user.toString()} by email [$email]');
+      return user;
     } catch (e) {
+      _logger.warning('Could not find user by email [$email]');
       throw NoUserWithEmailException(
         message: ErrorMessages.database.cantFindUserUid,
       );
@@ -50,9 +59,17 @@ class UserDatabaseImpl implements UserDatabase {
 
   @override
   Future<ChatUser> findUserByUuid(uuid) async {
-    final response = await _db.collection(Collections.users).doc(uuid).get();
-    final json = response.data();
-    return UserDTO.fromJson(json).toDomain();
+    _logger.info('Try to find user by uuid [$uuid]');
+    try {
+      final response = await _db.collection(Collections.users).doc(uuid).get();
+      final json = response.data();
+      final user = UserDTO.fromJson(json).toDomain();
+      _logger.info('Got user ${user.toString()} by uuid [$uuid]');
+      return user;
+    } catch (e) {
+      _logger.warning('Could not find user by uuid [$uuid]');
+      throw DatabaseException(message: ErrorMessages.database.cantFindUserUid);
+    }
   }
 
   @override
@@ -62,11 +79,15 @@ class UserDatabaseImpl implements UserDatabase {
       );
 
   @override
-  Future<ChatUser> getUser(String uid) async {
+  Future<ChatUser> getUser(String uuid) async {
+    _logger.info('Try to get user by uuid [$uuid]');
     try {
-      final response = await _db.collection(Collections.users).doc(uid).get();
-      return UserDTO.fromJson(response.data()).toDomain();
+      final response = await _db.collection(Collections.users).doc(uuid).get();
+      final user = UserDTO.fromJson(response.data()).toDomain();
+      _logger.info('Got user ${user.toString()} by uuid [$uuid]');
+      return user;
     } catch (e) {
+      _logger.warning('Could not find user by uuid [$uuid]');
       throw AuthException(message: 'Cant get user');
     }
   }
@@ -84,6 +105,7 @@ class UserDatabaseImpl implements UserDatabase {
     bool isFirstTime = true,
     Function? onFirstTime,
   }) async {
+    _logger.info('Try to add or update user [${user.toString()}]');
     try {
       await _db
           .collection(Collections.users)
@@ -97,8 +119,12 @@ class UserDatabaseImpl implements UserDatabase {
             .add(
               Invitation.empty().toJson(),
             );
+        _logger.info('Added empty invitation for user [${user.toString()}]');
       }
+      _logger.info('Successfully added or updated user [${user.toString()}]');
     } catch (e) {
+      _logger.error(
+          'Error occurred while trying to add or update user [${user.toString()}]');
       throw AuthException(message: onErrorMessage);
     }
   }

@@ -84,4 +84,9 @@ class ChatUser extends Equatable {
       hasOwnImage: hasOwnImage,
     );
   }
+
+  @override
+  String toString() {
+    return '{\nuid: $uuid,\n email: ${emailAddress.value},\n phone: ${phoneNumber.value},\n profileImageUrl: ${profileImage.url},\n name: ${name.value},\n gender: ${gender.value.toString()},\n hasOwnImage: $hasOwnImage,\n}';
+  }
 }
