@@ -1,5 +1,6 @@
 import 'package:emotion_chat/blocs/active_chat/active_chat_bloc.dart';
 import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/screens/abstractions/custom_state.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
 import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
@@ -15,10 +16,10 @@ class ActiveChat extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ActiveChat> createState() => _ActiveChatState();
+  _ActiveChatState createState() => _ActiveChatState();
 }
 
-class _ActiveChatState extends State<ActiveChat> {
+class _ActiveChatState extends CustomState<ActiveChat> {
   late final TextEditingController _controller;
 
   @override
@@ -37,13 +38,34 @@ class _ActiveChatState extends State<ActiveChat> {
       ),
       body: BlocBuilder<ActiveChatBloc, ActiveChatState>(
         builder: (context, state) {
-          return Column(
+          return Stack(
             children: [
-              Expanded(
-                flex: 9,
-                child: _buildMessages(state.messages),
+              Column(
+                children: [
+                  Expanded(
+                    flex: 9,
+                    child: _buildMessages(state.messages),
+                  ),
+                  _buildTextInput(),
+                ],
               ),
-              _buildTextInput(),
+              Align(
+                alignment: Alignment.topCenter,
+                child: hasInternetConnection
+                    ? const SizedBox()
+                    : Container(
+                        color: Colors.transparent,
+                        padding: const EdgeInsets.all(4.0),
+                        height: screenHeight * 0.03,
+                        child: Text(
+                          'No internet connection',
+                          style: bodyStyle.copyWith(
+                            color: Colors.red,
+                            fontSize: 10.0,
+                          ),
+                        ),
+                      ),
+              ),
             ],
           );
         },

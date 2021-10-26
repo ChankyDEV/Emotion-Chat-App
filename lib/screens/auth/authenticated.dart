@@ -1,4 +1,4 @@
-import 'package:emotion_chat/screens/abstractions/custom_stateful_widget.dart';
+import 'package:emotion_chat/screens/abstractions/custom_state.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/main/chats.dart';
 import 'package:emotion_chat/screens/main/contact_list.dart';
