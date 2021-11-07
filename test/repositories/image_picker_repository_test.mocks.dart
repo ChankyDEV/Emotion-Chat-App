@@ -4,12 +4,13 @@
 
 import 'dart:async' as _i4;
 
-import 'package:emotion_chat/data/enums/my_permission_status.dart' as _i6;
 import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart'
     as _i3;
 import 'package:emotion_chat/features/image/domain/services/image_service.dart'
     as _i2;
-import 'package:emotion_chat/services/permission/permission_service.dart'
+import 'package:emotion_chat/features/permission/domain/entities/my_permission_status.dart'
+    as _i6;
+import 'package:emotion_chat/features/permission/domain/permission_info.dart'
     as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -44,7 +45,7 @@ class MockImagePickerService extends _i1.Mock implements _i3.ImageRepository {
 /// A class which mocks [PermissionService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPermissionService extends _i1.Mock implements _i5.PermissionService {
+class MockPermissionService extends _i1.Mock implements _i5.PermissionInfo {
   MockPermissionService() {
     _i1.throwOnMissingStub(this);
   }

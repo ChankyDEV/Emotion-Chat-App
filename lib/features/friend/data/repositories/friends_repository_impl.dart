@@ -4,9 +4,9 @@ import 'package:emotion_chat/data/exceptions/exceptions.dart';
 import 'package:emotion_chat/features/friend/data/dtos/invitation_dto.dart';
 import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
 import 'package:emotion_chat/features/friend/domain/repositories/friends_repository.dart';
+import 'package:emotion_chat/features/logger/domain/chat_logger.dart';
 import 'package:emotion_chat/features/user/domain/entities/user.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
-import 'package:emotion_chat/services/utils/logger/logger.dart';
 
 class FriendsRepositoryImpl implements FriendsRepository {
   FirebaseFirestore _db = FirebaseFirestore.instance;

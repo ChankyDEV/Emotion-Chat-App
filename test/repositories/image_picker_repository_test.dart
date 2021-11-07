@@ -3,14 +3,14 @@ import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/image/data/services/image_service_impl.dart';
 import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart';
 import 'package:emotion_chat/features/image/domain/services/image_service.dart';
-import 'package:emotion_chat/services/permission/permission_service.dart';
+import 'package:emotion_chat/features/permission/domain/permission_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'image_picker_repository_test.mocks.dart';
 
-@GenerateMocks([ImageRepository, PermissionService])
+@GenerateMocks([ImageRepository, PermissionInfo])
 void main() {
   late ImageServiceImpl imagePickerRepository;
   late MockImagePickerService mockImagePickerService;

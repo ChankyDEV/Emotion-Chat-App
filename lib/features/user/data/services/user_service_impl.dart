@@ -6,14 +6,14 @@ import 'package:emotion_chat/features/image/domain/entities/picked_file.dart';
 import 'package:emotion_chat/features/image/domain/services/image_service.dart';
 import 'package:emotion_chat/features/network/domain/network_info.dart';
 import 'package:emotion_chat/features/user/domain/repositories/auth_repository.dart';
+import 'package:emotion_chat/features/user/domain/repositories/local_repository.dart';
 import 'package:emotion_chat/features/user/domain/services/auth_service.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
-import 'package:emotion_chat/services/local_db/local_database_service.dart';
 
 class UserServiceImpl implements AuthService {
   final ImageService imageService;
   final AuthRepository authService;
-  final LocalDatabaseService localDatabaseService;
+  final LocalRepository localDatabaseService;
   final NetworkInfo networkService;
   final DatabaseService db;
 

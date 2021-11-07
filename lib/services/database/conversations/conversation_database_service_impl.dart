@@ -4,9 +4,9 @@ import 'package:emotion_chat/data/data_transfer_objects/messages/message_dto.dar
 import 'package:emotion_chat/data/exceptions/error_messages.dart';
 import 'package:emotion_chat/data/models/conversation/conversation.dart';
 import 'package:emotion_chat/data/models/conversation/message.dart';
+import 'package:emotion_chat/features/logger/domain/chat_logger.dart';
 import 'package:emotion_chat/services/database/conversations/conversation_database_service.dart';
 import 'package:emotion_chat/services/database/database_service_impl.dart';
-import 'package:emotion_chat/services/utils/logger/logger.dart';
 
 class ConversationDatabaseImpl implements ConversationDatabase {
   FirebaseFirestore _db = FirebaseFirestore.instance;

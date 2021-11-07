@@ -45,7 +45,7 @@ class MockDatabaseService extends Mock implements DatabaseService {
   }
 }
 
-class MockLocalDatabaseService extends Mock implements LocalDatabaseService {
+class MockLocalDatabaseService extends Mock implements LocalRepository {
   @override
   Future<bool> isUserSaved() {
     return super.noSuchMethod(

@@ -1,6 +1,6 @@
+import 'package:emotion_chat/features/routing/routing_service.dart';
 import 'package:emotion_chat/features/user/presentation/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/screens/core/loading_screen.dart';
-import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

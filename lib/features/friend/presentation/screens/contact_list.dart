@@ -1,12 +1,12 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/friend/presentation/blocs/friends/friends_bloc.dart';
 import 'package:emotion_chat/features/network/presentation/blocs/network/network_bloc.dart';
+import 'package:emotion_chat/features/routing/routing_service.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';
 import 'package:emotion_chat/screens/core/no_internet_connection_screen.dart';
 import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
 import 'package:emotion_chat/screens/utils/user_list_item.dart';
-import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

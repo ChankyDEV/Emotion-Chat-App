@@ -1,10 +1,5 @@
+import 'package:emotion_chat/features/logger/domain/chat_logger.dart';
 import 'package:logger/logger.dart';
-
-abstract class ChatLogger {
-  void info(String message);
-  void warning(String message);
-  void error(String message);
-}
 
 class ChatLoggerImpl implements ChatLogger {
   final Logger logger;

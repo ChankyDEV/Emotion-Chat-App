@@ -1,6 +1,7 @@
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
 import 'package:emotion_chat/data/models/conversation/conversation.dart';
 import 'package:emotion_chat/features/friend/domain/entities/inviter.dart';
+import 'package:emotion_chat/features/routing/routing_service.dart';
 import 'package:emotion_chat/features/user/presentation/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/screens/abstractions/custom_state.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
@@ -8,7 +9,6 @@ import 'package:emotion_chat/screens/core/consts/styles.dart';
 import 'package:emotion_chat/screens/core/no_internet_connection_screen.dart';
 import 'package:emotion_chat/screens/utils/loading.dart';
 import 'package:emotion_chat/screens/utils/user_list_item.dart';
-import 'package:emotion_chat/services/routing/routing_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

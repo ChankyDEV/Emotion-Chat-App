@@ -1,8 +1,8 @@
 import 'package:emotion_chat/config.dart';
 import 'package:emotion_chat/constants/services.dart';
+import 'package:emotion_chat/features/logger/domain/chat_logger.dart';
 import 'package:emotion_chat/features/network/presentation/blocs/network/network_bloc.dart';
-import 'package:emotion_chat/services/routing/routing_service.dart';
-import 'package:emotion_chat/services/utils/logger/logger.dart';
+import 'package:emotion_chat/features/routing/routing_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

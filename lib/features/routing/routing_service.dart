@@ -12,9 +12,9 @@ import 'package:emotion_chat/features/user/presentation/blocs/auth_form/auth_for
 import 'package:emotion_chat/features/user/presentation/screens/additional_user_info/additional_user_info_screen.dart';
 import 'package:emotion_chat/features/user/presentation/screens/authenticated.dart';
 import 'package:emotion_chat/features/user/presentation/screens/unauthenticated.dart';
+import 'package:emotion_chat/features/user/presentation/screens/wrapper.dart';
 import 'package:emotion_chat/repositories/chat/chat_repository.dart';
 import 'package:emotion_chat/screens/chat/active_chat.dart';
-import 'package:emotion_chat/screens/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

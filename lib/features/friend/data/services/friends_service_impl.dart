@@ -14,7 +14,7 @@ import 'package:emotion_chat/features/user/domain/repositories/user_repository.d
 class FriendsServiceImpl implements FriendsService {
   final FriendsRepository _friendsRepository;
   final UserRepository _userRepository;
-  final LocalDatabaseService _local;
+  final LocalRepository _local;
   final NetworkInfo _network;
 
   FriendsServiceImpl(

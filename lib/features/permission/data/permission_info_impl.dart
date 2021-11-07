@@ -1,8 +1,8 @@
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/services/permission/permission_service.dart';
+import 'package:emotion_chat/features/permission/domain/permission_info.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class PermissionServiceImpl implements PermissionService {
+class PermissionInfoImpl implements PermissionInfo {
   @override
   Future<MyPermissionStatus> getCameraPermission() async {
     final status = await Permission.camera.request();
