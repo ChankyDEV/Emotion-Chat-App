@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
-import 'package:emotion_chat/repositories/invitation/invitation_repository_impl.dart';
+import 'package:emotion_chat/features/friend/data/services/invitation_service_impl.dart';
+import 'package:emotion_chat/features/friend/domain/services/invitation_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../utils/mocks.dart';
 
 void main() {
-  late InvitationRepository repository;
+  late InvitationService service;
   late MockDatabaseService db;
   late MockLocalDatabaseService local;
   late MockNetworkService network;
@@ -28,7 +28,7 @@ void main() {
     db = MockDatabaseService();
     local = MockLocalDatabaseService();
     network = MockNetworkService();
-    repository = InvitationRepositoryImpl(
+    service = InvitationServiceImpl(
       db: db,
       local: local,
       network: network,
@@ -43,7 +43,7 @@ void main() {
     when(db.findUserUuidByEmail(any)).thenAnswer((_) async => tReceiverUuid);
     when(local.getUser()).thenAnswer((_) async => tUser);
 
-    final result = await repository.sendInvitation(tEmail);
+    final result = await service.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
     verify(db.findUserUuidByEmail(tEmail));
@@ -60,7 +60,7 @@ void main() {
     when(network.isConnected).thenAnswer((_) async => true);
     when(local.isUserSaved()).thenAnswer((_) async => false);
 
-    final result = await repository.sendInvitation(tEmail);
+    final result = await service.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
     verifyNever(db.findUserUuidByEmail(tEmail));
@@ -82,7 +82,7 @@ void main() {
           message: 'There is no user with particular email'),
     );
 
-    final result = await repository.sendInvitation(tEmail);
+    final result = await service.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
     verify(db.findUserUuidByEmail(tEmail));

@@ -1,5 +1,5 @@
 import 'package:emotion_chat/data/enums/form_input.dart';
-import 'package:emotion_chat/data/models/auth/user_props.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
 
 import './extensions.dart';
 

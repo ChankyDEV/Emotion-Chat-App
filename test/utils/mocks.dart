@@ -1,6 +1,6 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/services.dart';
-import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
+import 'package:emotion_chat/features/image/domain/services/image_service.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:mockito/mockito.dart';
 
@@ -82,7 +82,7 @@ class MockLocalDatabaseService extends Mock implements LocalDatabaseService {
   }
 }
 
-class MockAuthService extends Mock implements AuthService {
+class MockAuthService extends Mock implements AuthRepository {
   @override
   Future<ChatUser> signUpWithEmailAndPhone({
     required EmailAddress? emailAddress,
@@ -195,7 +195,7 @@ class MockImageUploadService extends Mock implements ImageUploadService {
   }
 }
 
-class MockNetworkService extends Mock implements NetworkService {
+class MockNetworkService extends Mock implements NetworkInfo {
   @override
   Future<bool> get isConnected => super.noSuchMethod(
         Invocation.getter(

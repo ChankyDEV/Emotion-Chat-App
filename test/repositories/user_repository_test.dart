@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/repositories/user/user_repository_impl.dart';
+import 'package:emotion_chat/features/user/data/services/user_service_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -31,14 +31,14 @@ void main() {
   late MockImageUploadService imageUploadService;
   late MockNetworkService networkService;
   late MockDatabaseService dbService;
-  late UserRepositoryImpl repository;
+  late UserServiceImpl repository;
   setUpAll(() {
     authService = MockAuthService();
     localDatabaseService = MockLocalDatabaseService();
     imageUploadService = MockImageUploadService();
     networkService = MockNetworkService();
     dbService = MockDatabaseService();
-    repository = UserRepositoryImpl(
+    repository = UserServiceImpl(
         db: dbService,
         imageService: imageUploadService,
         authService: authService,

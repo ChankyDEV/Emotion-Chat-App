@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:emotion_chat/blocs/network/network_bloc.dart';
+import 'package:emotion_chat/features/network/presentation/blocs/network/network_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -5,10 +5,10 @@
 import 'dart:async' as _i4;
 
 import 'package:emotion_chat/data/enums/my_permission_status.dart' as _i6;
-import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart'
-    as _i2;
-import 'package:emotion_chat/services/image_picker/image_picker_service.dart'
+import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart'
     as _i3;
+import 'package:emotion_chat/features/image/domain/services/image_service.dart'
+    as _i2;
 import 'package:emotion_chat/services/permission/permission_service.dart'
     as _i5;
 import 'package:mockito/mockito.dart' as _i1;
@@ -24,8 +24,7 @@ class _FakeMyPickedFile extends _i1.Fake implements _i2.MyPickedFile {}
 /// A class which mocks [ImagePickerService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockImagePickerService extends _i1.Mock
-    implements _i3.ImagePickerService {
+class MockImagePickerService extends _i1.Mock implements _i3.ImageRepository {
   MockImagePickerService() {
     _i1.throwOnMissingStub(this);
   }

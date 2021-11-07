@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
-import 'package:emotion_chat/blocs/auth_form/auth_form_bloc.dart';
+import 'package:emotion_chat/features/user/presentation/blocs/auth/auth_cubit.dart';
+import 'package:emotion_chat/features/user/presentation/blocs/auth_form/auth_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'animatedbutton_cubit.freezed.dart';
-
 part 'animatedbutton_state.dart';
 
 class AnimatedButtonCubit extends Cubit<AnimatedButtonState> {

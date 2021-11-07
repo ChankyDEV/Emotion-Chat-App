@@ -8,7 +8,7 @@ import 'package:emotion_chat/services/database/database_service.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   final LocalDatabaseService _local;
-  final NetworkService _network;
+  final NetworkInfo _network;
   final DatabaseService _db;
 
   ChatRepositoryImpl(

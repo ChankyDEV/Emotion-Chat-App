@@ -1,7 +1,7 @@
-import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/blocs/chats/chats_bloc.dart';
 import 'package:emotion_chat/data/models/conversation/conversation.dart';
-import 'package:emotion_chat/data/models/invitation/invitation_sender.dart';
+import 'package:emotion_chat/features/friend/domain/entities/inviter.dart';
+import 'package:emotion_chat/features/user/presentation/blocs/auth/auth_cubit.dart';
 import 'package:emotion_chat/screens/abstractions/custom_state.dart';
 import 'package:emotion_chat/screens/core/consts/colors.dart';
 import 'package:emotion_chat/screens/core/consts/styles.dart';

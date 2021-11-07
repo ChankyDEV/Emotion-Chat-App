@@ -1,5 +1,5 @@
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/data/models/invitation/invitation.dart';
+import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
 
 abstract class DatabaseService {
   Future<void> addUser(ChatUser user);
