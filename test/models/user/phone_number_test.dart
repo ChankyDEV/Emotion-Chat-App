@@ -1,4 +1,4 @@
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

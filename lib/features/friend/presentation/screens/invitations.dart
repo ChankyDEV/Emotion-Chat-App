@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
 import 'package:emotion_chat/features/friend/domain/entities/inviter.dart';
 import 'package:emotion_chat/features/friend/presentation/blocs/invitations/invitation_bloc.dart';
-import 'package:emotion_chat/screens/core/consts/colors.dart';
-import 'package:emotion_chat/screens/core/consts/styles.dart';
-import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
+import 'package:emotion_chat/features/user/presentation/models/form_input.dart';
+import 'package:emotion_chat/utils/presentation/consts/colors.dart';
+import 'package:emotion_chat/utils/presentation/consts/styles.dart';
+import 'package:emotion_chat/utils/presentation/core/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

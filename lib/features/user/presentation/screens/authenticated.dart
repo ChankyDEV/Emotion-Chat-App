@@ -1,8 +1,8 @@
+import 'package:emotion_chat/features/chat/presentation/screens/chats.dart';
 import 'package:emotion_chat/features/friend/presentation/screens/contact_list.dart';
-import 'package:emotion_chat/screens/abstractions/custom_state.dart';
-import 'package:emotion_chat/screens/core/consts/colors.dart';
-import 'package:emotion_chat/screens/main/chats.dart';
-import 'package:emotion_chat/screens/utils/labeled_icon_button.dart';
+import 'package:emotion_chat/utils/presentation/abstraction/custom_state.dart';
+import 'package:emotion_chat/utils/presentation/consts/colors.dart';
+import 'package:emotion_chat/utils/presentation/core/labeled_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class Authenticated extends StatefulWidget {
@@ -47,7 +47,7 @@ class _AuthenticatedState extends CustomState<Authenticated> {
               controller: pageController,
               children: [
                 Chats(),
-                ContactList(),
+                FriendsList(),
               ],
             ),
           ),

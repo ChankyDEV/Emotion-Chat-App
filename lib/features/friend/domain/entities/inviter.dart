@@ -1,5 +1,5 @@
-import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
 
 class Inviter {
   final Invitation invitation;

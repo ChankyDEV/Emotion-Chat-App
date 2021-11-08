@@ -1,12 +1,14 @@
-import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/constants/services.dart';
 import 'package:emotion_chat/features/friend/domain/repositories/friends_repository.dart';
 import 'package:emotion_chat/features/image/domain/entities/picked_file.dart';
 import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart';
-import 'package:emotion_chat/features/image/domain/services/image_service.dart';
+import 'package:emotion_chat/features/network/domain/network_info.dart';
+import 'package:emotion_chat/features/permission/domain/entities/my_permission_status.dart';
 import 'package:emotion_chat/features/permission/domain/permission_info.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
+import 'package:emotion_chat/features/user/domain/repositories/auth_repository.dart';
+import 'package:emotion_chat/features/user/domain/repositories/local_repository.dart';
 import 'package:emotion_chat/features/user/domain/repositories/user_repository.dart';
-import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:mockito/mockito.dart';
 
 class MockPermissionInfo extends Mock implements PermissionInfo {
@@ -72,35 +74,6 @@ class MockFriendsRepository extends Mock implements FriendsRepository {
   }
 }
 
-class MockDatabaseService extends Mock implements DatabaseService {
-  @override
-  Future<String> findUserUuidByEmail(String? email) async {
-    return super.noSuchMethod(
-      Invocation.method(#findUserUidByEmail, [email]),
-      returnValueForMissingStub: Future.value('12345'),
-      returnValue: Future.value('12345'),
-    );
-  }
-
-  @override
-  Future<void> addUser(ChatUser user) {
-    return super.noSuchMethod(
-      Invocation.method(#addUser, [user]),
-      returnValue: Future.value(),
-      returnValueForMissingStub: Future.value(),
-    );
-  }
-
-  @override
-  Future<void> updateUser(ChatUser? user) {
-    return super.noSuchMethod(
-      Invocation.method(#updateUser, [user]),
-      returnValue: Future.value(),
-      returnValueForMissingStub: Future.value(),
-    );
-  }
-}
-
 class MockLocalRepository extends Mock implements LocalRepository {
   @override
   Future<bool> isUserSaved() {
@@ -138,7 +111,7 @@ class MockLocalRepository extends Mock implements LocalRepository {
   }
 }
 
-class MockAuthService extends Mock implements AuthRepository {
+class MockAuthRepository extends Mock implements AuthRepository {
   @override
   Future<ChatUser> signUpWithEmailAndPhone({
     required EmailAddress? emailAddress,
@@ -241,9 +214,7 @@ class MockImageRepository extends Mock implements ImageRepository {
       returnValueForMissingStub: Future.value(MyPickedFile('')),
     );
   }
-}
 
-class MockImageService extends Mock implements ImageService {
   @override
   Future<void> uploadProfileImage({
     required MyPickedFile? profileImage,

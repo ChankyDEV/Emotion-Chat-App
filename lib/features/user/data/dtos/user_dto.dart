@@ -1,4 +1,5 @@
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 

@@ -1,6 +1,9 @@
 import 'dart:async';
 
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/chat/data/repositories/chat_repository_impl.dart';
+import 'package:emotion_chat/features/chat/data/services/chat_service_impl.dart';
+import 'package:emotion_chat/features/chat/domain/repositories/chat_repository.dart';
+import 'package:emotion_chat/features/chat/domain/services/chat_service.dart';
 import 'package:emotion_chat/features/friend/data/repositories/friends_repository_impl.dart';
 import 'package:emotion_chat/features/friend/data/services/friends_service_impl.dart';
 import 'package:emotion_chat/features/friend/domain/repositories/friends_repository.dart';
@@ -17,6 +20,7 @@ import 'package:emotion_chat/features/permission/data/permission_info_impl.dart'
 import 'package:emotion_chat/features/permission/domain/permission_info.dart';
 import 'package:emotion_chat/features/routing/routing_service.dart';
 import 'package:emotion_chat/features/user/data/dtos/user_dto.dart';
+import 'package:emotion_chat/features/user/data/repositories/auth_repository_impl.dart';
 import 'package:emotion_chat/features/user/data/repositories/local_repository_impl.dart';
 import 'package:emotion_chat/features/user/data/repositories/user_repository_impl.dart';
 import 'package:emotion_chat/features/user/data/services/user_service_impl.dart';
@@ -26,12 +30,7 @@ import 'package:emotion_chat/features/user/domain/repositories/user_repository.d
 import 'package:emotion_chat/features/user/domain/services/auth_service.dart';
 import 'package:emotion_chat/features/user/presentation/blocs/additional_info/additional_info_bloc.dart';
 import 'package:emotion_chat/features/user/presentation/blocs/auth_form/auth_form_bloc.dart';
-import 'package:emotion_chat/helpers/validator.dart';
-import 'package:emotion_chat/repositories/chat/chat_repository.dart';
-import 'package:emotion_chat/repositories/chat/chat_repository_impl.dart';
-import 'package:emotion_chat/services/database/conversations/conversation_database_service_impl.dart';
-import 'package:emotion_chat/services/database/database_service.dart';
-import 'package:emotion_chat/services/database/database_service_impl.dart';
+import 'package:emotion_chat/utils/data/utils/validator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -79,14 +78,15 @@ class Config {
     final logger = getItInstance.get<ChatLogger>();
     getItInstance
       ..registerSingleton<Validator>(Validator())
-      ..registerSingleton<DatabaseService>(
-        DatabaseServiceImpl(
-          friends: FriendsRepositoryImpl(logger),
-          conversations: ConversationDatabaseImpl(logger),
-          users: UserRepositoryImpl(logger),
+      ..registerSingleton<FriendsRepository>(FriendsRepositoryImpl(logger))
+      ..registerSingleton<UserRepository>(UserRepositoryImpl(logger))
+      ..registerSingleton<AuthRepository>(
+        AuthRepositoryImpl(
+          getItInstance.get<UserRepository>(),
+          StreamController<UserDTO>(),
         ),
       )
-      ..registerSingleton<UserRepository>(UserRepositoryImpl(logger))
+      ..registerSingleton<ChatRepository>(ChatRepositoryImpl(logger))
       ..registerSingleton<ImageRepository>(ImageRepositoryImpl())
       ..registerSingleton<LocalRepository>(LocalRepositoryImpl())
       ..registerSingleton<NetworkInfo>(NetworkInfoImpl(
@@ -95,11 +95,11 @@ class Config {
       ..registerSingleton<PermissionInfo>(PermissionInfoImpl())
       ..registerSingleton<AuthService>(
         UserServiceImpl(
-          imageService: getItInstance.get<ImageService>(),
-          authService: getItInstance.get<AuthRepository>(),
-          localDatabaseService: getItInstance.get<LocalRepository>(),
-          networkService: getItInstance.get<NetworkInfo>(),
-          db: getItInstance.get<DatabaseService>(),
+          imageRepository: getItInstance.get<ImageRepository>(),
+          authRepository: getItInstance.get<AuthRepository>(),
+          localRepository: getItInstance.get<LocalRepository>(),
+          networkInfo: getItInstance.get<NetworkInfo>(),
+          userRepository: getItInstance.get<UserRepository>(),
         ),
       )
       ..registerSingleton<ImageService>(
@@ -115,11 +115,12 @@ class Config {
           getItInstance.get<NetworkInfo>(),
         ),
       )
-      ..registerSingleton<ChatRepository>(
-        ChatRepositoryImpl(
+      ..registerSingleton<ChatService>(
+        ChatServiceImpl(
           getItInstance.get<LocalRepository>(),
           getItInstance.get<NetworkInfo>(),
-          getItInstance.get<DatabaseService>(),
+          getItInstance.get<ChatRepository>(),
+          getItInstance.get<UserRepository>(),
         ),
       );
   }

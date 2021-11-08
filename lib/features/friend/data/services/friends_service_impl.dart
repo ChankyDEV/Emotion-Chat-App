@@ -1,15 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:emotion_chat/constants/services.dart';
-import 'package:emotion_chat/data/exceptions/error_messages.dart';
-import 'package:emotion_chat/data/exceptions/exceptions.dart';
-import 'package:emotion_chat/data/failures/failures.dart';
-import 'package:emotion_chat/data/models/core/failure.dart';
 import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
 import 'package:emotion_chat/features/friend/domain/entities/inviter.dart';
 import 'package:emotion_chat/features/friend/domain/repositories/friends_repository.dart';
 import 'package:emotion_chat/features/friend/domain/services/friends_service.dart';
+import 'package:emotion_chat/features/network/domain/network_info.dart';
 import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/domain/repositories/local_repository.dart';
 import 'package:emotion_chat/features/user/domain/repositories/user_repository.dart';
+import 'package:emotion_chat/utils/data/utils/error_messages.dart';
+import 'package:emotion_chat/utils/data/utils/exceptions.dart';
+import 'package:emotion_chat/utils/data/utils/failures.dart';
+import 'package:emotion_chat/utils/domain/failure.dart';
 
 class FriendsServiceImpl implements FriendsService {
   final FriendsRepository _friendsRepository;

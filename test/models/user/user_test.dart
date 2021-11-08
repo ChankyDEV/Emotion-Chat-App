@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:convert' as convert;
 
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/user/data/dtos/user_dto.dart';
+import 'package:emotion_chat/features/user/domain/entities/gender_enum.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../fixtures/fixture_reader.dart';

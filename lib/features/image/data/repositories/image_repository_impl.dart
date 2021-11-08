@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:emotion_chat/data/exceptions/exceptions.dart';
 import 'package:emotion_chat/features/image/domain/entities/picked_file.dart';
 import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart';
+import 'package:emotion_chat/utils/data/utils/exceptions.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 

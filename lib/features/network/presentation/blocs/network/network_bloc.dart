@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/constants/services.dart';
+import 'package:emotion_chat/features/network/domain/entities/connection_status.dart';
+import 'package:emotion_chat/features/network/domain/network_info.dart';
 import 'package:meta/meta.dart';
 
 part 'network_event.dart';

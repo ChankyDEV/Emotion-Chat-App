@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/network/domain/entities/connection_status.dart';
 import 'package:emotion_chat/features/network/domain/network_info.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
 import 'package:emotion_chat/features/user/domain/services/auth_service.dart';
 import 'package:emotion_chat/features/user/presentation/blocs/auth/auth_cubit.dart';
-import 'package:emotion_chat/helpers/extensions.dart';
+import 'package:emotion_chat/utils/data/utils/extensions.dart';
+import 'package:emotion_chat/utils/domain/failure.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

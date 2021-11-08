@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
 import 'package:emotion_chat/features/user/domain/services/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

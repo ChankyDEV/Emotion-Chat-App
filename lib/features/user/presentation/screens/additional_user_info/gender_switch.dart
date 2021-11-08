@@ -1,4 +1,4 @@
-import 'package:emotion_chat/screens/core/consts/colors.dart';
+import 'package:emotion_chat/utils/presentation/consts/colors.dart';
 import 'package:flutter/material.dart';
 
 class GenderSwitch extends StatefulWidget {

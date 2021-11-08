@@ -1,6 +1,6 @@
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/user/domain/entities/gender_enum.dart';
+import 'package:emotion_chat/utils/domain/value_object.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 class EmailAddress extends ValueObject<String> {
   @override
@@ -45,6 +45,7 @@ class PhoneNumber extends ValueObject<String> {
   factory PhoneNumber.empty() {
     return PhoneNumber(value: '');
   }
+
   @override
   String toString() {
     return value;

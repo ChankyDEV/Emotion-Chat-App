@@ -1,21 +1,22 @@
-import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/friend/presentation/blocs/friends/friends_bloc.dart';
 import 'package:emotion_chat/features/network/presentation/blocs/network/network_bloc.dart';
+import 'package:emotion_chat/features/network/presentation/screens/no_internet_connection_screen.dart';
 import 'package:emotion_chat/features/routing/routing_service.dart';
-import 'package:emotion_chat/screens/core/consts/colors.dart';
-import 'package:emotion_chat/screens/core/consts/styles.dart';
-import 'package:emotion_chat/screens/core/no_internet_connection_screen.dart';
-import 'package:emotion_chat/screens/core/widgets/my_text_field.dart';
-import 'package:emotion_chat/screens/utils/user_list_item.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/presentation/models/form_input.dart';
+import 'package:emotion_chat/features/user/presentation/screens/widgets/user_list_item.dart';
+import 'package:emotion_chat/utils/presentation/consts/colors.dart';
+import 'package:emotion_chat/utils/presentation/consts/styles.dart';
+import 'package:emotion_chat/utils/presentation/core/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ContactList extends StatefulWidget {
+class FriendsList extends StatefulWidget {
   @override
-  _ContactListState createState() => _ContactListState();
+  _FriendsListState createState() => _FriendsListState();
 }
 
-class _ContactListState extends State<ContactList> {
+class _FriendsListState extends State<FriendsList> {
   @override
   void initState() {
     super.initState();

@@ -1,5 +1,5 @@
-import 'package:emotion_chat/screens/core/consts/colors.dart';
-import 'package:emotion_chat/screens/core/consts/styles.dart';
+import 'package:emotion_chat/utils/presentation/consts/colors.dart';
+import 'package:emotion_chat/utils/presentation/consts/styles.dart';
 import 'package:flutter/material.dart';
 
 class SignUpButton extends StatefulWidget {

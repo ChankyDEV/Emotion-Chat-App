@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/image/domain/entities/picked_file.dart';
 import 'package:emotion_chat/features/image/domain/services/image_service.dart';
 import 'package:emotion_chat/features/user/domain/entities/choose_photo_method.dart';
+import 'package:emotion_chat/features/user/domain/entities/gender_enum.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
 import 'package:emotion_chat/features/user/domain/services/auth_service.dart';
+import 'package:emotion_chat/utils/domain/failure.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

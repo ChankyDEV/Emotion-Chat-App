@@ -1,19 +1,21 @@
 import 'dart:async';
 
-import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/constants/services.dart';
+import 'package:emotion_chat/features/user/data/dtos/user_dto.dart';
+import 'package:emotion_chat/features/user/domain/entities/gender_enum.dart';
 import 'package:emotion_chat/features/user/domain/entities/user.dart';
 import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
-import 'package:emotion_chat/services/database/database_service.dart';
+import 'package:emotion_chat/features/user/domain/repositories/auth_repository.dart';
+import 'package:emotion_chat/features/user/domain/repositories/user_repository.dart';
+import 'package:emotion_chat/utils/data/utils/exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final _auth = FirebaseAuth.instance;
   final StreamController<UserDTO> _currentUserController;
-  final DatabaseService _db;
+  final UserRepository _userRepository;
 
   AuthRepositoryImpl(
-    this._db,
+    this._userRepository,
     this._currentUserController,
   );
 
@@ -35,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<ChatUser> getSignedInUser() async {
     final currentUserUid = _auth.currentUser!.uid;
-    return _db.getUser(currentUserUid);
+    return _userRepository.getUser(currentUserUid);
   }
 
   @override

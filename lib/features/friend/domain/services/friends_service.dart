@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:emotion_chat/data/models/core/failure.dart';
 import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
 import 'package:emotion_chat/features/friend/domain/entities/inviter.dart';
 import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/utils/domain/failure.dart';
 
 abstract class FriendsService {
   Future<Either<Failure, List<ChatUser>>> getAllFriends();

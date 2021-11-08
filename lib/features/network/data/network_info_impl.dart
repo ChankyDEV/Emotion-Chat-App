@@ -1,5 +1,5 @@
-import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/constants/services.dart';
+import 'package:emotion_chat/features/network/domain/entities/connection_status.dart';
+import 'package:emotion_chat/features/network/domain/network_info.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 

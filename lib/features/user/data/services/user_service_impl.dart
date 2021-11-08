@@ -1,38 +1,42 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/image/domain/entities/picked_file.dart';
-import 'package:emotion_chat/features/image/domain/services/image_service.dart';
+import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart';
 import 'package:emotion_chat/features/network/domain/network_info.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
 import 'package:emotion_chat/features/user/domain/repositories/auth_repository.dart';
 import 'package:emotion_chat/features/user/domain/repositories/local_repository.dart';
+import 'package:emotion_chat/features/user/domain/repositories/user_repository.dart';
 import 'package:emotion_chat/features/user/domain/services/auth_service.dart';
-import 'package:emotion_chat/services/database/database_service.dart';
+import 'package:emotion_chat/utils/data/utils/exceptions.dart';
+import 'package:emotion_chat/utils/data/utils/failures.dart';
+import 'package:emotion_chat/utils/domain/failure.dart';
 
 class UserServiceImpl implements AuthService {
-  final ImageService imageService;
-  final AuthRepository authService;
-  final LocalRepository localDatabaseService;
-  final NetworkInfo networkService;
-  final DatabaseService db;
+  final ImageRepository imageRepository;
+  final AuthRepository authRepository;
+  final LocalRepository localRepository;
+  final NetworkInfo networkInfo;
+  final UserRepository userRepository;
 
   UserServiceImpl({
-    required this.imageService,
-    required this.authService,
-    required this.localDatabaseService,
-    required this.networkService,
-    required this.db,
+    required this.imageRepository,
+    required this.authRepository,
+    required this.localRepository,
+    required this.networkInfo,
+    required this.userRepository,
   });
 
   @override
-  Stream<ChatUser> get currentUser => authService.currentUser.map(
+  Stream<ChatUser> get currentUser => authRepository.currentUser.map(
         (dto) => dto.toDomain(),
       );
 
   @override
   Future<ChatUser> getSignedInUser() async {
-    return await localDatabaseService.getUser();
+    return await localRepository.getUser();
   }
 
   @override
@@ -41,7 +45,7 @@ class UserServiceImpl implements AuthService {
     required Password password,
   }) async {
     return await _performAuthAction(
-      () => authService.signInWithEmail(
+      () => authRepository.signInWithEmail(
         emailAddress: emailAddress,
         password: password,
       ),
@@ -55,7 +59,7 @@ class UserServiceImpl implements AuthService {
     required Password password,
   }) async {
     return await _performAuthAction(
-      () => authService.signInWithPhoneNumber(
+      () => authRepository.signInWithPhoneNumber(
         phoneNumber: phoneNumber,
         password: password,
       ),
@@ -69,7 +73,7 @@ class UserServiceImpl implements AuthService {
       required PhoneNumber phoneNumber,
       required Password password}) async {
     return await _performAuthAction(
-      () => authService.signUpWithEmailAndPhone(
+      () => authRepository.signUpWithEmailAndPhone(
           emailAddress: emailAddress,
           phoneNumber: phoneNumber,
           password: password),
@@ -81,14 +85,14 @@ class UserServiceImpl implements AuthService {
     Function authAction,
     bool isSignUpAction,
   ) async {
-    if (await networkService.isConnected) {
+    if (await networkInfo.isConnected) {
       try {
         final user = await authAction() as ChatUser;
         if (isSignUpAction) {
-          await db.addUser(user);
+          await userRepository.addUser(user);
         }
-        await localDatabaseService.saveUser(user);
-        await authService.addInfoAboutUserToStream(user);
+        await localRepository.saveUser(user);
+        await authRepository.addInfoAboutUserToStream(user);
         return right(user);
       } on AuthException catch (e) {
         return left(AuthFailure(message: e.message));
@@ -103,8 +107,8 @@ class UserServiceImpl implements AuthService {
   @override
   Future<bool> logout() async {
     try {
-      await localDatabaseService.removeUser();
-      authService.addInfoAboutUserToStream(ChatUser.empty());
+      await localRepository.removeUser();
+      authRepository.addInfoAboutUserToStream(ChatUser.empty());
       return true;
     } on AuthException catch (e) {
       print(e.message);
@@ -114,19 +118,19 @@ class UserServiceImpl implements AuthService {
 
   @override
   Future<bool> checkIfUserIsLoggedIn() async {
-    bool isUserSaved = await localDatabaseService.isUserSaved();
+    bool isUserSaved = await localRepository.isUserSaved();
     if (isUserSaved) {
       try {
-        final user = await localDatabaseService.getUser();
-        authService.addInfoAboutUserToStream(user);
+        final user = await localRepository.getUser();
+        authRepository.addInfoAboutUserToStream(user);
         return true;
       } on AuthException catch (e) {
         print(e);
-        authService.addInfoAboutUserToStream(ChatUser.empty());
+        authRepository.addInfoAboutUserToStream(ChatUser.empty());
         return false;
       }
     } else {
-      authService.addInfoAboutUserToStream(ChatUser.empty());
+      authRepository.addInfoAboutUserToStream(ChatUser.empty());
       return false;
     }
   }
@@ -138,15 +142,15 @@ class UserServiceImpl implements AuthService {
     required bool hasOwnImage,
     MyPickedFile? profileImage,
   }) async {
-    if (await networkService.isConnected) {
+    if (await networkInfo.isConnected) {
       try {
-        ChatUser user = await authService.getSignedInUser();
+        ChatUser user = await authRepository.getSignedInUser();
         String generatedImageUploadUrl = "";
         if (hasOwnImage) {
-          await imageService.uploadProfileImage(
+          await imageRepository.uploadProfileImage(
               profileImage: profileImage, uid: user.uuid);
           generatedImageUploadUrl =
-              await imageService.getProfileImageUrl(uid: user.uuid);
+              await imageRepository.getProfileImageUrl(uid: user.uuid);
         }
         final updatedUser = ChatUser(
           phoneNumber: user.phoneNumber,
@@ -157,9 +161,9 @@ class UserServiceImpl implements AuthService {
           profileImage: ProfileImage(url: generatedImageUploadUrl),
           uuid: user.uuid,
         );
-        await db.updateUser(updatedUser);
-        await localDatabaseService.saveUser(updatedUser);
-        authService.addInfoAboutUserToStream(updatedUser);
+        await userRepository.updateUser(updatedUser);
+        await localRepository.saveUser(updatedUser);
+        authRepository.addInfoAboutUserToStream(updatedUser);
         return right(unit);
       } on AuthException catch (e) {
         return left(AuthFailure(message: e.message));

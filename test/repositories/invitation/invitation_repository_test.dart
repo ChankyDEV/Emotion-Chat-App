@@ -1,7 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/friend/data/services/friends_service_impl.dart';
 import 'package:emotion_chat/features/friend/domain/services/friends_service.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
+import 'package:emotion_chat/features/user/domain/entities/user_props.dart';
+import 'package:emotion_chat/utils/data/utils/exceptions.dart';
+import 'package:emotion_chat/utils/domain/failure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

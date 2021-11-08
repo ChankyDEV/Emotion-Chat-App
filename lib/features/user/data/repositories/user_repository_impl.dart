@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emotion_chat/data/exceptions/error_messages.dart';
-import 'package:emotion_chat/data/exceptions/exceptions.dart';
 import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
 import 'package:emotion_chat/features/logger/domain/chat_logger.dart';
 import 'package:emotion_chat/features/user/data/dtos/user_dto.dart';
 import 'package:emotion_chat/features/user/domain/entities/user.dart';
 import 'package:emotion_chat/features/user/domain/repositories/user_repository.dart';
-import 'package:emotion_chat/services/database/database_service_impl.dart';
+import 'package:emotion_chat/utils/data/repositories/collections.dart';
+import 'package:emotion_chat/utils/data/utils/error_messages.dart';
+import 'package:emotion_chat/utils/data/utils/exceptions.dart';
 
 class UserRepositoryImpl implements UserRepository {
   FirebaseFirestore _db = FirebaseFirestore.instance;

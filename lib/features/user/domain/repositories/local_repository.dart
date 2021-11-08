@@ -1,4 +1,4 @@
-import 'package:emotion_chat/constants/data.dart';
+import 'package:emotion_chat/features/user/domain/entities/user.dart';
 
 abstract class LocalRepository {
   Future<void> saveUser(ChatUser user);
