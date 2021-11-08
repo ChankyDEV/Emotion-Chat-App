@@ -14,5 +14,8 @@ class SentimentAnalysisDTO extends SentimentAnalysis {
   factory SentimentAnalysisDTO.fromJson(
     Map<String, dynamic> json,
   ) =>
-      SentimentAnalysisDTO(json['sadness'], json['other']);
+      SentimentAnalysisDTO(
+        double.parse(json['sad']),
+        double.parse(json['other']),
+      );
 }
