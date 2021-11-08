@@ -1,5 +1,7 @@
 import 'package:emotion_chat/features/chat/domain/entities/message.dart';
 import 'package:emotion_chat/features/chat/presentation/blocs/active_chat/active_chat_bloc.dart';
+import 'package:emotion_chat/features/classification/domain/entities/sentiment_analysis.dart';
+import 'package:emotion_chat/features/classification/domain/entities/sentiment_analysis_result.dart';
 import 'package:emotion_chat/features/user/domain/entities/user.dart';
 import 'package:emotion_chat/features/user/presentation/models/form_input.dart';
 import 'package:emotion_chat/utils/presentation/abstraction/custom_state.dart';
@@ -8,6 +10,12 @@ import 'package:emotion_chat/utils/presentation/consts/styles.dart';
 import 'package:emotion_chat/utils/presentation/core/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+extension DoubleExtension on double {
+  int get percentage {
+    return (this * 100).toInt();
+  }
+}
 
 class ActiveChat extends StatefulWidget {
   final ChatUser userToChatWith;
@@ -30,6 +38,17 @@ class _ActiveChatState extends CustomState<ActiveChat> {
     super.initState();
   }
 
+  String _getSentimentAnalysisLabel(SentimentAnalysis analysis) {
+    switch (analysis.result) {
+      case SentimentAnalysisResult.sad:
+        return 'Depressed - ${analysis.sadness.percentage}%';
+      case SentimentAnalysisResult.other:
+        return 'Other emotions - ${analysis.other.percentage}%';
+      case SentimentAnalysisResult.none:
+        return 'We cant classify this message';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +57,43 @@ class _ActiveChatState extends CustomState<ActiveChat> {
         backgroundColor: cDarkGrey,
         title: _buildTitle(),
       ),
-      body: BlocBuilder<ActiveChatBloc, ActiveChatState>(
+      body: BlocConsumer<ActiveChatBloc, ActiveChatState>(
+        listener: (context, state) {
+          if (state.sentimentAnalysis.result != SentimentAnalysisResult.none) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Container(
+                  height: screenHeight * 0.08,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '\"${state.classifiedMessage.content.value}\"',
+                        style: bodyStyle.copyWith(
+                          fontSize: 12.0,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        _getSentimentAnalysisLabel(state.sentimentAnalysis),
+                        style: bodyStyle.copyWith(fontSize: 13.0),
+                      ),
+                    ],
+                  ),
+                ),
+                duration: const Duration(seconds: 10),
+                action: SnackBarAction(
+                  onPressed: () {},
+                  label: 'Close',
+                ),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           return Stack(
             children: [
@@ -120,7 +175,7 @@ class _ActiveChatState extends CustomState<ActiveChat> {
         itemCount: messages.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onLongPress: () => BlocProvider.of<ActiveChatBloc>(context).add(
+            onTap: () => BlocProvider.of<ActiveChatBloc>(context).add(
               ActiveChatEvent.onMessageTap(
                 messages[index],
               ),

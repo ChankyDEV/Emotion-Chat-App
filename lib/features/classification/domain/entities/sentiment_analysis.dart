@@ -1,3 +1,4 @@
+import 'package:emotion_chat/features/classification/domain/entities/sentiment_analysis_result.dart';
 import 'package:equatable/equatable.dart';
 
 class SentimentAnalysis extends Equatable {
@@ -16,4 +17,15 @@ class SentimentAnalysis extends Equatable {
 
   @override
   bool? get stringify => true;
+
+  SentimentAnalysisResult get result => _getResult();
+
+  SentimentAnalysisResult _getResult() {
+    if (sadness == -1 || other == -1) {
+      return SentimentAnalysisResult.none;
+    }
+    return sadness > 0.5
+        ? SentimentAnalysisResult.sad
+        : SentimentAnalysisResult.other;
+  }
 }

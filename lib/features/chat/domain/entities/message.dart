@@ -10,4 +10,10 @@ class Message {
     required this.createdAt,
     required this.senderUid,
   });
+
+  factory Message.empty() => Message(
+        content: Content(value: ''),
+        createdAt: DateTime.now(),
+        senderUid: '',
+      );
 }

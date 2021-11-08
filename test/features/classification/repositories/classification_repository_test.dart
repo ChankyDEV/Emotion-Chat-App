@@ -1,36 +1,39 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:emotion_chat/features/chat/domain/entities/content.dart';
 import 'package:emotion_chat/features/classification/data/dtos/sentiment_analysis_dto.dart';
 import 'package:emotion_chat/features/classification/data/repositories/classification_repository_impl.dart';
 import 'package:emotion_chat/features/classification/domain/repositories/classification_repository.dart';
 import 'package:emotion_chat/utils/data/utils/exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../fixtures/fixture_reader.dart';
-import '../../mocks/mock_client.dart';
+import '../../mocks/mock_dio.dart';
 
 void main() {
   late ClassificationRepository repository;
-  late MockClient client;
+  late MockDio dio;
   setUpAll(() {
-    client = MockClient();
-    repository = ClassificationRepositoryImpl(client);
+    dio = MockDio();
+    repository = ClassificationRepositoryImpl(dio);
   });
-  const String url = 'http://127.0.0.1:5000/text_classification';
+  final url = 'http://192.168.0.107:5000/text_classification';
   const content = Content(value: 'test');
   final expected = SentimentAnalysisDTO(0.1, 0.9);
-
+  final queryParameters = {
+    'message': content.value,
+  };
   test(
     'should return SentimentAnalysisDTO from body if status code is ok',
     () async {
-      when(client.get(
-        Uri(path: '$url/${content.value}'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      )).thenAnswer(
-        (_) async => Response(fixture('sentimentAnalysis.json'), 200),
+      when(dio.post(url, queryParameters: queryParameters)).thenAnswer(
+        (_) async => Response(
+          requestOptions: RequestOptions(path: url),
+          data: jsonDecode(fixture('sentimentAnalysis.json')),
+          statusCode: 200,
+        ),
       );
       final actual = await repository.getSentimentAnalysis(content);
       expect(actual, expected);
@@ -40,13 +43,12 @@ void main() {
   test(
     'should throw ClassificationException if status code is not ok',
     () async {
-      when(client.get(
-        Uri(path: '$url/${content.value}'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      )).thenAnswer(
-        (_) async => Response(fixture('sentimentAnalysis.json'), 404),
+      when(dio.post(url, queryParameters: queryParameters)).thenAnswer(
+        (_) async => Response(
+          requestOptions: RequestOptions(path: url),
+          data: jsonDecode(fixture('sentimentAnalysis.json')),
+          statusCode: 404,
+        ),
       );
       final call = repository.getSentimentAnalysis;
       expect(

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:emotion_chat/features/chat/data/repositories/chat_repository_impl.dart';
 import 'package:emotion_chat/features/chat/data/services/chat_service_impl.dart';
 import 'package:emotion_chat/features/chat/domain/repositories/chat_repository.dart';
@@ -38,7 +39,6 @@ import 'package:emotion_chat/features/user/presentation/blocs/auth_form/auth_for
 import 'package:emotion_chat/utils/data/utils/validator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -85,7 +85,7 @@ class Config {
     getItInstance
       ..registerSingleton<Validator>(Validator())
       ..registerSingleton<ClassificationRepository>(
-          ClassificationRepositoryImpl(Client()))
+          ClassificationRepositoryImpl(Dio()))
       ..registerSingleton<FriendsRepository>(FriendsRepositoryImpl(logger))
       ..registerSingleton<UserRepository>(UserRepositoryImpl(logger))
       ..registerSingleton<AuthRepository>(

@@ -6,5 +6,7 @@ class ActiveChatState with _$ActiveChatState {
     required List<Message> messages,
     required int numberOfMessages,
     required bool hasError,
+    required SentimentAnalysis sentimentAnalysis,
+    required Message classifiedMessage,
   }) = _Initial;
 }

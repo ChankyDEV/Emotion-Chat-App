@@ -17,6 +17,7 @@ class InternetConnectionMessages {
   const InternetConnectionMessages._();
 
   final noConnection = 'User dont have internet connection';
+  final error = 'Error occurred while processing request';
 }
 
 class DatabaseMessages {

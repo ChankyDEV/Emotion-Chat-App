@@ -676,11 +676,15 @@ class _$ActiveChatStateTearOff {
   _Initial initial(
       {required List<Message> messages,
       required int numberOfMessages,
-      required bool hasError}) {
+      required bool hasError,
+      required SentimentAnalysis sentimentAnalysis,
+      required Message classifiedMessage}) {
     return _Initial(
       messages: messages,
       numberOfMessages: numberOfMessages,
       hasError: hasError,
+      sentimentAnalysis: sentimentAnalysis,
+      classifiedMessage: classifiedMessage,
     );
   }
 }
@@ -693,25 +697,39 @@ mixin _$ActiveChatState {
   List<Message> get messages => throw _privateConstructorUsedError;
   int get numberOfMessages => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
+  SentimentAnalysis get sentimentAnalysis => throw _privateConstructorUsedError;
+  Message get classifiedMessage => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            List<Message> messages, int numberOfMessages, bool hasError)
+            List<Message> messages,
+            int numberOfMessages,
+            bool hasError,
+            SentimentAnalysis sentimentAnalysis,
+            Message classifiedMessage)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            List<Message> messages, int numberOfMessages, bool hasError)?
+            List<Message> messages,
+            int numberOfMessages,
+            bool hasError,
+            SentimentAnalysis sentimentAnalysis,
+            Message classifiedMessage)?
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            List<Message> messages, int numberOfMessages, bool hasError)?
+            List<Message> messages,
+            int numberOfMessages,
+            bool hasError,
+            SentimentAnalysis sentimentAnalysis,
+            Message classifiedMessage)?
         initial,
     required TResult orElse(),
   }) =>
@@ -743,7 +761,12 @@ abstract class $ActiveChatStateCopyWith<$Res> {
   factory $ActiveChatStateCopyWith(
           ActiveChatState value, $Res Function(ActiveChatState) then) =
       _$ActiveChatStateCopyWithImpl<$Res>;
-  $Res call({List<Message> messages, int numberOfMessages, bool hasError});
+  $Res call(
+      {List<Message> messages,
+      int numberOfMessages,
+      bool hasError,
+      SentimentAnalysis sentimentAnalysis,
+      Message classifiedMessage});
 }
 
 /// @nodoc
@@ -760,6 +783,8 @@ class _$ActiveChatStateCopyWithImpl<$Res>
     Object? messages = freezed,
     Object? numberOfMessages = freezed,
     Object? hasError = freezed,
+    Object? sentimentAnalysis = freezed,
+    Object? classifiedMessage = freezed,
   }) {
     return _then(_value.copyWith(
       messages: messages == freezed
@@ -774,6 +799,14 @@ class _$ActiveChatStateCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      sentimentAnalysis: sentimentAnalysis == freezed
+          ? _value.sentimentAnalysis
+          : sentimentAnalysis // ignore: cast_nullable_to_non_nullable
+              as SentimentAnalysis,
+      classifiedMessage: classifiedMessage == freezed
+          ? _value.classifiedMessage
+          : classifiedMessage // ignore: cast_nullable_to_non_nullable
+              as Message,
     ));
   }
 }
@@ -784,7 +817,12 @@ abstract class _$InitialCopyWith<$Res>
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
   @override
-  $Res call({List<Message> messages, int numberOfMessages, bool hasError});
+  $Res call(
+      {List<Message> messages,
+      int numberOfMessages,
+      bool hasError,
+      SentimentAnalysis sentimentAnalysis,
+      Message classifiedMessage});
 }
 
 /// @nodoc
@@ -801,6 +839,8 @@ class __$InitialCopyWithImpl<$Res> extends _$ActiveChatStateCopyWithImpl<$Res>
     Object? messages = freezed,
     Object? numberOfMessages = freezed,
     Object? hasError = freezed,
+    Object? sentimentAnalysis = freezed,
+    Object? classifiedMessage = freezed,
   }) {
     return _then(_Initial(
       messages: messages == freezed
@@ -815,6 +855,14 @@ class __$InitialCopyWithImpl<$Res> extends _$ActiveChatStateCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      sentimentAnalysis: sentimentAnalysis == freezed
+          ? _value.sentimentAnalysis
+          : sentimentAnalysis // ignore: cast_nullable_to_non_nullable
+              as SentimentAnalysis,
+      classifiedMessage: classifiedMessage == freezed
+          ? _value.classifiedMessage
+          : classifiedMessage // ignore: cast_nullable_to_non_nullable
+              as Message,
     ));
   }
 }
@@ -825,7 +873,9 @@ class _$_Initial implements _Initial {
   const _$_Initial(
       {required this.messages,
       required this.numberOfMessages,
-      required this.hasError});
+      required this.hasError,
+      required this.sentimentAnalysis,
+      required this.classifiedMessage});
 
   @override
   final List<Message> messages;
@@ -833,10 +883,14 @@ class _$_Initial implements _Initial {
   final int numberOfMessages;
   @override
   final bool hasError;
+  @override
+  final SentimentAnalysis sentimentAnalysis;
+  @override
+  final Message classifiedMessage;
 
   @override
   String toString() {
-    return 'ActiveChatState.initial(messages: $messages, numberOfMessages: $numberOfMessages, hasError: $hasError)';
+    return 'ActiveChatState.initial(messages: $messages, numberOfMessages: $numberOfMessages, hasError: $hasError, sentimentAnalysis: $sentimentAnalysis, classifiedMessage: $classifiedMessage)';
   }
 
   @override
@@ -851,7 +905,13 @@ class _$_Initial implements _Initial {
                     .equals(other.numberOfMessages, numberOfMessages)) &&
             (identical(other.hasError, hasError) ||
                 const DeepCollectionEquality()
-                    .equals(other.hasError, hasError)));
+                    .equals(other.hasError, hasError)) &&
+            (identical(other.sentimentAnalysis, sentimentAnalysis) ||
+                const DeepCollectionEquality()
+                    .equals(other.sentimentAnalysis, sentimentAnalysis)) &&
+            (identical(other.classifiedMessage, classifiedMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.classifiedMessage, classifiedMessage)));
   }
 
   @override
@@ -859,7 +919,9 @@ class _$_Initial implements _Initial {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(messages) ^
       const DeepCollectionEquality().hash(numberOfMessages) ^
-      const DeepCollectionEquality().hash(hasError);
+      const DeepCollectionEquality().hash(hasError) ^
+      const DeepCollectionEquality().hash(sentimentAnalysis) ^
+      const DeepCollectionEquality().hash(classifiedMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -870,32 +932,47 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            List<Message> messages, int numberOfMessages, bool hasError)
+            List<Message> messages,
+            int numberOfMessages,
+            bool hasError,
+            SentimentAnalysis sentimentAnalysis,
+            Message classifiedMessage)
         initial,
   }) {
-    return initial(messages, numberOfMessages, hasError);
+    return initial(messages, numberOfMessages, hasError, sentimentAnalysis,
+        classifiedMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(
-            List<Message> messages, int numberOfMessages, bool hasError)?
+            List<Message> messages,
+            int numberOfMessages,
+            bool hasError,
+            SentimentAnalysis sentimentAnalysis,
+            Message classifiedMessage)?
         initial,
   }) {
-    return initial?.call(messages, numberOfMessages, hasError);
+    return initial?.call(messages, numberOfMessages, hasError,
+        sentimentAnalysis, classifiedMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            List<Message> messages, int numberOfMessages, bool hasError)?
+            List<Message> messages,
+            int numberOfMessages,
+            bool hasError,
+            SentimentAnalysis sentimentAnalysis,
+            Message classifiedMessage)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(messages, numberOfMessages, hasError);
+      return initial(messages, numberOfMessages, hasError, sentimentAnalysis,
+          classifiedMessage);
     }
     return orElse();
   }
@@ -933,7 +1010,9 @@ abstract class _Initial implements ActiveChatState {
   const factory _Initial(
       {required List<Message> messages,
       required int numberOfMessages,
-      required bool hasError}) = _$_Initial;
+      required bool hasError,
+      required SentimentAnalysis sentimentAnalysis,
+      required Message classifiedMessage}) = _$_Initial;
 
   @override
   List<Message> get messages => throw _privateConstructorUsedError;
@@ -941,6 +1020,10 @@ abstract class _Initial implements ActiveChatState {
   int get numberOfMessages => throw _privateConstructorUsedError;
   @override
   bool get hasError => throw _privateConstructorUsedError;
+  @override
+  SentimentAnalysis get sentimentAnalysis => throw _privateConstructorUsedError;
+  @override
+  Message get classifiedMessage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$InitialCopyWith<_Initial> get copyWith =>
