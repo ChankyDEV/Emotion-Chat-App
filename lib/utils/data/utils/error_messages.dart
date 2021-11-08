@@ -2,6 +2,7 @@ mixin ErrorMessages {
   static const invitation = InvitationMessages._();
   static const internet = InternetConnectionMessages._();
   static const database = DatabaseMessages._();
+  static const classification = ClassificationMessages._();
 }
 
 class InvitationMessages {
@@ -23,4 +24,10 @@ class DatabaseMessages {
   final cantGetData = 'Cant get data from particular collection';
   final cantFindUserUid = 'Cant get user uid with this email';
   final cantAddData = 'Cant add data to particular collection';
+}
+
+class ClassificationMessages {
+  const ClassificationMessages._();
+
+  final error = 'Error occurred while trying to classify content';
 }

@@ -31,3 +31,7 @@ class DatabaseException extends ExceptionWithMessage {
 class InvitationException extends ExceptionWithMessage {
   InvitationException({required String message}) : super(message: message);
 }
+
+class ClassificationException extends ExceptionWithMessage {
+  ClassificationException({required String message}) : super(message: message);
+}
