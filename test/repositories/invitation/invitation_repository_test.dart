@@ -1,17 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/features/friend/data/services/invitation_service_impl.dart';
-import 'package:emotion_chat/features/friend/domain/services/invitation_service.dart';
+import 'package:emotion_chat/features/friend/data/services/friends_service_impl.dart';
+import 'package:emotion_chat/features/friend/domain/services/friends_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../utils/mocks.dart';
 
 void main() {
-  late InvitationService service;
-  late MockDatabaseService db;
-  late MockLocalDatabaseService local;
-  late MockNetworkService network;
+  late FriendsService service;
+  late MockLocalRepository local;
+  late MockNetworkInfo network;
+  late MockFriendsRepository friendsRepository;
+  late MockUserRepository userRepository;
   const tEmail = 'test@gmail.com';
   const tReceiverUuid = '12345';
   const tSenderUid = '54321';
@@ -25,13 +26,15 @@ void main() {
     uuid: tSenderUid,
   );
   setUpAll(() {
-    db = MockDatabaseService();
-    local = MockLocalDatabaseService();
-    network = MockNetworkService();
-    service = InvitationServiceImpl(
-      db: db,
-      local: local,
-      network: network,
+    friendsRepository = MockFriendsRepository();
+    local = MockLocalRepository();
+    network = MockNetworkInfo();
+    userRepository = MockUserRepository();
+    service = FriendsServiceImpl(
+      friendsRepository,
+      userRepository,
+      local,
+      network,
     );
   });
 
@@ -40,15 +43,16 @@ void main() {
       () async {
     when(network.isConnected).thenAnswer((_) async => true);
     when(local.isUserSaved()).thenAnswer((_) async => true);
-    when(db.findUserUuidByEmail(any)).thenAnswer((_) async => tReceiverUuid);
+    when(userRepository.findUserUuidByEmail(any))
+        .thenAnswer((_) async => tReceiverUuid);
     when(local.getUser()).thenAnswer((_) async => tUser);
 
     final result = await service.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
-    verify(db.findUserUuidByEmail(tEmail));
+    verify(userRepository.findUserUuidByEmail(tEmail));
     verify(local.getUser());
-    verify(db.sendInvitation(
+    verify(friendsRepository.sendInvitation(
       from: tUser.uuid,
       to: tReceiverUuid,
     ));
@@ -63,9 +67,9 @@ void main() {
     final result = await service.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
-    verifyNever(db.findUserUuidByEmail(tEmail));
+    verifyNever(userRepository.findUserUuidByEmail(tEmail));
     verifyNever(local.getUser());
-    verifyNever(db.sendInvitation(
+    verifyNever(friendsRepository.sendInvitation(
       from: tUser.uuid,
       to: tReceiverUuid,
     ));
@@ -77,7 +81,7 @@ void main() {
         Failure(message: 'There is no user with particular email');
     when(network.isConnected).thenAnswer((_) async => true);
     when(local.isUserSaved()).thenAnswer((_) async => true);
-    when(db.findUserUuidByEmail(any)).thenThrow(
+    when(userRepository.findUserUuidByEmail(any)).thenThrow(
       NoUserWithEmailException(
           message: 'There is no user with particular email'),
     );
@@ -85,9 +89,9 @@ void main() {
     final result = await service.sendInvitation(tEmail);
 
     verify(local.isUserSaved());
-    verify(db.findUserUuidByEmail(tEmail));
+    verify(userRepository.findUserUuidByEmail(tEmail));
     verifyNever(local.getUser());
-    verifyNever(db.sendInvitation(
+    verifyNever(friendsRepository.sendInvitation(
       from: tUser.uuid,
       to: tReceiverUuid,
     ));

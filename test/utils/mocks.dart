@@ -1,28 +1,41 @@
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/constants/services.dart';
+import 'package:emotion_chat/features/friend/domain/repositories/friends_repository.dart';
+import 'package:emotion_chat/features/image/domain/entities/picked_file.dart';
+import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart';
 import 'package:emotion_chat/features/image/domain/services/image_service.dart';
+import 'package:emotion_chat/features/permission/domain/permission_info.dart';
+import 'package:emotion_chat/features/user/domain/repositories/user_repository.dart';
 import 'package:emotion_chat/services/database/database_service.dart';
 import 'package:mockito/mockito.dart';
 
-class MockDatabaseService extends Mock implements DatabaseService {
+class MockPermissionInfo extends Mock implements PermissionInfo {
+  @override
+  Future<MyPermissionStatus> getCameraPermission() {
+    return super.noSuchMethod(
+      Invocation.method(#getCameraPermission, null),
+      returnValueForMissingStub: Future.value(MyPermissionStatus.granted),
+      returnValue: Future.value(MyPermissionStatus.granted),
+    );
+  }
+
+  @override
+  Future<MyPermissionStatus> getGalleryPermission() {
+    return super.noSuchMethod(
+      Invocation.method(#getGalleryPermission, null),
+      returnValueForMissingStub: Future.value(MyPermissionStatus.granted),
+      returnValue: Future.value(MyPermissionStatus.granted),
+    );
+  }
+}
+
+class MockUserRepository extends Mock implements UserRepository {
   @override
   Future<String> findUserUuidByEmail(String? email) async {
     return super.noSuchMethod(
       Invocation.method(#findUserUidByEmail, [email]),
       returnValueForMissingStub: Future.value('12345'),
       returnValue: Future.value('12345'),
-    );
-  }
-
-  @override
-  Future<void> sendInvitation({String? from, String? to}) {
-    return super.noSuchMethod(
-      Invocation.method(#sendInvitation, null, {
-        #from: from,
-        #to: to,
-      }),
-      returnValue: Future.value(),
-      returnValueForMissingStub: Future.value(),
     );
   }
 
@@ -45,7 +58,50 @@ class MockDatabaseService extends Mock implements DatabaseService {
   }
 }
 
-class MockLocalDatabaseService extends Mock implements LocalRepository {
+class MockFriendsRepository extends Mock implements FriendsRepository {
+  @override
+  Future<void> sendInvitation({String? from, String? to}) {
+    return super.noSuchMethod(
+      Invocation.method(#sendInvitation, null, {
+        #from: from,
+        #to: to,
+      }),
+      returnValue: Future.value(),
+      returnValueForMissingStub: Future.value(),
+    );
+  }
+}
+
+class MockDatabaseService extends Mock implements DatabaseService {
+  @override
+  Future<String> findUserUuidByEmail(String? email) async {
+    return super.noSuchMethod(
+      Invocation.method(#findUserUidByEmail, [email]),
+      returnValueForMissingStub: Future.value('12345'),
+      returnValue: Future.value('12345'),
+    );
+  }
+
+  @override
+  Future<void> addUser(ChatUser user) {
+    return super.noSuchMethod(
+      Invocation.method(#addUser, [user]),
+      returnValue: Future.value(),
+      returnValueForMissingStub: Future.value(),
+    );
+  }
+
+  @override
+  Future<void> updateUser(ChatUser? user) {
+    return super.noSuchMethod(
+      Invocation.method(#updateUser, [user]),
+      returnValue: Future.value(),
+      returnValueForMissingStub: Future.value(),
+    );
+  }
+}
+
+class MockLocalRepository extends Mock implements LocalRepository {
   @override
   Future<bool> isUserSaved() {
     return super.noSuchMethod(
@@ -167,7 +223,27 @@ class MockAuthService extends Mock implements AuthRepository {
   }
 }
 
-class MockImageUploadService extends Mock implements ImageUploadService {
+class MockImageRepository extends Mock implements ImageRepository {
+  @override
+  Future<MyPickedFile> getImageFromGallery() {
+    return super.noSuchMethod(
+      Invocation.method(#getImageFromGallery, null),
+      returnValue: Future.value(MyPickedFile('')),
+      returnValueForMissingStub: Future.value(MyPickedFile('')),
+    );
+  }
+
+  @override
+  Future<MyPickedFile> getImageFromCamera() {
+    return super.noSuchMethod(
+      Invocation.method(#getImageFromCamera, null),
+      returnValue: Future.value(MyPickedFile('')),
+      returnValueForMissingStub: Future.value(MyPickedFile('')),
+    );
+  }
+}
+
+class MockImageService extends Mock implements ImageService {
   @override
   Future<void> uploadProfileImage({
     required MyPickedFile? profileImage,
@@ -195,7 +271,7 @@ class MockImageUploadService extends Mock implements ImageUploadService {
   }
 }
 
-class MockNetworkService extends Mock implements NetworkInfo {
+class MockNetworkInfo extends Mock implements NetworkInfo {
   @override
   Future<bool> get isConnected => super.noSuchMethod(
         Invocation.getter(

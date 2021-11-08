@@ -1,28 +1,25 @@
 import 'package:dartz/dartz.dart';
 import 'package:emotion_chat/constants/data.dart';
 import 'package:emotion_chat/features/image/data/services/image_service_impl.dart';
-import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart';
-import 'package:emotion_chat/features/image/domain/services/image_service.dart';
-import 'package:emotion_chat/features/permission/domain/permission_info.dart';
+import 'package:emotion_chat/features/image/domain/entities/picked_file.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'image_picker_repository_test.mocks.dart';
+import '../utils/mocks.dart';
 
-@GenerateMocks([ImageRepository, PermissionInfo])
 void main() {
-  late ImageServiceImpl imagePickerRepository;
-  late MockImagePickerService mockImagePickerService;
-  late MockPermissionService mockPermissionHandler;
+  late ImageServiceImpl imageService;
+  late MockImageRepository imageRepository;
+  late MockPermissionInfo permissionInfo;
 
   setUp(() {
     TestWidgetsFlutterBinding.ensureInitialized();
-    mockImagePickerService = MockImagePickerService();
-    mockPermissionHandler = MockPermissionService();
-    imagePickerRepository = ImageServiceImpl(
-        imageRepository: mockImagePickerService,
-        permissionHandler: mockPermissionHandler);
+    imageRepository = MockImageRepository();
+    permissionInfo = MockPermissionInfo();
+    imageService = ImageServiceImpl(
+      imageRepository: imageRepository,
+      permissionHandler: permissionInfo,
+    );
   });
   final image = MyPickedFile('some_path_file');
   final noCameraPermissonFailure =
@@ -36,144 +33,137 @@ void main() {
 
   group('getImageFromGallery', () {
     test('should requst permission grant', () async {
-      when(mockPermissionHandler.getGalleryPermission())
+      when(permissionInfo.getGalleryPermission())
           .thenAnswer((_) async => MyPermissionStatus.granted);
-      when(mockImagePickerService.getImageFromGallery())
+      when(imageRepository.getImageFromGallery())
           .thenAnswer((_) async => image);
-      await imagePickerRepository.getImageFromGallery();
-      verify(mockPermissionHandler.getGalleryPermission());
+      await imageService.getImageFromGallery();
+      verify(permissionInfo.getGalleryPermission());
     });
 
     test(
         'should forward call to imagePickerService when the permission is granted',
         () async {
-      when(mockPermissionHandler.getGalleryPermission())
+      when(permissionInfo.getGalleryPermission())
           .thenAnswer((_) async => MyPermissionStatus.granted);
-      when(mockImagePickerService.getImageFromGallery())
+      when(imageRepository.getImageFromGallery())
           .thenAnswer((_) async => image);
-      await imagePickerRepository.getImageFromGallery();
-      verify(mockImagePickerService.getImageFromGallery());
+      await imageService.getImageFromGallery();
+      verify(imageRepository.getImageFromGallery());
     });
     test(
         'should not forward call to imagePickerService when the permission is denied',
         () async {
-      when(mockPermissionHandler.getGalleryPermission())
+      when(permissionInfo.getGalleryPermission())
           .thenAnswer((_) async => MyPermissionStatus.denied);
 
-      await imagePickerRepository.getImageFromGallery();
-      verify(mockPermissionHandler.getGalleryPermission());
-      verifyZeroInteractions(mockImagePickerService);
+      await imageService.getImageFromGallery();
+      verify(permissionInfo.getGalleryPermission());
+      verifyZeroInteractions(imageRepository);
     });
 
     test('should return MyPickedFile when the permission is granted', () async {
-      when(mockPermissionHandler.getGalleryPermission())
+      when(permissionInfo.getGalleryPermission())
           .thenAnswer((_) async => MyPermissionStatus.granted);
-      when(mockImagePickerService.getImageFromGallery())
+      when(imageRepository.getImageFromGallery())
           .thenAnswer((_) async => image);
 
-      final result = await imagePickerRepository.getImageFromGallery();
-      verify(mockPermissionHandler.getGalleryPermission());
-      verify(mockImagePickerService.getImageFromGallery());
-      verifyNoMoreInteractions(mockPermissionHandler);
-      verifyNoMoreInteractions(mockImagePickerService);
+      final result = await imageService.getImageFromGallery();
+      verify(permissionInfo.getGalleryPermission());
+      verify(imageRepository.getImageFromGallery());
+      verifyNoMoreInteractions(permissionInfo);
+      verifyNoMoreInteractions(imageRepository);
       expect(result, equals(right(image)));
     });
 
     test('should return ImagePickFailure when permission is denied', () async {
-      when(mockPermissionHandler.getGalleryPermission())
+      when(permissionInfo.getGalleryPermission())
           .thenAnswer((_) async => MyPermissionStatus.denied);
-      final result = await imagePickerRepository.getImageFromGallery();
+      final result = await imageService.getImageFromGallery();
       expect(result, equals(left(noGalleryPermissonFailure)));
     });
 
     test(
         'should return ImagePickFailure when permissionService throws PermissionException',
         () async {
-      when(mockPermissionHandler.getGalleryPermission()).thenThrow(
-          PermissionException(
-              message: "Something went wrong with requesting permission"));
-      final result = await imagePickerRepository.getImageFromGallery();
+      when(permissionInfo.getGalleryPermission()).thenThrow(PermissionException(
+          message: "Something went wrong with requesting permission"));
+      final result = await imageService.getImageFromGallery();
       expect(result, equals(left(requestPermissionFailure)));
     });
     test(
         'should return ImagePickFailure when imagePickerService throws ImagePickException',
         () async {
-      when(mockPermissionHandler.getGalleryPermission()).thenThrow(
-          ImagePickException(
-              message: "Something went wrong with getting image"));
-      final result = await imagePickerRepository.getImageFromGallery();
+      when(permissionInfo.getGalleryPermission()).thenThrow(ImagePickException(
+          message: "Something went wrong with getting image"));
+      final result = await imageService.getImageFromGallery();
       expect(result, equals(left(getImageFailure)));
     });
   });
 
   group('getImageFromCamera', () {
     test('should requst permission grant', () async {
-      when(mockPermissionHandler.getCameraPermission())
+      when(permissionInfo.getCameraPermission())
           .thenAnswer((_) async => MyPermissionStatus.granted);
-      when(mockImagePickerService.getImageFromCamera())
-          .thenAnswer((_) async => image);
-      await imagePickerRepository.getImageFromCamera();
-      verify(mockPermissionHandler.getCameraPermission());
+      when(imageRepository.getImageFromCamera()).thenAnswer((_) async => image);
+      await imageService.getImageFromCamera();
+      verify(permissionInfo.getCameraPermission());
     });
 
     test(
         'should forward call to imagePickerService when the permission is granted',
         () async {
-      when(mockPermissionHandler.getCameraPermission())
+      when(permissionInfo.getCameraPermission())
           .thenAnswer((_) async => MyPermissionStatus.granted);
-      when(mockImagePickerService.getImageFromCamera())
-          .thenAnswer((_) async => image);
-      await imagePickerRepository.getImageFromCamera();
-      verify(mockPermissionHandler.getCameraPermission());
-      verify(mockImagePickerService.getImageFromCamera());
+      when(imageRepository.getImageFromCamera()).thenAnswer((_) async => image);
+      await imageService.getImageFromCamera();
+      verify(permissionInfo.getCameraPermission());
+      verify(imageRepository.getImageFromCamera());
     });
     test(
         'should not forward call to imagePickerService when the permission is denied',
         () async {
-      when(mockPermissionHandler.getCameraPermission())
+      when(permissionInfo.getCameraPermission())
           .thenAnswer((_) async => MyPermissionStatus.denied);
 
-      await imagePickerRepository.getImageFromCamera();
-      verifyZeroInteractions(mockImagePickerService);
+      await imageService.getImageFromCamera();
+      verifyZeroInteractions(imageRepository);
     });
 
     test('should return MyPickedFile when the permission is granted', () async {
-      when(mockPermissionHandler.getCameraPermission())
+      when(permissionInfo.getCameraPermission())
           .thenAnswer((_) async => MyPermissionStatus.granted);
-      when(mockImagePickerService.getImageFromCamera())
-          .thenAnswer((_) async => image);
+      when(imageRepository.getImageFromCamera()).thenAnswer((_) async => image);
 
-      final result = await imagePickerRepository.getImageFromCamera();
-      verify(mockPermissionHandler.getCameraPermission());
-      verify(mockImagePickerService.getImageFromCamera());
-      verifyNoMoreInteractions(mockPermissionHandler);
-      verifyNoMoreInteractions(mockImagePickerService);
+      final result = await imageService.getImageFromCamera();
+      verify(permissionInfo.getCameraPermission());
+      verify(imageRepository.getImageFromCamera());
+      verifyNoMoreInteractions(permissionInfo);
+      verifyNoMoreInteractions(imageRepository);
       expect(result, equals(right(image)));
     });
 
     test('should return ImagePickFailure when permission is denied', () async {
-      when(mockPermissionHandler.getCameraPermission())
+      when(permissionInfo.getCameraPermission())
           .thenAnswer((_) async => MyPermissionStatus.denied);
-      final result = await imagePickerRepository.getImageFromCamera();
+      final result = await imageService.getImageFromCamera();
       expect(result, equals(left(noCameraPermissonFailure)));
     });
 
     test(
         'should return ImagePickFailure when permissionService throws PermissionException',
         () async {
-      when(mockPermissionHandler.getCameraPermission()).thenThrow(
-          PermissionException(
-              message: "Something went wrong with requesting permission"));
-      final result = await imagePickerRepository.getImageFromCamera();
+      when(permissionInfo.getCameraPermission()).thenThrow(PermissionException(
+          message: "Something went wrong with requesting permission"));
+      final result = await imageService.getImageFromCamera();
       expect(result, equals(left(requestPermissionFailure)));
     });
     test(
         'should return ImagePickFailure when imagePickerService throws ImagePickException',
         () async {
-      when(mockPermissionHandler.getCameraPermission()).thenThrow(
-          ImagePickException(
-              message: "Something went wrong with getting image"));
-      final result = await imagePickerRepository.getImageFromCamera();
+      when(permissionInfo.getCameraPermission()).thenThrow(ImagePickException(
+          message: "Something went wrong with getting image"));
+      final result = await imageService.getImageFromCamera();
       expect(result, equals(left(getImageFailure)));
     });
   });

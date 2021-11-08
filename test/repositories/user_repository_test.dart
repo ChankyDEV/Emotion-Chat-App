@@ -27,20 +27,20 @@ void main() {
   );
 
   late MockAuthService authService;
-  late MockLocalDatabaseService localDatabaseService;
-  late MockImageUploadService imageUploadService;
-  late MockNetworkService networkService;
+  late MockLocalRepository localDatabaseService;
+  late MockImageService imageService;
+  late MockNetworkInfo networkService;
   late MockDatabaseService dbService;
   late UserServiceImpl repository;
   setUpAll(() {
     authService = MockAuthService();
-    localDatabaseService = MockLocalDatabaseService();
-    imageUploadService = MockImageUploadService();
-    networkService = MockNetworkService();
+    localDatabaseService = MockLocalRepository();
+    imageService = MockImageService();
+    networkService = MockNetworkInfo();
     dbService = MockDatabaseService();
     repository = UserServiceImpl(
         db: dbService,
-        imageService: imageUploadService,
+        imageService: imageService,
         authService: authService,
         localDatabaseService: localDatabaseService,
         networkService: networkService);
@@ -222,7 +222,7 @@ void main() {
       () async {
     when(networkService.isConnected).thenAnswer((_) async => true);
     when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-    when(imageUploadService.getProfileImageUrl(uid: anyNamed('uid'))).thenThrow(
+    when(imageService.getProfileImageUrl(uid: anyNamed('uid'))).thenThrow(
       AuthException(message: 'error occurred while generating upload url'),
     );
 
@@ -247,7 +247,7 @@ void main() {
       () async {
     when(networkService.isConnected).thenAnswer((_) async => true);
     when(authService.getSignedInUser()).thenAnswer((_) async => tUser);
-    when(imageUploadService.getProfileImageUrl(uid: anyNamed('uid')))
+    when(imageService.getProfileImageUrl(uid: anyNamed('uid')))
         .thenAnswer((_) async => '');
     when(dbService.updateUser(any)).thenThrow(
       AuthException(message: 'error occurred while updating info'),
