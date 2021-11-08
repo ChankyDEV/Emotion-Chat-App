@@ -38,6 +38,10 @@ class _$ActiveChatEventTearOff {
   OnScrollToEnd onScrollToEnd() {
     return const OnScrollToEnd();
   }
+
+  OnEndClassifing onEndClassifing() {
+    return const OnEndClassifing();
+  }
 }
 
 /// @nodoc
@@ -51,6 +55,7 @@ mixin _$ActiveChatEvent {
     required TResult Function(String message) sendMessage,
     required TResult Function(Message message) onMessageTap,
     required TResult Function() onScrollToEnd,
+    required TResult Function() onEndClassifing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,6 +64,7 @@ mixin _$ActiveChatEvent {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,6 +73,7 @@ mixin _$ActiveChatEvent {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -76,6 +83,7 @@ mixin _$ActiveChatEvent {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnMessageTap value) onMessageTap,
     required TResult Function(OnScrollToEnd value) onScrollToEnd,
+    required TResult Function(OnEndClassifing value) onEndClassifing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,6 +92,7 @@ mixin _$ActiveChatEvent {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -92,6 +101,7 @@ mixin _$ActiveChatEvent {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -184,6 +194,7 @@ class _$ShowMessages implements ShowMessages {
     required TResult Function(String message) sendMessage,
     required TResult Function(Message message) onMessageTap,
     required TResult Function() onScrollToEnd,
+    required TResult Function() onEndClassifing,
   }) {
     return showMessages(messages);
   }
@@ -195,6 +206,7 @@ class _$ShowMessages implements ShowMessages {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
   }) {
     return showMessages?.call(messages);
   }
@@ -206,6 +218,7 @@ class _$ShowMessages implements ShowMessages {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
     required TResult orElse(),
   }) {
     if (showMessages != null) {
@@ -221,6 +234,7 @@ class _$ShowMessages implements ShowMessages {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnMessageTap value) onMessageTap,
     required TResult Function(OnScrollToEnd value) onScrollToEnd,
+    required TResult Function(OnEndClassifing value) onEndClassifing,
   }) {
     return showMessages(this);
   }
@@ -232,6 +246,7 @@ class _$ShowMessages implements ShowMessages {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
   }) {
     return showMessages?.call(this);
   }
@@ -243,6 +258,7 @@ class _$ShowMessages implements ShowMessages {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
     required TResult orElse(),
   }) {
     if (showMessages != null) {
@@ -330,6 +346,7 @@ class _$SendMessage implements SendMessage {
     required TResult Function(String message) sendMessage,
     required TResult Function(Message message) onMessageTap,
     required TResult Function() onScrollToEnd,
+    required TResult Function() onEndClassifing,
   }) {
     return sendMessage(message);
   }
@@ -341,6 +358,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
   }) {
     return sendMessage?.call(message);
   }
@@ -352,6 +370,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
@@ -367,6 +386,7 @@ class _$SendMessage implements SendMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnMessageTap value) onMessageTap,
     required TResult Function(OnScrollToEnd value) onScrollToEnd,
+    required TResult Function(OnEndClassifing value) onEndClassifing,
   }) {
     return sendMessage(this);
   }
@@ -378,6 +398,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
   }) {
     return sendMessage?.call(this);
   }
@@ -389,6 +410,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
@@ -476,6 +498,7 @@ class _$OnMessageTap implements OnMessageTap {
     required TResult Function(String message) sendMessage,
     required TResult Function(Message message) onMessageTap,
     required TResult Function() onScrollToEnd,
+    required TResult Function() onEndClassifing,
   }) {
     return onMessageTap(message);
   }
@@ -487,6 +510,7 @@ class _$OnMessageTap implements OnMessageTap {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
   }) {
     return onMessageTap?.call(message);
   }
@@ -498,6 +522,7 @@ class _$OnMessageTap implements OnMessageTap {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
     required TResult orElse(),
   }) {
     if (onMessageTap != null) {
@@ -513,6 +538,7 @@ class _$OnMessageTap implements OnMessageTap {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnMessageTap value) onMessageTap,
     required TResult Function(OnScrollToEnd value) onScrollToEnd,
+    required TResult Function(OnEndClassifing value) onEndClassifing,
   }) {
     return onMessageTap(this);
   }
@@ -524,6 +550,7 @@ class _$OnMessageTap implements OnMessageTap {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
   }) {
     return onMessageTap?.call(this);
   }
@@ -535,6 +562,7 @@ class _$OnMessageTap implements OnMessageTap {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
     required TResult orElse(),
   }) {
     if (onMessageTap != null) {
@@ -597,6 +625,7 @@ class _$OnScrollToEnd implements OnScrollToEnd {
     required TResult Function(String message) sendMessage,
     required TResult Function(Message message) onMessageTap,
     required TResult Function() onScrollToEnd,
+    required TResult Function() onEndClassifing,
   }) {
     return onScrollToEnd();
   }
@@ -608,6 +637,7 @@ class _$OnScrollToEnd implements OnScrollToEnd {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
   }) {
     return onScrollToEnd?.call();
   }
@@ -619,6 +649,7 @@ class _$OnScrollToEnd implements OnScrollToEnd {
     TResult Function(String message)? sendMessage,
     TResult Function(Message message)? onMessageTap,
     TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
     required TResult orElse(),
   }) {
     if (onScrollToEnd != null) {
@@ -634,6 +665,7 @@ class _$OnScrollToEnd implements OnScrollToEnd {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnMessageTap value) onMessageTap,
     required TResult Function(OnScrollToEnd value) onScrollToEnd,
+    required TResult Function(OnEndClassifing value) onEndClassifing,
   }) {
     return onScrollToEnd(this);
   }
@@ -645,6 +677,7 @@ class _$OnScrollToEnd implements OnScrollToEnd {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
   }) {
     return onScrollToEnd?.call(this);
   }
@@ -656,6 +689,7 @@ class _$OnScrollToEnd implements OnScrollToEnd {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnMessageTap value)? onMessageTap,
     TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
     required TResult orElse(),
   }) {
     if (onScrollToEnd != null) {
@@ -670,6 +704,128 @@ abstract class OnScrollToEnd implements ActiveChatEvent {
 }
 
 /// @nodoc
+abstract class $OnEndClassifingCopyWith<$Res> {
+  factory $OnEndClassifingCopyWith(
+          OnEndClassifing value, $Res Function(OnEndClassifing) then) =
+      _$OnEndClassifingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$OnEndClassifingCopyWithImpl<$Res>
+    extends _$ActiveChatEventCopyWithImpl<$Res>
+    implements $OnEndClassifingCopyWith<$Res> {
+  _$OnEndClassifingCopyWithImpl(
+      OnEndClassifing _value, $Res Function(OnEndClassifing) _then)
+      : super(_value, (v) => _then(v as OnEndClassifing));
+
+  @override
+  OnEndClassifing get _value => super._value as OnEndClassifing;
+}
+
+/// @nodoc
+
+class _$OnEndClassifing implements OnEndClassifing {
+  const _$OnEndClassifing();
+
+  @override
+  String toString() {
+    return 'ActiveChatEvent.onEndClassifing()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is OnEndClassifing);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<Message> messages) showMessages,
+    required TResult Function(String message) sendMessage,
+    required TResult Function(Message message) onMessageTap,
+    required TResult Function() onScrollToEnd,
+    required TResult Function() onEndClassifing,
+  }) {
+    return onEndClassifing();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Message> messages)? showMessages,
+    TResult Function(String message)? sendMessage,
+    TResult Function(Message message)? onMessageTap,
+    TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
+  }) {
+    return onEndClassifing?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<Message> messages)? showMessages,
+    TResult Function(String message)? sendMessage,
+    TResult Function(Message message)? onMessageTap,
+    TResult Function()? onScrollToEnd,
+    TResult Function()? onEndClassifing,
+    required TResult orElse(),
+  }) {
+    if (onEndClassifing != null) {
+      return onEndClassifing();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ShowMessages value) showMessages,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnMessageTap value) onMessageTap,
+    required TResult Function(OnScrollToEnd value) onScrollToEnd,
+    required TResult Function(OnEndClassifing value) onEndClassifing,
+  }) {
+    return onEndClassifing(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ShowMessages value)? showMessages,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnMessageTap value)? onMessageTap,
+    TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
+  }) {
+    return onEndClassifing?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ShowMessages value)? showMessages,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnMessageTap value)? onMessageTap,
+    TResult Function(OnScrollToEnd value)? onScrollToEnd,
+    TResult Function(OnEndClassifing value)? onEndClassifing,
+    required TResult orElse(),
+  }) {
+    if (onEndClassifing != null) {
+      return onEndClassifing(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnEndClassifing implements ActiveChatEvent {
+  const factory OnEndClassifing() = _$OnEndClassifing;
+}
+
+/// @nodoc
 class _$ActiveChatStateTearOff {
   const _$ActiveChatStateTearOff();
 
@@ -678,13 +834,15 @@ class _$ActiveChatStateTearOff {
       required int numberOfMessages,
       required bool hasError,
       required SentimentAnalysis sentimentAnalysis,
-      required Message classifiedMessage}) {
+      required Message classifiedMessage,
+      required bool isClassifing}) {
     return _Initial(
       messages: messages,
       numberOfMessages: numberOfMessages,
       hasError: hasError,
       sentimentAnalysis: sentimentAnalysis,
       classifiedMessage: classifiedMessage,
+      isClassifing: isClassifing,
     );
   }
 }
@@ -699,6 +857,7 @@ mixin _$ActiveChatState {
   bool get hasError => throw _privateConstructorUsedError;
   SentimentAnalysis get sentimentAnalysis => throw _privateConstructorUsedError;
   Message get classifiedMessage => throw _privateConstructorUsedError;
+  bool get isClassifing => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -707,7 +866,8 @@ mixin _$ActiveChatState {
             int numberOfMessages,
             bool hasError,
             SentimentAnalysis sentimentAnalysis,
-            Message classifiedMessage)
+            Message classifiedMessage,
+            bool isClassifing)
         initial,
   }) =>
       throw _privateConstructorUsedError;
@@ -718,7 +878,8 @@ mixin _$ActiveChatState {
             int numberOfMessages,
             bool hasError,
             SentimentAnalysis sentimentAnalysis,
-            Message classifiedMessage)?
+            Message classifiedMessage,
+            bool isClassifing)?
         initial,
   }) =>
       throw _privateConstructorUsedError;
@@ -729,7 +890,8 @@ mixin _$ActiveChatState {
             int numberOfMessages,
             bool hasError,
             SentimentAnalysis sentimentAnalysis,
-            Message classifiedMessage)?
+            Message classifiedMessage,
+            bool isClassifing)?
         initial,
     required TResult orElse(),
   }) =>
@@ -766,7 +928,8 @@ abstract class $ActiveChatStateCopyWith<$Res> {
       int numberOfMessages,
       bool hasError,
       SentimentAnalysis sentimentAnalysis,
-      Message classifiedMessage});
+      Message classifiedMessage,
+      bool isClassifing});
 }
 
 /// @nodoc
@@ -785,6 +948,7 @@ class _$ActiveChatStateCopyWithImpl<$Res>
     Object? hasError = freezed,
     Object? sentimentAnalysis = freezed,
     Object? classifiedMessage = freezed,
+    Object? isClassifing = freezed,
   }) {
     return _then(_value.copyWith(
       messages: messages == freezed
@@ -807,6 +971,10 @@ class _$ActiveChatStateCopyWithImpl<$Res>
           ? _value.classifiedMessage
           : classifiedMessage // ignore: cast_nullable_to_non_nullable
               as Message,
+      isClassifing: isClassifing == freezed
+          ? _value.isClassifing
+          : isClassifing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -822,7 +990,8 @@ abstract class _$InitialCopyWith<$Res>
       int numberOfMessages,
       bool hasError,
       SentimentAnalysis sentimentAnalysis,
-      Message classifiedMessage});
+      Message classifiedMessage,
+      bool isClassifing});
 }
 
 /// @nodoc
@@ -841,6 +1010,7 @@ class __$InitialCopyWithImpl<$Res> extends _$ActiveChatStateCopyWithImpl<$Res>
     Object? hasError = freezed,
     Object? sentimentAnalysis = freezed,
     Object? classifiedMessage = freezed,
+    Object? isClassifing = freezed,
   }) {
     return _then(_Initial(
       messages: messages == freezed
@@ -863,6 +1033,10 @@ class __$InitialCopyWithImpl<$Res> extends _$ActiveChatStateCopyWithImpl<$Res>
           ? _value.classifiedMessage
           : classifiedMessage // ignore: cast_nullable_to_non_nullable
               as Message,
+      isClassifing: isClassifing == freezed
+          ? _value.isClassifing
+          : isClassifing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -875,7 +1049,8 @@ class _$_Initial implements _Initial {
       required this.numberOfMessages,
       required this.hasError,
       required this.sentimentAnalysis,
-      required this.classifiedMessage});
+      required this.classifiedMessage,
+      required this.isClassifing});
 
   @override
   final List<Message> messages;
@@ -887,10 +1062,12 @@ class _$_Initial implements _Initial {
   final SentimentAnalysis sentimentAnalysis;
   @override
   final Message classifiedMessage;
+  @override
+  final bool isClassifing;
 
   @override
   String toString() {
-    return 'ActiveChatState.initial(messages: $messages, numberOfMessages: $numberOfMessages, hasError: $hasError, sentimentAnalysis: $sentimentAnalysis, classifiedMessage: $classifiedMessage)';
+    return 'ActiveChatState.initial(messages: $messages, numberOfMessages: $numberOfMessages, hasError: $hasError, sentimentAnalysis: $sentimentAnalysis, classifiedMessage: $classifiedMessage, isClassifing: $isClassifing)';
   }
 
   @override
@@ -911,7 +1088,10 @@ class _$_Initial implements _Initial {
                     .equals(other.sentimentAnalysis, sentimentAnalysis)) &&
             (identical(other.classifiedMessage, classifiedMessage) ||
                 const DeepCollectionEquality()
-                    .equals(other.classifiedMessage, classifiedMessage)));
+                    .equals(other.classifiedMessage, classifiedMessage)) &&
+            (identical(other.isClassifing, isClassifing) ||
+                const DeepCollectionEquality()
+                    .equals(other.isClassifing, isClassifing)));
   }
 
   @override
@@ -921,7 +1101,8 @@ class _$_Initial implements _Initial {
       const DeepCollectionEquality().hash(numberOfMessages) ^
       const DeepCollectionEquality().hash(hasError) ^
       const DeepCollectionEquality().hash(sentimentAnalysis) ^
-      const DeepCollectionEquality().hash(classifiedMessage);
+      const DeepCollectionEquality().hash(classifiedMessage) ^
+      const DeepCollectionEquality().hash(isClassifing);
 
   @JsonKey(ignore: true)
   @override
@@ -936,11 +1117,12 @@ class _$_Initial implements _Initial {
             int numberOfMessages,
             bool hasError,
             SentimentAnalysis sentimentAnalysis,
-            Message classifiedMessage)
+            Message classifiedMessage,
+            bool isClassifing)
         initial,
   }) {
     return initial(messages, numberOfMessages, hasError, sentimentAnalysis,
-        classifiedMessage);
+        classifiedMessage, isClassifing);
   }
 
   @override
@@ -951,11 +1133,12 @@ class _$_Initial implements _Initial {
             int numberOfMessages,
             bool hasError,
             SentimentAnalysis sentimentAnalysis,
-            Message classifiedMessage)?
+            Message classifiedMessage,
+            bool isClassifing)?
         initial,
   }) {
     return initial?.call(messages, numberOfMessages, hasError,
-        sentimentAnalysis, classifiedMessage);
+        sentimentAnalysis, classifiedMessage, isClassifing);
   }
 
   @override
@@ -966,13 +1149,14 @@ class _$_Initial implements _Initial {
             int numberOfMessages,
             bool hasError,
             SentimentAnalysis sentimentAnalysis,
-            Message classifiedMessage)?
+            Message classifiedMessage,
+            bool isClassifing)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
       return initial(messages, numberOfMessages, hasError, sentimentAnalysis,
-          classifiedMessage);
+          classifiedMessage, isClassifing);
     }
     return orElse();
   }
@@ -1012,7 +1196,8 @@ abstract class _Initial implements ActiveChatState {
       required int numberOfMessages,
       required bool hasError,
       required SentimentAnalysis sentimentAnalysis,
-      required Message classifiedMessage}) = _$_Initial;
+      required Message classifiedMessage,
+      required bool isClassifing}) = _$_Initial;
 
   @override
   List<Message> get messages => throw _privateConstructorUsedError;
@@ -1024,6 +1209,8 @@ abstract class _Initial implements ActiveChatState {
   SentimentAnalysis get sentimentAnalysis => throw _privateConstructorUsedError;
   @override
   Message get classifiedMessage => throw _privateConstructorUsedError;
+  @override
+  bool get isClassifing => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$InitialCopyWith<_Initial> get copyWith =>

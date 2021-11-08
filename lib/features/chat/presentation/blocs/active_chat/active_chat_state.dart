@@ -8,5 +8,6 @@ class ActiveChatState with _$ActiveChatState {
     required bool hasError,
     required SentimentAnalysis sentimentAnalysis,
     required Message classifiedMessage,
+    required bool isClassifing,
   }) = _Initial;
 }

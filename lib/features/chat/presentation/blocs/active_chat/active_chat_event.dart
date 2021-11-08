@@ -11,4 +11,6 @@ class ActiveChatEvent with _$ActiveChatEvent {
   const factory ActiveChatEvent.onMessageTap(Message message) = OnMessageTap;
 
   const factory ActiveChatEvent.onScrollToEnd() = OnScrollToEnd;
+
+  const factory ActiveChatEvent.onEndClassifing() = OnEndClassifing;
 }

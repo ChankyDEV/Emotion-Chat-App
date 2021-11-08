@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:emotion_chat/features/chat/domain/entities/message.dart';
 import 'package:emotion_chat/features/chat/domain/services/chat_service.dart';
 import 'package:emotion_chat/features/classification/domain/entities/sentiment_analysis.dart';
-import 'package:emotion_chat/features/classification/domain/entities/sentiment_analysis_result.dart';
 import 'package:emotion_chat/features/classification/domain/services/classification_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -30,6 +29,7 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
             hasError: false,
             sentimentAnalysis: SentimentAnalysis.empty(),
             classifiedMessage: Message.empty(),
+            isClassifing: false,
           ),
         );
 
@@ -52,6 +52,7 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
       sendMessage: sendMessage,
       onScrollToEnd: onScrollToEnd,
       onMessageTap: onMessageTap,
+      onEndClassifing: onEndClassifing,
     );
   }
 
@@ -89,7 +90,8 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
   }
 
   Stream<ActiveChatState> onMessageTap(OnMessageTap value) async* {
-    if (state.sentimentAnalysis.result == SentimentAnalysisResult.none) {
+    yield state.copyWith(isClassifing: true);
+    if (!state.isClassifing) {
       final failureOrResult = await _classificationService
           .getSentimentAnalysis(value.message.content);
       yield failureOrResult.fold<ActiveChatState>(
@@ -110,6 +112,11 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
     return state.copyWith(
       sentimentAnalysis: analysis,
       classifiedMessage: message,
+      isClassifing: true,
     );
+  }
+
+  Stream<ActiveChatState> onEndClassifing(OnEndClassifing value) async* {
+    yield state.copyWith(isClassifing: false);
   }
 }

@@ -59,7 +59,13 @@ class _ActiveChatState extends CustomState<ActiveChat> {
       ),
       body: BlocConsumer<ActiveChatBloc, ActiveChatState>(
         listener: (context, state) {
-          if (state.sentimentAnalysis.result != SentimentAnalysisResult.none) {
+          if (state.isClassifing &&
+              state.sentimentAnalysis.result != SentimentAnalysisResult.none) {
+            Future.delayed(const Duration(seconds: 60), () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              BlocProvider.of<ActiveChatBloc>(context)
+                  .add(ActiveChatEvent.onEndClassifing());
+            });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Container(
@@ -85,9 +91,12 @@ class _ActiveChatState extends CustomState<ActiveChat> {
                     ],
                   ),
                 ),
-                duration: const Duration(seconds: 10),
+                duration: const Duration(seconds: 60),
                 action: SnackBarAction(
-                  onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<ActiveChatBloc>(context)
+                        .add(ActiveChatEvent.onEndClassifing());
+                  },
                   label: 'Close',
                 ),
               ),
@@ -101,7 +110,7 @@ class _ActiveChatState extends CustomState<ActiveChat> {
                 children: [
                   Expanded(
                     flex: 9,
-                    child: _buildMessages(state.messages),
+                    child: _buildMessages(state.messages, state.isClassifing),
                   ),
                   _buildTextInput(),
                 ],
@@ -168,18 +177,20 @@ class _ActiveChatState extends CustomState<ActiveChat> {
     );
   }
 
-  Widget _buildMessages(List<Message> messages) {
+  Widget _buildMessages(List<Message> messages, bool isClassifing) {
     return NotificationListener(
       child: ListView.builder(
         reverse: true,
         itemCount: messages.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => BlocProvider.of<ActiveChatBloc>(context).add(
-              ActiveChatEvent.onMessageTap(
-                messages[index],
-              ),
-            ),
+            onTap: isClassifing
+                ? () {}
+                : () => BlocProvider.of<ActiveChatBloc>(context).add(
+                      ActiveChatEvent.onMessageTap(
+                        messages[index],
+                      ),
+                    ),
             child: Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
