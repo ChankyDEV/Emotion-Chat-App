@@ -33,8 +33,8 @@ void main() {
   const content = Content(value: 'test');
   const sadness = 0.43;
   const other = 0.67;
-  const expected = SentimentAnalysis(content, sadness, other);
-  final dto = SentimentAnalysisDTO(content.value, sadness, other);
+  const expected = SentimentAnalysis(sadness, other);
+  final dto = SentimentAnalysisDTO(sadness, other);
   final errMsg = ErrorMessages.classification.error;
   final exception = ClassificationException(message: errMsg);
   final failure = Failure(message: errMsg);

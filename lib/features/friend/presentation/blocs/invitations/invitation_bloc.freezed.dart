@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'invitation_bloc.dart';
 
@@ -55,6 +56,14 @@ mixin _$InvitationEvent {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
@@ -70,6 +79,14 @@ mixin _$InvitationEvent {
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
     required TResult Function(_SendInvitation value) sendInvitation,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -176,6 +193,17 @@ class _$_AcceptInvitation implements _AcceptInvitation {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+  }) {
+    return accept?.call(invitation);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
@@ -199,6 +227,17 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     required TResult Function(_SendInvitation value) sendInvitation,
   }) {
     return accept(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
+  }) {
+    return accept?.call(this);
   }
 
   @override
@@ -302,6 +341,17 @@ class _$_DeleteInvitation implements _DeleteInvitation {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+  }) {
+    return delete?.call(invitation);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
@@ -325,6 +375,17 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     required TResult Function(_SendInvitation value) sendInvitation,
   }) {
     return delete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
+  }) {
+    return delete?.call(this);
   }
 
   @override
@@ -429,6 +490,17 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+  }) {
+    return invitationsNumberChanged?.call(invites);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
@@ -452,6 +524,17 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     required TResult Function(_SendInvitation value) sendInvitation,
   }) {
     return invitationsNumberChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
+  }) {
+    return invitationsNumberChanged?.call(this);
   }
 
   @override
@@ -555,6 +638,17 @@ class _$_SendInvitation implements _SendInvitation {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+  }) {
+    return sendInvitation?.call(email);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Invitation invitation)? accept,
     TResult Function(Invitation invitation)? delete,
@@ -578,6 +672,17 @@ class _$_SendInvitation implements _SendInvitation {
     required TResult Function(_SendInvitation value) sendInvitation,
   }) {
     return sendInvitation(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
+  }) {
+    return sendInvitation?.call(this);
   }
 
   @override
@@ -633,6 +738,11 @@ mixin _$InvitationState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
     required TResult orElse(),
@@ -641,6 +751,11 @@ mixin _$InvitationState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -775,6 +890,14 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
+  }) {
+    return initial?.call(inviters, numberOfInviters);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
     required TResult orElse(),
@@ -791,6 +914,14 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+  }) {
+    return initial?.call(this);
   }
 
   @override

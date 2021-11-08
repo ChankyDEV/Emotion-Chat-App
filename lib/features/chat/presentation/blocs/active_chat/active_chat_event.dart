@@ -8,5 +8,7 @@ class ActiveChatEvent with _$ActiveChatEvent {
 
   const factory ActiveChatEvent.sendMessage(String message) = SendMessage;
 
+  const factory ActiveChatEvent.onMessageTap(Message message) = OnMessageTap;
+
   const factory ActiveChatEvent.onScrollToEnd() = OnScrollToEnd;
 }

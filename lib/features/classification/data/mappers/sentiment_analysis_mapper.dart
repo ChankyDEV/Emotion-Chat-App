@@ -4,7 +4,6 @@ import 'package:emotion_chat/features/classification/domain/entities/sentiment_a
 class SentimentAnalysisMapper {
   SentimentAnalysisDTO fromDomain(SentimentAnalysis analysis) {
     return SentimentAnalysisDTO(
-      analysis.content.value,
       analysis.sadness,
       analysis.other,
     );

@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'additional_info_bloc.dart';
 
@@ -78,6 +79,19 @@ mixin _$AdditionalInfoEvent {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -102,6 +116,18 @@ mixin _$AdditionalInfoEvent {
     required TResult Function(_CloseError value) closeError,
     required TResult Function(_AddPhotoFromCamera value) addPhoto,
     required TResult Function(_RemovePhoto value) removePhoto,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -216,6 +242,22 @@ class _$_NameChanged implements _NameChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return nameChanged?.call(input);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -248,6 +290,21 @@ class _$_NameChanged implements _NameChanged {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return nameChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return nameChanged?.call(this);
   }
 
   @override
@@ -334,6 +391,22 @@ class _$_NameCleared implements _NameCleared {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return nameCleared?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -366,6 +439,21 @@ class _$_NameCleared implements _NameCleared {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return nameCleared(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return nameCleared?.call(this);
   }
 
   @override
@@ -447,6 +535,22 @@ class _$_StepChanged implements _StepChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return stepChanged?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -479,6 +583,21 @@ class _$_StepChanged implements _StepChanged {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return stepChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return stepChanged?.call(this);
   }
 
   @override
@@ -586,6 +705,22 @@ class _$_GenderChanged implements _GenderChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return genderChanged?.call(activeGender);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -618,6 +753,21 @@ class _$_GenderChanged implements _GenderChanged {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return genderChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return genderChanged?.call(this);
   }
 
   @override
@@ -743,6 +893,22 @@ class _$_ParticularStepChanged implements _ParticularStepChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return particularStepChanged?.call(doneStepIndex, activeStepIndex);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -775,6 +941,21 @@ class _$_ParticularStepChanged implements _ParticularStepChanged {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return particularStepChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return particularStepChanged?.call(this);
   }
 
   @override
@@ -863,6 +1044,22 @@ class _$_CloseError implements _CloseError {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return closeError?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -895,6 +1092,21 @@ class _$_CloseError implements _CloseError {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return closeError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return closeError?.call(this);
   }
 
   @override
@@ -1001,6 +1213,22 @@ class _$_AddPhotoFromCamera implements _AddPhotoFromCamera {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return addPhoto?.call(method);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -1033,6 +1261,21 @@ class _$_AddPhotoFromCamera implements _AddPhotoFromCamera {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return addPhoto(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return addPhoto?.call(this);
   }
 
   @override
@@ -1120,6 +1363,22 @@ class _$_RemovePhoto implements _RemovePhoto {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? nameChanged,
+    TResult Function()? nameCleared,
+    TResult Function()? stepChanged,
+    TResult Function(GenderEnum activeGender)? genderChanged,
+    TResult Function(int doneStepIndex, int activeStepIndex)?
+        particularStepChanged,
+    TResult Function()? closeError,
+    TResult Function(AddingPhotoMethod method)? addPhoto,
+    TResult Function()? removePhoto,
+  }) {
+    return removePhoto?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? nameChanged,
     TResult Function()? nameCleared,
@@ -1152,6 +1411,21 @@ class _$_RemovePhoto implements _RemovePhoto {
     required TResult Function(_RemovePhoto value) removePhoto,
   }) {
     return removePhoto(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_NameCleared value)? nameCleared,
+    TResult Function(_StepChanged value)? stepChanged,
+    TResult Function(_GenderChanged value)? genderChanged,
+    TResult Function(_ParticularStepChanged value)? particularStepChanged,
+    TResult Function(_CloseError value)? closeError,
+    TResult Function(_AddPhotoFromCamera value)? addPhoto,
+    TResult Function(_RemovePhoto value)? removePhoto,
+  }) {
+    return removePhoto?.call(this);
   }
 
   @override
@@ -1237,6 +1511,21 @@ mixin _$AdditionalInfoState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            Name name,
+            Gender gender,
+            Image photo,
+            bool hasPhoto,
+            bool showLoading,
+            int activeStep,
+            int doneStep,
+            bool failureOccured,
+            Failure failure)?
+        initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             Name name,
@@ -1255,6 +1544,11 @@ mixin _$AdditionalInfoState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1535,6 +1829,25 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            Name name,
+            Gender gender,
+            Image photo,
+            bool hasPhoto,
+            bool showLoading,
+            int activeStep,
+            int doneStep,
+            bool failureOccured,
+            Failure failure)?
+        initial,
+  }) {
+    return initial?.call(name, gender, photo, hasPhoto, showLoading, activeStep,
+        doneStep, failureOccured, failure);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             Name name,
@@ -1562,6 +1875,14 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+  }) {
+    return initial?.call(this);
   }
 
   @override

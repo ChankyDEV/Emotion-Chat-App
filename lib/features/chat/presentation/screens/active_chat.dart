@@ -119,26 +119,34 @@ class _ActiveChatState extends CustomState<ActiveChat> {
         reverse: true,
         itemCount: messages.length,
         itemBuilder: (context, index) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-            alignment: isActualUserMessage(messages, index)
-                ? Alignment.centerRight
-                : Alignment.centerLeft,
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                messages[index].content.value,
-                style: bodyStyle.copyWith(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13.0,
-                  fontStyle: FontStyle.normal,
-                ),
+          return GestureDetector(
+            onLongPress: () => BlocProvider.of<ActiveChatBloc>(context).add(
+              ActiveChatEvent.onMessageTap(
+                messages[index],
               ),
-              decoration: BoxDecoration(
-                color: isActualUserMessage(messages, index)
-                    ? cPurple.withOpacity(0.5)
-                    : darkAccentColor,
-                borderRadius: BorderRadius.circular(4.0),
+            ),
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              alignment: isActualUserMessage(messages, index)
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  messages[index].content.value,
+                  style: bodyStyle.copyWith(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 13.0,
+                    fontStyle: FontStyle.normal,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: isActualUserMessage(messages, index)
+                      ? cPurple.withOpacity(0.5)
+                      : darkAccentColor,
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
               ),
             ),
           );

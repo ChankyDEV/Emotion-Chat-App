@@ -2,6 +2,7 @@ import 'package:emotion_chat/features/chat/domain/services/chat_service.dart';
 import 'package:emotion_chat/features/chat/presentation/blocs/active_chat/active_chat_bloc.dart';
 import 'package:emotion_chat/features/chat/presentation/blocs/chats/chats_bloc.dart';
 import 'package:emotion_chat/features/chat/presentation/screens/active_chat.dart';
+import 'package:emotion_chat/features/classification/domain/services/classification_service.dart';
 import 'package:emotion_chat/features/friend/domain/services/friends_service.dart';
 import 'package:emotion_chat/features/friend/presentation/blocs/friends/friends_bloc.dart';
 import 'package:emotion_chat/features/friend/presentation/blocs/invitations/invitation_bloc.dart';
@@ -138,6 +139,7 @@ class RoutingService {
         return BlocProvider(
           create: (context) => ActiveChatBloc(
             GetIt.I.get<ChatService>(),
+            GetIt.I.get<ClassificationService>(),
             friend.uuid,
           )..startListeningForMessages(null),
           child: ActiveChat(userToChatWith: friend),

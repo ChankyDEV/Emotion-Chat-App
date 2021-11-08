@@ -4,6 +4,11 @@ import 'package:emotion_chat/features/chat/data/repositories/chat_repository_imp
 import 'package:emotion_chat/features/chat/data/services/chat_service_impl.dart';
 import 'package:emotion_chat/features/chat/domain/repositories/chat_repository.dart';
 import 'package:emotion_chat/features/chat/domain/services/chat_service.dart';
+import 'package:emotion_chat/features/classification/data/mappers/sentiment_analysis_mapper.dart';
+import 'package:emotion_chat/features/classification/data/repositories/classification_repository_impl.dart';
+import 'package:emotion_chat/features/classification/data/services/classification_service_impl.dart';
+import 'package:emotion_chat/features/classification/domain/repositories/classification_repository.dart';
+import 'package:emotion_chat/features/classification/domain/services/classification_service.dart';
 import 'package:emotion_chat/features/friend/data/repositories/friends_repository_impl.dart';
 import 'package:emotion_chat/features/friend/data/services/friends_service_impl.dart';
 import 'package:emotion_chat/features/friend/domain/repositories/friends_repository.dart';
@@ -33,6 +38,7 @@ import 'package:emotion_chat/features/user/presentation/blocs/auth_form/auth_for
 import 'package:emotion_chat/utils/data/utils/validator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -78,6 +84,8 @@ class Config {
     final logger = getItInstance.get<ChatLogger>();
     getItInstance
       ..registerSingleton<Validator>(Validator())
+      ..registerSingleton<ClassificationRepository>(
+          ClassificationRepositoryImpl(Client()))
       ..registerSingleton<FriendsRepository>(FriendsRepositoryImpl(logger))
       ..registerSingleton<UserRepository>(UserRepositoryImpl(logger))
       ..registerSingleton<AuthRepository>(
@@ -121,6 +129,13 @@ class Config {
           getItInstance.get<NetworkInfo>(),
           getItInstance.get<ChatRepository>(),
           getItInstance.get<UserRepository>(),
+        ),
+      )
+      ..registerSingleton<ClassificationService>(
+        ClassificationServiceImpl(
+          getItInstance.get<ClassificationRepository>(),
+          SentimentAnalysisMapper(),
+          getItInstance.get<NetworkInfo>(),
         ),
       );
   }

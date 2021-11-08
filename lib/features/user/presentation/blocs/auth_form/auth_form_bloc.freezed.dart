@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'auth_form_bloc.dart';
 
@@ -95,6 +96,22 @@ mixin _$AuthFormEvent {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -125,6 +142,22 @@ mixin _$AuthFormEvent {
     required TResult Function(_ResetErrors value) resetErrors,
     required TResult Function(_ResetState value) resetState,
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -246,6 +279,25 @@ class _$_EmailChanged implements _EmailChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return emailChanged?.call(input);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -284,6 +336,25 @@ class _$_EmailChanged implements _EmailChanged {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return emailChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return emailChanged?.call(this);
   }
 
   @override
@@ -402,6 +473,25 @@ class _$_PhoneChanged implements _PhoneChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return phoneChanged?.call(input);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -440,6 +530,25 @@ class _$_PhoneChanged implements _PhoneChanged {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return phoneChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return phoneChanged?.call(this);
   }
 
   @override
@@ -558,6 +667,25 @@ class _$_PasswordChanged implements _PasswordChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return passwordChanged?.call(input);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -596,6 +724,25 @@ class _$_PasswordChanged implements _PasswordChanged {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return passwordChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return passwordChanged?.call(this);
   }
 
   @override
@@ -689,6 +836,25 @@ class _$_ClearEmailField implements _ClearEmailField {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return clearEmailField?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -727,6 +893,25 @@ class _$_ClearEmailField implements _ClearEmailField {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return clearEmailField(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return clearEmailField?.call(this);
   }
 
   @override
@@ -815,6 +1000,25 @@ class _$_ClearPhoneField implements _ClearPhoneField {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return clearPhoneField?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -853,6 +1057,25 @@ class _$_ClearPhoneField implements _ClearPhoneField {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return clearPhoneField(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return clearPhoneField?.call(this);
   }
 
   @override
@@ -941,6 +1164,25 @@ class _$_ShowOrHidePassword implements _ShowOrHidePassword {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return showOrHidePassword?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -979,6 +1221,25 @@ class _$_ShowOrHidePassword implements _ShowOrHidePassword {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return showOrHidePassword(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return showOrHidePassword?.call(this);
   }
 
   @override
@@ -1064,6 +1325,25 @@ class _$_SignUp implements _SignUp {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return signUp?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -1102,6 +1382,25 @@ class _$_SignUp implements _SignUp {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return signUp(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return signUp?.call(this);
   }
 
   @override
@@ -1187,6 +1486,25 @@ class _$_SignIn implements _SignIn {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return signIn?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -1225,6 +1543,25 @@ class _$_SignIn implements _SignIn {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return signIn(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return signIn?.call(this);
   }
 
   @override
@@ -1313,6 +1650,25 @@ class _$_StartValidating implements _StartValidating {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return startValidating?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -1351,6 +1707,25 @@ class _$_StartValidating implements _StartValidating {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return startValidating(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return startValidating?.call(this);
   }
 
   @override
@@ -1438,6 +1813,25 @@ class _$_ResetErrors implements _ResetErrors {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return resetErrors?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -1476,6 +1870,25 @@ class _$_ResetErrors implements _ResetErrors {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return resetErrors(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return resetErrors?.call(this);
   }
 
   @override
@@ -1563,6 +1976,25 @@ class _$_ResetState implements _ResetState {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return resetState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -1601,6 +2033,25 @@ class _$_ResetState implements _ResetState {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return resetState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return resetState?.call(this);
   }
 
   @override
@@ -1715,6 +2166,25 @@ class _$_NetworkStatusChanged implements _NetworkStatusChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String input)? emailChanged,
+    TResult Function(String input)? phoneChanged,
+    TResult Function(String input)? passwordChanged,
+    TResult Function()? clearEmailField,
+    TResult Function()? clearPhoneField,
+    TResult Function()? showOrHidePassword,
+    TResult Function()? signUp,
+    TResult Function()? signIn,
+    TResult Function()? startValidating,
+    TResult Function()? resetErrors,
+    TResult Function()? resetState,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+  }) {
+    return networkStatusChanged?.call(status);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String input)? emailChanged,
     TResult Function(String input)? phoneChanged,
@@ -1753,6 +2223,25 @@ class _$_NetworkStatusChanged implements _NetworkStatusChanged {
     required TResult Function(_NetworkStatusChanged value) networkStatusChanged,
   }) {
     return networkStatusChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_EmailChanged value)? emailChanged,
+    TResult Function(_PhoneChanged value)? phoneChanged,
+    TResult Function(_PasswordChanged value)? passwordChanged,
+    TResult Function(_ClearEmailField value)? clearEmailField,
+    TResult Function(_ClearPhoneField value)? clearPhoneField,
+    TResult Function(_ShowOrHidePassword value)? showOrHidePassword,
+    TResult Function(_SignUp value)? signUp,
+    TResult Function(_SignIn value)? signIn,
+    TResult Function(_StartValidating value)? startValidating,
+    TResult Function(_ResetErrors value)? resetErrors,
+    TResult Function(_ResetState value)? resetState,
+    TResult Function(_NetworkStatusChanged value)? networkStatusChanged,
+  }) {
+    return networkStatusChanged?.call(this);
   }
 
   @override
@@ -1852,6 +2341,22 @@ mixin _$AuthFormState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            EmailAddress emailOrPhone,
+            PhoneNumber phone,
+            Password password,
+            bool showPassword,
+            AutovalidateMode validationMode,
+            bool hasError,
+            String failureMessage,
+            bool authRequestFinished,
+            bool isPhoneNumber,
+            bool hasNetworkConnection)?
+        initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             EmailAddress emailOrPhone,
@@ -1871,6 +2376,11 @@ mixin _$AuthFormState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2181,6 +2691,35 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            EmailAddress emailOrPhone,
+            PhoneNumber phone,
+            Password password,
+            bool showPassword,
+            AutovalidateMode validationMode,
+            bool hasError,
+            String failureMessage,
+            bool authRequestFinished,
+            bool isPhoneNumber,
+            bool hasNetworkConnection)?
+        initial,
+  }) {
+    return initial?.call(
+        emailOrPhone,
+        phone,
+        password,
+        showPassword,
+        validationMode,
+        hasError,
+        failureMessage,
+        authRequestFinished,
+        isPhoneNumber,
+        hasNetworkConnection);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             EmailAddress emailOrPhone,
@@ -2218,6 +2757,14 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+  }) {
+    return initial?.call(this);
   }
 
   @override

@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'chats_bloc.dart';
 
@@ -52,6 +53,14 @@ mixin _$ChatsEvent {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(List<Conversation> conversations)? conversationsChanged,
+    TResult Function()? refresh,
+    TResult Function()? reset,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(List<Conversation> conversations)? conversationsChanged,
@@ -67,6 +76,14 @@ mixin _$ChatsEvent {
     required TResult Function(_ConversationsChanged value) conversationsChanged,
     required TResult Function(_Refresh value) refresh,
     required TResult Function(_Reset value) reset,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_ConversationsChanged value)? conversationsChanged,
+    TResult Function(_Refresh value)? refresh,
+    TResult Function(_Reset value)? reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -174,6 +191,17 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(List<Conversation> conversations)? conversationsChanged,
+    TResult Function()? refresh,
+    TResult Function()? reset,
+  }) {
+    return invitationsNumberChanged?.call(invites);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(List<Conversation> conversations)? conversationsChanged,
@@ -197,6 +225,17 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     required TResult Function(_Reset value) reset,
   }) {
     return invitationsNumberChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_ConversationsChanged value)? conversationsChanged,
+    TResult Function(_Refresh value)? refresh,
+    TResult Function(_Reset value)? reset,
+  }) {
+    return invitationsNumberChanged?.call(this);
   }
 
   @override
@@ -303,6 +342,17 @@ class _$_ConversationsChanged implements _ConversationsChanged {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(List<Conversation> conversations)? conversationsChanged,
+    TResult Function()? refresh,
+    TResult Function()? reset,
+  }) {
+    return conversationsChanged?.call(conversations);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(List<Conversation> conversations)? conversationsChanged,
@@ -326,6 +376,17 @@ class _$_ConversationsChanged implements _ConversationsChanged {
     required TResult Function(_Reset value) reset,
   }) {
     return conversationsChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_ConversationsChanged value)? conversationsChanged,
+    TResult Function(_Refresh value)? refresh,
+    TResult Function(_Reset value)? reset,
+  }) {
+    return conversationsChanged?.call(this);
   }
 
   @override
@@ -402,6 +463,17 @@ class _$_Refresh implements _Refresh {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(List<Conversation> conversations)? conversationsChanged,
+    TResult Function()? refresh,
+    TResult Function()? reset,
+  }) {
+    return refresh?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(List<Conversation> conversations)? conversationsChanged,
@@ -425,6 +497,17 @@ class _$_Refresh implements _Refresh {
     required TResult Function(_Reset value) reset,
   }) {
     return refresh(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_ConversationsChanged value)? conversationsChanged,
+    TResult Function(_Refresh value)? refresh,
+    TResult Function(_Reset value)? reset,
+  }) {
+    return refresh?.call(this);
   }
 
   @override
@@ -495,6 +578,17 @@ class _$_Reset implements _Reset {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(List<Conversation> conversations)? conversationsChanged,
+    TResult Function()? refresh,
+    TResult Function()? reset,
+  }) {
+    return reset?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(List<Conversation> conversations)? conversationsChanged,
@@ -518,6 +612,17 @@ class _$_Reset implements _Reset {
     required TResult Function(_Reset value) reset,
   }) {
     return reset(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_ConversationsChanged value)? conversationsChanged,
+    TResult Function(_Refresh value)? refresh,
+    TResult Function(_Reset value)? reset,
+  }) {
+    return reset?.call(this);
   }
 
   @override
@@ -583,6 +688,17 @@ mixin _$ChatsState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            String numberOfInviters,
+            List<Inviter> inviters,
+            List<Conversation> conversations,
+            int numberOfConversations,
+            bool loading)?
+        initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             String numberOfInviters,
@@ -597,6 +713,11 @@ mixin _$ChatsState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -797,6 +918,21 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(
+            String numberOfInviters,
+            List<Inviter> inviters,
+            List<Conversation> conversations,
+            int numberOfConversations,
+            bool loading)?
+        initial,
+  }) {
+    return initial?.call(numberOfInviters, inviters, conversations,
+        numberOfConversations, loading);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             String numberOfInviters,
@@ -820,6 +956,14 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+  }) {
+    return initial?.call(this);
   }
 
   @override

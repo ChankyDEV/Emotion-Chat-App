@@ -19,7 +19,7 @@ void main() {
   });
   const String url = 'http://127.0.0.1:5000/text_classification';
   const content = Content(value: 'test');
-  final expected = SentimentAnalysisDTO(content.value, 0.1, 0.9);
+  final expected = SentimentAnalysisDTO(0.1, 0.9);
 
   test(
     'should return SentimentAnalysisDTO from body if status code is ok',

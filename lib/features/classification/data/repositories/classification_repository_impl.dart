@@ -12,19 +12,21 @@ class ClassificationRepositoryImpl implements ClassificationRepository {
 
   ClassificationRepositoryImpl(this._client);
 
-  final String _url = 'http://127.0.0.1:5000/text_classification';
+  final _url = '127.0.0.1:5000';
+  final String _path = '/text_classification';
 
   @override
   Future<SentimentAnalysisDTO> getSentimentAnalysis(Content content) async {
-    final path = '$_url/${content.value}';
-    final response = await _client.get(
-      Uri(path: path),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
+    final queryParameters = {
+      'message': content.value,
+    };
+    final response = await _client.post(Uri.http(
+      '127.0.0.1:5000',
+      _path,
+      queryParameters,
+    ));
     if (response.statusCode == 200) {
-      return SentimentAnalysisDTO.fromJson(jsonDecode(response.body), content);
+      return SentimentAnalysisDTO.fromJson(jsonDecode(response.body));
     } else {
       throw ClassificationException(
           message: ErrorMessages.classification.error);

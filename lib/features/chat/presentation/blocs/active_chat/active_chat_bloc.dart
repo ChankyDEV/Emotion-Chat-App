@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:emotion_chat/features/chat/domain/entities/message.dart';
 import 'package:emotion_chat/features/chat/domain/services/chat_service.dart';
+import 'package:emotion_chat/features/classification/domain/entities/sentiment_analysis.dart';
+import 'package:emotion_chat/features/classification/domain/services/classification_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'active_chat_bloc.freezed.dart';
@@ -10,13 +12,15 @@ part 'active_chat_event.dart';
 part 'active_chat_state.dart';
 
 class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
-  final ChatService _repository;
+  final ChatService _chatService;
+  final ClassificationService _classificationService;
   final String _friendUid;
   late StreamSubscription<List<Message>> _messageSub;
   int limit = 20;
 
   ActiveChatBloc(
-    this._repository,
+    this._chatService,
+    this._classificationService,
     this._friendUid,
   ) : super(
           ActiveChatState.initial(
@@ -27,7 +31,7 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
         );
 
   Future<void> startListeningForMessages(int? newLimit) async {
-    final streamOrFailure = await _repository.getMessagesStream(
+    final streamOrFailure = await _chatService.getMessagesStream(
       messageReceiverUuid: _friendUid,
       limit: newLimit ?? limit,
     );
@@ -44,6 +48,7 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
       showMessages: _showMessages,
       sendMessage: sendMessage,
       onScrollToEnd: onScrollToEnd,
+      onMessageTap: onMessageTap,
     );
   }
 
@@ -64,7 +69,7 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
 
   Stream<ActiveChatState> sendMessage(SendMessage sendMessageEvent) async* {
     if (sendMessageEvent.message.length > 0) {
-      final messageSentOrFailure = await _repository.sendMessage(
+      final messageSentOrFailure = await _chatService.sendMessage(
         messageContent: sendMessageEvent.message,
         messageReceiverUuid: _friendUid,
       );
@@ -78,5 +83,16 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
   Stream<ActiveChatState> onScrollToEnd(OnScrollToEnd value) async* {
     await _messageSub.cancel();
     await startListeningForMessages(limit += 20);
+  }
+
+  Stream<ActiveChatState> onMessageTap(OnMessageTap value) async* {
+    final failureOrResult = await _classificationService
+        .getSentimentAnalysis(value.message.content);
+    yield failureOrResult.fold((l) => state, (r) => onClassification(r));
+  }
+
+  ActiveChatState onClassification(SentimentAnalysis r) {
+    print(r);
+    return state;
   }
 }
