@@ -15,7 +15,7 @@ class SentimentAnalysisDTO extends SentimentAnalysis {
     Map<String, dynamic> json,
   ) =>
       SentimentAnalysisDTO(
-        double.parse(json['sad']),
-        double.parse(json['other']),
+        double.parse(json['depressed']),
+        double.parse(json['non-depressed']),
       );
 }
