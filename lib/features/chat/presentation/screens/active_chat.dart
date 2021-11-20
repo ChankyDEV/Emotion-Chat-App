@@ -43,68 +43,68 @@ class _ActiveChatState extends CustomState<ActiveChat> {
       case SentimentAnalysisResult.sad:
         return 'Depressed - ${analysis.sadness.percentage}%';
       case SentimentAnalysisResult.other:
-        return 'Other emotions - ${analysis.other.percentage}%';
+        return 'Non depressed - ${analysis.other.percentage}%';
       case SentimentAnalysisResult.none:
-        return 'We cant classify this message';
+        return '';
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: cDarkGrey,
-        title: _buildTitle(),
-      ),
-      body: BlocConsumer<ActiveChatBloc, ActiveChatState>(
-        listener: (context, state) {
-          if (state.isClassifing &&
-              state.sentimentAnalysis.result != SentimentAnalysisResult.none) {
-            Future.delayed(const Duration(seconds: 60), () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              BlocProvider.of<ActiveChatBloc>(context)
-                  .add(ActiveChatEvent.onEndClassifing());
-            });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Container(
-                  height: screenHeight * 0.08,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '\"${state.classifiedMessage.content.value}\"',
-                        style: bodyStyle.copyWith(
-                          fontSize: 12.0,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        _getSentimentAnalysisLabel(state.sentimentAnalysis),
-                        style: bodyStyle.copyWith(fontSize: 13.0),
-                      ),
-                    ],
-                  ),
-                ),
-                duration: const Duration(seconds: 60),
-                action: SnackBarAction(
-                  onPressed: () {
-                    BlocProvider.of<ActiveChatBloc>(context)
-                        .add(ActiveChatEvent.onEndClassifing());
-                  },
-                  label: 'Close',
-                ),
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Stack(
+    return BlocConsumer<ActiveChatBloc, ActiveChatState>(
+      listener: (context, state) {
+        // if (state.isClassifing &&
+        //     state.sentimentAnalysis.result != SentimentAnalysisResult.none) {
+        //   Future.delayed(const Duration(seconds: 60), () {
+        //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        //     BlocProvider.of<ActiveChatBloc>(context)
+        //         .add(ActiveChatEvent.onEndClassifing());
+        //   });
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Container(
+        //         height: screenHeight * 0.08,
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: [
+        //             Text(
+        //               '\"${state.classifiedMessage.content.value}\"',
+        //               style: bodyStyle.copyWith(
+        //                 fontSize: 12.0,
+        //                 fontStyle: FontStyle.italic,
+        //               ),
+        //             ),
+        //             const SizedBox(
+        //               height: 5,
+        //             ),
+        //             Text(
+        //               _getSentimentAnalysisLabel(state.sentimentAnalysis),
+        //               style: bodyStyle.copyWith(fontSize: 13.0),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       duration: const Duration(seconds: 60),
+        //       action: SnackBarAction(
+        //         onPressed: () {
+        //           BlocProvider.of<ActiveChatBloc>(context)
+        //               .add(ActiveChatEvent.onEndClassifing());
+        //         },
+        //         label: 'Close',
+        //       ),
+        //     ),
+        //   );
+        // }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: cDarkGrey,
+            title: _buildTitle(state.isClassifing, state.sentimentAnalysis),
+          ),
+          body: Stack(
             children: [
               Column(
                 children: [
@@ -133,13 +133,13 @@ class _ActiveChatState extends CustomState<ActiveChat> {
                       ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildTitle() {
+  Widget _buildTitle(bool isClassifing, SentimentAnalysis analysis) {
     return Row(
       children: [
         widget.userToChatWith.hasOwnImage
@@ -167,7 +167,9 @@ class _ActiveChatState extends CustomState<ActiveChat> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Sad/Other',
+                isClassifing
+                    ? 'Classifing...'
+                    : _getSentimentAnalysisLabel(analysis),
                 style: bodyStyle.copyWith(fontSize: 12.0),
               )
             ],
@@ -184,9 +186,9 @@ class _ActiveChatState extends CustomState<ActiveChat> {
         itemCount: messages.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: isClassifing
-                ? () {}
-                : () => BlocProvider.of<ActiveChatBloc>(context).add(
+            onLongPressDown: isClassifing
+                ? (d) {}
+                : (d) => BlocProvider.of<ActiveChatBloc>(context).add(
                       ActiveChatEvent.onMessageTap(
                         messages[index],
                       ),

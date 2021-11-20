@@ -103,6 +103,13 @@ class ActiveChatBloc extends Bloc<ActiveChatEvent, ActiveChatState> {
         classifiedMessage: Message.empty(),
       );
     }
+    yield state.copyWith(
+      isClassifing: false,
+    );
+    await Future.delayed(const Duration(seconds: 3), () {});
+    yield state.copyWith(
+      sentimentAnalysis: SentimentAnalysis.empty(),
+    );
   }
 
   ActiveChatState onClassification(
