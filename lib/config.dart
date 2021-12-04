@@ -1,45 +1,49 @@
 import 'dart:async';
 
-import 'package:emotion_chat/blocs/additional_info/additional_info_bloc.dart';
-import 'package:emotion_chat/blocs/auth/auth_cubit.dart';
-import 'package:emotion_chat/blocs/auth_form/auth_form_bloc.dart';
-import 'package:emotion_chat/constants/data.dart';
-import 'package:emotion_chat/data/data_transfer_objects/auth/user_dto.dart';
-import 'package:emotion_chat/helpers/validator.dart';
-import 'package:emotion_chat/repositories/chat/chat_repository.dart';
-import 'package:emotion_chat/repositories/chat/chat_repository_impl.dart';
-import 'package:emotion_chat/repositories/friends/friends_repository.dart';
-import 'package:emotion_chat/repositories/friends/friends_repository_impl.dart';
-import 'package:emotion_chat/repositories/image_picker/i_image_picker_repository.dart';
-import 'package:emotion_chat/repositories/image_picker/image_picker_repository.dart';
-import 'package:emotion_chat/repositories/invitation/invitation_repository.dart';
-import 'package:emotion_chat/repositories/invitation/invitation_repository_impl.dart';
-import 'package:emotion_chat/repositories/user/user_repository.dart';
-import 'package:emotion_chat/repositories/user/user_repository_impl.dart';
-import 'package:emotion_chat/services/auth/auth_service.dart';
-import 'package:emotion_chat/services/auth/auth_service_impl.dart';
-import 'package:emotion_chat/services/database/conversations/conversation_database_service_impl.dart';
-import 'package:emotion_chat/services/database/database_service.dart';
-import 'package:emotion_chat/services/database/database_service_impl.dart';
-import 'package:emotion_chat/services/database/friends/invitation_database_service_impl.dart';
-import 'package:emotion_chat/services/database/user/user_source.dart';
-import 'package:emotion_chat/services/image_picker/image_picker_service.dart';
-import 'package:emotion_chat/services/image_picker/image_picker_service_impl.dart';
-import 'package:emotion_chat/services/image_upload/image_upload_service.dart';
-import 'package:emotion_chat/services/image_upload/image_upload_service_impl.dart';
-import 'package:emotion_chat/services/local_db/local_database_service.dart';
-import 'package:emotion_chat/services/local_db/local_database_service_impl.dart';
-import 'package:emotion_chat/services/network/network_service.dart';
-import 'package:emotion_chat/services/network/network_service_impl.dart';
-import 'package:emotion_chat/services/permission/permission_service.dart';
-import 'package:emotion_chat/services/permission/permission_service_impl.dart';
-import 'package:emotion_chat/services/routing/routing_service.dart';
-import 'package:emotion_chat/services/utils/logger/logger.dart';
+import 'package:dio/dio.dart';
+import 'package:emotion_chat/features/chat/data/repositories/chat_repository_impl.dart';
+import 'package:emotion_chat/features/chat/data/services/chat_service_impl.dart';
+import 'package:emotion_chat/features/chat/domain/repositories/chat_repository.dart';
+import 'package:emotion_chat/features/chat/domain/services/chat_service.dart';
+import 'package:emotion_chat/features/classification/data/mappers/sentiment_analysis_mapper.dart';
+import 'package:emotion_chat/features/classification/data/repositories/classification_repository_impl.dart';
+import 'package:emotion_chat/features/classification/data/services/classification_service_impl.dart';
+import 'package:emotion_chat/features/classification/domain/repositories/classification_repository.dart';
+import 'package:emotion_chat/features/classification/domain/services/classification_service.dart';
+import 'package:emotion_chat/features/friend/data/repositories/friends_repository_impl.dart';
+import 'package:emotion_chat/features/friend/data/services/friends_service_impl.dart';
+import 'package:emotion_chat/features/friend/domain/repositories/friends_repository.dart';
+import 'package:emotion_chat/features/friend/domain/services/friends_service.dart';
+import 'package:emotion_chat/features/image/data/repositories/image_repository_impl.dart';
+import 'package:emotion_chat/features/image/data/services/image_service_impl.dart';
+import 'package:emotion_chat/features/image/domain/repositories/image_repository.dart';
+import 'package:emotion_chat/features/image/domain/services/image_service.dart';
+import 'package:emotion_chat/features/logger/data/chat_logger_impl.dart';
+import 'package:emotion_chat/features/logger/domain/chat_logger.dart';
+import 'package:emotion_chat/features/network/data/network_info_impl.dart';
+import 'package:emotion_chat/features/network/domain/network_info.dart';
+import 'package:emotion_chat/features/permission/data/permission_info_impl.dart';
+import 'package:emotion_chat/features/permission/domain/permission_info.dart';
+import 'package:emotion_chat/features/routing/routing_service.dart';
+import 'package:emotion_chat/features/user/data/dtos/user_dto.dart';
+import 'package:emotion_chat/features/user/data/repositories/auth_repository_impl.dart';
+import 'package:emotion_chat/features/user/data/repositories/local_repository_impl.dart';
+import 'package:emotion_chat/features/user/data/repositories/user_repository_impl.dart';
+import 'package:emotion_chat/features/user/data/services/user_service_impl.dart';
+import 'package:emotion_chat/features/user/domain/repositories/auth_repository.dart';
+import 'package:emotion_chat/features/user/domain/repositories/local_repository.dart';
+import 'package:emotion_chat/features/user/domain/repositories/user_repository.dart';
+import 'package:emotion_chat/features/user/domain/services/auth_service.dart';
+import 'package:emotion_chat/features/user/presentation/blocs/additional_info/additional_info_bloc.dart';
+import 'package:emotion_chat/features/user/presentation/blocs/auth_form/auth_form_bloc.dart';
+import 'package:emotion_chat/utils/data/utils/validator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+
+import 'features/user/presentation/blocs/auth/auth_cubit.dart';
 
 class Config {
   final getItInstance = GetIt.instance;
@@ -80,56 +84,58 @@ class Config {
     final logger = getItInstance.get<ChatLogger>();
     getItInstance
       ..registerSingleton<Validator>(Validator())
-      ..registerSingleton<DatabaseService>(
-        DatabaseServiceImpl(
-          friends: FriendsDatabaseImpl(logger),
-          conversations: ConversationDatabaseImpl(logger),
-          users: UserDatabaseImpl(logger),
-        ),
-      )
-      ..registerSingleton<AuthService>(
-        AuthServiceImpl(
-          getItInstance.get<DatabaseService>(),
+      ..registerSingleton<ClassificationRepository>(
+          ClassificationRepositoryImpl(Dio()))
+      ..registerSingleton<FriendsRepository>(FriendsRepositoryImpl(logger))
+      ..registerSingleton<UserRepository>(UserRepositoryImpl(logger))
+      ..registerSingleton<AuthRepository>(
+        AuthRepositoryImpl(
+          getItInstance.get<UserRepository>(),
           StreamController<UserDTO>(),
         ),
       )
-      ..registerSingleton<ImagePickerService>(ImagePickerServiceImpl())
-      ..registerSingleton<ImageUploadService>(ImageUploadServiceImpl())
-      ..registerSingleton<LocalDatabaseService>(LocalDatabaseServiceImpl())
-      ..registerSingleton<NetworkService>(NetworkServiceImpl(
+      ..registerSingleton<ChatRepository>(ChatRepositoryImpl(logger))
+      ..registerSingleton<ImageRepository>(ImageRepositoryImpl())
+      ..registerSingleton<LocalRepository>(LocalRepositoryImpl())
+      ..registerSingleton<NetworkInfo>(NetworkInfoImpl(
         InternetConnectionChecker(),
       ))
-      ..registerSingleton<PermissionService>(PermissionServiceImpl())
-      ..registerSingleton<InvitationRepository>(InvitationRepositoryImpl(
-          db: getItInstance.get<DatabaseService>(),
-          local: getItInstance.get<LocalDatabaseService>(),
-          network: getItInstance.get<NetworkService>()))
-      ..registerSingleton<UserRepository>(
-        UserRepositoryImpl(
-          imageService: getItInstance.get<ImageUploadService>(),
-          authService: getItInstance.get<AuthService>(),
-          localDatabaseService: getItInstance.get<LocalDatabaseService>(),
-          networkService: getItInstance.get<NetworkService>(),
-          db: getItInstance.get<DatabaseService>(),
+      ..registerSingleton<PermissionInfo>(PermissionInfoImpl())
+      ..registerSingleton<AuthService>(
+        UserServiceImpl(
+          imageRepository: getItInstance.get<ImageRepository>(),
+          authRepository: getItInstance.get<AuthRepository>(),
+          localRepository: getItInstance.get<LocalRepository>(),
+          networkInfo: getItInstance.get<NetworkInfo>(),
+          userRepository: getItInstance.get<UserRepository>(),
         ),
       )
-      ..registerSingleton<IImagePickerRepository>(
-        ImagePickerRepository(
-            imagePickerService: getItInstance.get<ImagePickerService>(),
-            permissionHandler: getItInstance.get<PermissionService>()),
+      ..registerSingleton<ImageService>(
+        ImageServiceImpl(
+            imageRepository: getItInstance.get<ImageRepository>(),
+            permissionHandler: getItInstance.get<PermissionInfo>()),
       )
-      ..registerSingleton<FriendsRepository>(
-        FriendsRepositoryImpl(
-          getItInstance.get<DatabaseService>(),
-          getItInstance.get<LocalDatabaseService>(),
-          getItInstance.get<NetworkService>(),
+      ..registerSingleton<FriendsService>(
+        FriendsServiceImpl(
+          getItInstance.get<FriendsRepository>(),
+          getItInstance.get<UserRepository>(),
+          getItInstance.get<LocalRepository>(),
+          getItInstance.get<NetworkInfo>(),
         ),
       )
-      ..registerSingleton<ChatRepository>(
-        ChatRepositoryImpl(
-          getItInstance.get<LocalDatabaseService>(),
-          getItInstance.get<NetworkService>(),
-          getItInstance.get<DatabaseService>(),
+      ..registerSingleton<ChatService>(
+        ChatServiceImpl(
+          getItInstance.get<LocalRepository>(),
+          getItInstance.get<NetworkInfo>(),
+          getItInstance.get<ChatRepository>(),
+          getItInstance.get<UserRepository>(),
+        ),
+      )
+      ..registerSingleton<ClassificationService>(
+        ClassificationServiceImpl(
+          getItInstance.get<ClassificationRepository>(),
+          SentimentAnalysisMapper(),
+          getItInstance.get<NetworkInfo>(),
         ),
       );
   }
@@ -137,18 +143,18 @@ class Config {
   Future<void> _registerBlocs() async {
     getItInstance
       ..registerSingleton<AuthCubit>(
-        AuthCubit(authRepository: getItInstance.get<UserRepository>()),
+        AuthCubit(authRepository: getItInstance.get<AuthService>()),
       )
       ..registerSingleton<AuthFormBloc>(
         AuthFormBloc(
-            userRepository: getItInstance.get<UserRepository>(),
+            userRepository: getItInstance.get<AuthService>(),
             authCubit: getItInstance.get<AuthCubit>(),
-            networkService: getItInstance.get<NetworkService>()),
+            networkService: getItInstance.get<NetworkInfo>()),
       )
       ..registerSingleton<AdditionalInfoBloc>(
         AdditionalInfoBloc(
-            imagePickerRepository: getItInstance.get<IImagePickerRepository>(),
-            userRepository: getItInstance.get<UserRepository>()),
+            imagePickerRepository: getItInstance.get<ImageService>(),
+            userRepository: getItInstance.get<AuthService>()),
       );
   }
 
