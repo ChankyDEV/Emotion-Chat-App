@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:emotion_chat/features/friend/domain/entities/invitation.dart';
 import 'package:emotion_chat/features/friend/domain/entities/inviter.dart';
 import 'package:emotion_chat/features/friend/domain/services/friends_service.dart';
+import 'package:emotion_chat/utils/presentation/models/info_dialog.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'invitation_bloc.freezed.dart';
@@ -40,6 +41,7 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
       delete: _delete,
       invitationsNumberChanged: _invitationsNumberChanged,
       sendInvitation: _sendInvitation,
+      hideDialog: _hideDialog,
     );
   }
 
@@ -85,6 +87,34 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
   }
 
   Stream<InvitationState> _sendInvitation(_SendInvitation e) async* {
-    await _service.sendInvitation(e.email);
+    if (e.email.isNotEmpty) {
+      final failureOrUnit = await _service.sendInvitation(e.email);
+      yield failureOrUnit.fold(
+        (l) => _showDialog(
+          isSuccess: false,
+          message: 'Could not find user with particular email address',
+        ),
+        (r) => _showDialog(
+          isSuccess: true,
+          message: 'Successfully sent invitation',
+        ),
+      );
+    }
+  }
+
+  InvitationState _showDialog({
+    required bool isSuccess,
+    required String message,
+  }) {
+    return state.copyWith(
+      infoDialog: InfoDialog(
+        isSuccess: isSuccess,
+        message: message,
+      ),
+    );
+  }
+
+  Stream<InvitationState> _hideDialog(_HideDialog value) async* {
+    yield state.copyWith(infoDialog: null);
   }
 }

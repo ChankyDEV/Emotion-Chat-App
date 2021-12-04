@@ -40,6 +40,10 @@ class _$InvitationEventTearOff {
       email,
     );
   }
+
+  _HideDialog hideDialog() {
+    return const _HideDialog();
+  }
 }
 
 /// @nodoc
@@ -53,6 +57,7 @@ mixin _$InvitationEvent {
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function(String email) sendInvitation,
+    required TResult Function() hideDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +66,7 @@ mixin _$InvitationEvent {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +75,7 @@ mixin _$InvitationEvent {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -79,6 +86,7 @@ mixin _$InvitationEvent {
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
     required TResult Function(_SendInvitation value) sendInvitation,
+    required TResult Function(_HideDialog value) hideDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,6 +95,7 @@ mixin _$InvitationEvent {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -95,6 +104,7 @@ mixin _$InvitationEvent {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -187,6 +197,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function(String email) sendInvitation,
+    required TResult Function() hideDialog,
   }) {
     return accept(invitation);
   }
@@ -198,6 +209,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
   }) {
     return accept?.call(invitation);
   }
@@ -209,6 +221,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
     required TResult orElse(),
   }) {
     if (accept != null) {
@@ -225,6 +238,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
     required TResult Function(_SendInvitation value) sendInvitation,
+    required TResult Function(_HideDialog value) hideDialog,
   }) {
     return accept(this);
   }
@@ -236,6 +250,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
   }) {
     return accept?.call(this);
   }
@@ -247,6 +262,7 @@ class _$_AcceptInvitation implements _AcceptInvitation {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
     required TResult orElse(),
   }) {
     if (accept != null) {
@@ -335,6 +351,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function(String email) sendInvitation,
+    required TResult Function() hideDialog,
   }) {
     return delete(invitation);
   }
@@ -346,6 +363,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
   }) {
     return delete?.call(invitation);
   }
@@ -357,6 +375,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -373,6 +392,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
     required TResult Function(_SendInvitation value) sendInvitation,
+    required TResult Function(_HideDialog value) hideDialog,
   }) {
     return delete(this);
   }
@@ -384,6 +404,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
   }) {
     return delete?.call(this);
   }
@@ -395,6 +416,7 @@ class _$_DeleteInvitation implements _DeleteInvitation {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -484,6 +506,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function(String email) sendInvitation,
+    required TResult Function() hideDialog,
   }) {
     return invitationsNumberChanged(invites);
   }
@@ -495,6 +518,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
   }) {
     return invitationsNumberChanged?.call(invites);
   }
@@ -506,6 +530,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
     required TResult orElse(),
   }) {
     if (invitationsNumberChanged != null) {
@@ -522,6 +547,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
     required TResult Function(_SendInvitation value) sendInvitation,
+    required TResult Function(_HideDialog value) hideDialog,
   }) {
     return invitationsNumberChanged(this);
   }
@@ -533,6 +559,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
   }) {
     return invitationsNumberChanged?.call(this);
   }
@@ -544,6 +571,7 @@ class _$_InvitationsNumberChanged implements _InvitationsNumberChanged {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
     required TResult orElse(),
   }) {
     if (invitationsNumberChanged != null) {
@@ -632,6 +660,7 @@ class _$_SendInvitation implements _SendInvitation {
     required TResult Function(Invitation invitation) delete,
     required TResult Function(List<Inviter> invites) invitationsNumberChanged,
     required TResult Function(String email) sendInvitation,
+    required TResult Function() hideDialog,
   }) {
     return sendInvitation(email);
   }
@@ -643,6 +672,7 @@ class _$_SendInvitation implements _SendInvitation {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
   }) {
     return sendInvitation?.call(email);
   }
@@ -654,6 +684,7 @@ class _$_SendInvitation implements _SendInvitation {
     TResult Function(Invitation invitation)? delete,
     TResult Function(List<Inviter> invites)? invitationsNumberChanged,
     TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
     required TResult orElse(),
   }) {
     if (sendInvitation != null) {
@@ -670,6 +701,7 @@ class _$_SendInvitation implements _SendInvitation {
     required TResult Function(_InvitationsNumberChanged value)
         invitationsNumberChanged,
     required TResult Function(_SendInvitation value) sendInvitation,
+    required TResult Function(_HideDialog value) hideDialog,
   }) {
     return sendInvitation(this);
   }
@@ -681,6 +713,7 @@ class _$_SendInvitation implements _SendInvitation {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
   }) {
     return sendInvitation?.call(this);
   }
@@ -692,6 +725,7 @@ class _$_SendInvitation implements _SendInvitation {
     TResult Function(_DeleteInvitation value)? delete,
     TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
     TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
     required TResult orElse(),
   }) {
     if (sendInvitation != null) {
@@ -711,14 +745,140 @@ abstract class _SendInvitation implements InvitationEvent {
 }
 
 /// @nodoc
+abstract class _$HideDialogCopyWith<$Res> {
+  factory _$HideDialogCopyWith(
+          _HideDialog value, $Res Function(_HideDialog) then) =
+      __$HideDialogCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$HideDialogCopyWithImpl<$Res>
+    extends _$InvitationEventCopyWithImpl<$Res>
+    implements _$HideDialogCopyWith<$Res> {
+  __$HideDialogCopyWithImpl(
+      _HideDialog _value, $Res Function(_HideDialog) _then)
+      : super(_value, (v) => _then(v as _HideDialog));
+
+  @override
+  _HideDialog get _value => super._value as _HideDialog;
+}
+
+/// @nodoc
+
+class _$_HideDialog implements _HideDialog {
+  const _$_HideDialog();
+
+  @override
+  String toString() {
+    return 'InvitationEvent.hideDialog()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _HideDialog);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Invitation invitation) accept,
+    required TResult Function(Invitation invitation) delete,
+    required TResult Function(List<Inviter> invites) invitationsNumberChanged,
+    required TResult Function(String email) sendInvitation,
+    required TResult Function() hideDialog,
+  }) {
+    return hideDialog();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
+  }) {
+    return hideDialog?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Invitation invitation)? accept,
+    TResult Function(Invitation invitation)? delete,
+    TResult Function(List<Inviter> invites)? invitationsNumberChanged,
+    TResult Function(String email)? sendInvitation,
+    TResult Function()? hideDialog,
+    required TResult orElse(),
+  }) {
+    if (hideDialog != null) {
+      return hideDialog();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AcceptInvitation value) accept,
+    required TResult Function(_DeleteInvitation value) delete,
+    required TResult Function(_InvitationsNumberChanged value)
+        invitationsNumberChanged,
+    required TResult Function(_SendInvitation value) sendInvitation,
+    required TResult Function(_HideDialog value) hideDialog,
+  }) {
+    return hideDialog(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
+  }) {
+    return hideDialog?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AcceptInvitation value)? accept,
+    TResult Function(_DeleteInvitation value)? delete,
+    TResult Function(_InvitationsNumberChanged value)? invitationsNumberChanged,
+    TResult Function(_SendInvitation value)? sendInvitation,
+    TResult Function(_HideDialog value)? hideDialog,
+    required TResult orElse(),
+  }) {
+    if (hideDialog != null) {
+      return hideDialog(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _HideDialog implements InvitationEvent {
+  const factory _HideDialog() = _$_HideDialog;
+}
+
+/// @nodoc
 class _$InvitationStateTearOff {
   const _$InvitationStateTearOff();
 
   _Initial initial(
-      {required List<Inviter> inviters, required int numberOfInviters}) {
+      {required List<Inviter> inviters,
+      required int numberOfInviters,
+      InfoDialog? infoDialog}) {
     return _Initial(
       inviters: inviters,
       numberOfInviters: numberOfInviters,
+      infoDialog: infoDialog,
     );
   }
 }
@@ -730,21 +890,27 @@ const $InvitationState = _$InvitationStateTearOff();
 mixin _$InvitationState {
   List<Inviter> get inviters => throw _privateConstructorUsedError;
   int get numberOfInviters => throw _privateConstructorUsedError;
+  InfoDialog? get infoDialog => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Inviter> inviters, int numberOfInviters)
+    required TResult Function(List<Inviter> inviters, int numberOfInviters,
+            InfoDialog? infoDialog)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
+    TResult Function(List<Inviter> inviters, int numberOfInviters,
+            InfoDialog? infoDialog)?
+        initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
+    TResult Function(List<Inviter> inviters, int numberOfInviters,
+            InfoDialog? infoDialog)?
+        initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -775,7 +941,8 @@ abstract class $InvitationStateCopyWith<$Res> {
   factory $InvitationStateCopyWith(
           InvitationState value, $Res Function(InvitationState) then) =
       _$InvitationStateCopyWithImpl<$Res>;
-  $Res call({List<Inviter> inviters, int numberOfInviters});
+  $Res call(
+      {List<Inviter> inviters, int numberOfInviters, InfoDialog? infoDialog});
 }
 
 /// @nodoc
@@ -791,6 +958,7 @@ class _$InvitationStateCopyWithImpl<$Res>
   $Res call({
     Object? inviters = freezed,
     Object? numberOfInviters = freezed,
+    Object? infoDialog = freezed,
   }) {
     return _then(_value.copyWith(
       inviters: inviters == freezed
@@ -801,6 +969,10 @@ class _$InvitationStateCopyWithImpl<$Res>
           ? _value.numberOfInviters
           : numberOfInviters // ignore: cast_nullable_to_non_nullable
               as int,
+      infoDialog: infoDialog == freezed
+          ? _value.infoDialog
+          : infoDialog // ignore: cast_nullable_to_non_nullable
+              as InfoDialog?,
     ));
   }
 }
@@ -811,7 +983,8 @@ abstract class _$InitialCopyWith<$Res>
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
   @override
-  $Res call({List<Inviter> inviters, int numberOfInviters});
+  $Res call(
+      {List<Inviter> inviters, int numberOfInviters, InfoDialog? infoDialog});
 }
 
 /// @nodoc
@@ -827,6 +1000,7 @@ class __$InitialCopyWithImpl<$Res> extends _$InvitationStateCopyWithImpl<$Res>
   $Res call({
     Object? inviters = freezed,
     Object? numberOfInviters = freezed,
+    Object? infoDialog = freezed,
   }) {
     return _then(_Initial(
       inviters: inviters == freezed
@@ -837,6 +1011,10 @@ class __$InitialCopyWithImpl<$Res> extends _$InvitationStateCopyWithImpl<$Res>
           ? _value.numberOfInviters
           : numberOfInviters // ignore: cast_nullable_to_non_nullable
               as int,
+      infoDialog: infoDialog == freezed
+          ? _value.infoDialog
+          : infoDialog // ignore: cast_nullable_to_non_nullable
+              as InfoDialog?,
     ));
   }
 }
@@ -844,16 +1022,21 @@ class __$InitialCopyWithImpl<$Res> extends _$InvitationStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial({required this.inviters, required this.numberOfInviters});
+  const _$_Initial(
+      {required this.inviters,
+      required this.numberOfInviters,
+      this.infoDialog});
 
   @override
   final List<Inviter> inviters;
   @override
   final int numberOfInviters;
+  @override
+  final InfoDialog? infoDialog;
 
   @override
   String toString() {
-    return 'InvitationState.initial(inviters: $inviters, numberOfInviters: $numberOfInviters)';
+    return 'InvitationState.initial(inviters: $inviters, numberOfInviters: $numberOfInviters, infoDialog: $infoDialog)';
   }
 
   @override
@@ -865,14 +1048,18 @@ class _$_Initial implements _Initial {
                     .equals(other.inviters, inviters)) &&
             (identical(other.numberOfInviters, numberOfInviters) ||
                 const DeepCollectionEquality()
-                    .equals(other.numberOfInviters, numberOfInviters)));
+                    .equals(other.numberOfInviters, numberOfInviters)) &&
+            (identical(other.infoDialog, infoDialog) ||
+                const DeepCollectionEquality()
+                    .equals(other.infoDialog, infoDialog)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(inviters) ^
-      const DeepCollectionEquality().hash(numberOfInviters);
+      const DeepCollectionEquality().hash(numberOfInviters) ^
+      const DeepCollectionEquality().hash(infoDialog);
 
   @JsonKey(ignore: true)
   @override
@@ -882,28 +1069,33 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Inviter> inviters, int numberOfInviters)
+    required TResult Function(List<Inviter> inviters, int numberOfInviters,
+            InfoDialog? infoDialog)
         initial,
   }) {
-    return initial(inviters, numberOfInviters);
+    return initial(inviters, numberOfInviters, infoDialog);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
+    TResult Function(List<Inviter> inviters, int numberOfInviters,
+            InfoDialog? infoDialog)?
+        initial,
   }) {
-    return initial?.call(inviters, numberOfInviters);
+    return initial?.call(inviters, numberOfInviters, infoDialog);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Inviter> inviters, int numberOfInviters)? initial,
+    TResult Function(List<Inviter> inviters, int numberOfInviters,
+            InfoDialog? infoDialog)?
+        initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(inviters, numberOfInviters);
+      return initial(inviters, numberOfInviters, infoDialog);
     }
     return orElse();
   }
@@ -940,12 +1132,15 @@ class _$_Initial implements _Initial {
 abstract class _Initial implements InvitationState {
   const factory _Initial(
       {required List<Inviter> inviters,
-      required int numberOfInviters}) = _$_Initial;
+      required int numberOfInviters,
+      InfoDialog? infoDialog}) = _$_Initial;
 
   @override
   List<Inviter> get inviters => throw _privateConstructorUsedError;
   @override
   int get numberOfInviters => throw _privateConstructorUsedError;
+  @override
+  InfoDialog? get infoDialog => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$InitialCopyWith<_Initial> get copyWith =>

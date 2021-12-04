@@ -6,6 +6,7 @@ import 'package:emotion_chat/features/friend/presentation/blocs/invitations/invi
 import 'package:emotion_chat/features/user/presentation/models/form_input.dart';
 import 'package:emotion_chat/utils/presentation/consts/colors.dart';
 import 'package:emotion_chat/utils/presentation/consts/styles.dart';
+import 'package:emotion_chat/utils/presentation/core/custom_snack_bar.dart';
 import 'package:emotion_chat/utils/presentation/core/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,22 @@ class _InvitationsState extends State<Invitations> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InvitationBloc, InvitationState>(
+    return BlocConsumer<InvitationBloc, InvitationState>(
+      listener: (context, state) {
+        if (state.infoDialog != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            CustomSnackBar(
+              isSuccess: state.infoDialog!.isSuccess,
+              message: state.infoDialog!.message,
+              width: 0.9 * MediaQuery.of(context).size.width,
+              height: 0.06 * MediaQuery.of(context).size.height,
+            ),
+          );
+          BlocProvider.of<InvitationBloc>(context).add(
+            InvitationEvent.hideDialog(),
+          );
+        }
+      },
       builder: (context, state) {
         return Scaffold(
             appBar: AppBar(

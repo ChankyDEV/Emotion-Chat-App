@@ -10,7 +10,8 @@ class ClassificationRepositoryImpl implements ClassificationRepository {
 
   ClassificationRepositoryImpl(this._dio);
 
-  final _url = 'http://192.168.0.107:5000/text_classification';
+  final _url =
+      'https://depressionclassification.herokuapp.com/text_classification';
 
   @override
   Future<SentimentAnalysisDTO> getSentimentAnalysis(Content content) async {

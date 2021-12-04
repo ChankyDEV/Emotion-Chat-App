@@ -12,4 +12,6 @@ class InvitationEvent with _$InvitationEvent {
       List<Inviter> invites) = _InvitationsNumberChanged;
 
   const factory InvitationEvent.sendInvitation(String email) = _SendInvitation;
+
+  const factory InvitationEvent.hideDialog() = _HideDialog;
 }

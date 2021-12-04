@@ -69,7 +69,7 @@ class _SignInFormState extends State<SignInForm> {
                   clearFunction: () => BlocProvider.of<AuthFormBloc>(context)
                       .add(AuthFormEvent.clearEmailField()),
                   controller: widget.emailController,
-                  hint: 'Email or phone',
+                  hint: 'Email',
                   formInput: InputType.both,
                   isPhoneNumber: state.isPhoneNumber,
                   icon: Icon(

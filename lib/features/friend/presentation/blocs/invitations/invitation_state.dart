@@ -5,5 +5,6 @@ class InvitationState with _$InvitationState {
   const factory InvitationState.initial({
     required List<Inviter> inviters,
     required int numberOfInviters,
+    InfoDialog? infoDialog,
   }) = _Initial;
 }

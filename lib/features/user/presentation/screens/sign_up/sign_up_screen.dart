@@ -1,8 +1,8 @@
 import 'package:emotion_chat/features/user/presentation/blocs/auth_form/auth_form_bloc.dart';
 import 'package:emotion_chat/features/user/presentation/models/form_input.dart';
 import 'package:emotion_chat/utils/presentation/consts/colors.dart';
-import 'package:emotion_chat/utils/presentation/consts/styles.dart';
 import 'package:emotion_chat/utils/presentation/core/animated_button.dart';
+import 'package:emotion_chat/utils/presentation/core/custom_snack_bar.dart';
 import 'package:emotion_chat/utils/presentation/core/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,20 +71,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 listener: (context, state) {
               if (state.hasError) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.red,
-                    behavior: SnackBarBehavior.floating,
-                    content: Container(
-                      width: 0.9 * width,
-                      height: 0.06 * height,
-                      alignment: Alignment.center,
-                      child: Text(
-                        state.failureMessage,
-                        style: bodyStyle.copyWith(color: Colors.white),
-                      ),
-                    ),
-                    elevation: 12.0,
-                    duration: Duration(milliseconds: 2500),
+                  CustomSnackBar(
+                    isSuccess: false,
+                    message: state.failureMessage,
+                    width: 0.9 * MediaQuery.of(context).size.width,
+                    height: 0.06 * MediaQuery.of(context).size.height,
                   ),
                 );
                 BlocProvider.of<AuthFormBloc>(context)
@@ -132,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   formNode: _formNode,
                                   controller: widget.emailController,
                                   inputType: InputType.emailAddress,
-                                  hint: 'Email or mobile phone...',
+                                  hint: 'Email...',
                                   prefixIcon: Icons.mail_outline,
                                   suffixIcon: Icons.clear,
                                   action: () {
@@ -195,9 +186,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   hint: 'Password...',
                                   prefixIcon: Icons.lock_outline,
                                   suffixIcon: Icons.visibility_off_outlined,
-                                  action: () => BlocProvider.of<AuthFormBloc>(
-                                          context)
-                                      .add(AuthFormEvent.showOrHidePassword()),
+                                  action: () =>
+                                      BlocProvider.of<AuthFormBloc>(context)
+                                          .add(
+                                    AuthFormEvent.showOrHidePassword(),
+                                  ),
                                   isTextVisible: state.showPassword,
                                   textInputAction: TextInputAction.done,
                                   onSubmitted: (_) {},
@@ -211,17 +204,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Expanded(
                           flex: 2,
                           child: AnimatedButton(
-                              formKey: _formKey,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              title: 'Next',
-                              onTap: () =>
-                                  BlocProvider.of<AuthFormBloc>(context).add(
-                                    AuthFormEvent.signUp(),
-                                  ),
-                              backgroundColor: cWhite,
-                              endColor: cDarkGrey,
-                              shadowColor: cLightGrey),
+                            formKey: _formKey,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            title: 'Next',
+                            onTap: () =>
+                                BlocProvider.of<AuthFormBloc>(context).add(
+                              AuthFormEvent.signUp(),
+                            ),
+                            backgroundColor: cWhite,
+                            endColor: cDarkGrey,
+                            shadowColor: cLightGrey,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         Expanded(
                           child: Row(
@@ -231,11 +228,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onTap: () => widget.pageController.previousPage(
                                     duration: const Duration(milliseconds: 500),
                                     curve: Curves.easeIn),
-                                child: Text('Already have account',
-                                    style: const TextStyle(
-                                        color: cLightGrey,
-                                        fontSize: 12,
-                                        fontFamily: 'Lato')),
+                                child: Text(
+                                  'Already have account',
+                                  style: const TextStyle(
+                                      color: cLightGrey,
+                                      fontSize: 12,
+                                      fontFamily: 'Lato'),
+                                ),
                               )
                             ],
                           ),

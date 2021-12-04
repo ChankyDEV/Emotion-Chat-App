@@ -132,7 +132,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   formNode: _formNode,
                                   controller: widget.emailController,
                                   inputType: InputType.emailAddress,
-                                  hint: 'Email or mobile phone...',
+                                  hint: 'Email...',
                                   prefixIcon: Icons.mail_outline,
                                   suffixIcon: Icons.clear,
                                   action: () {
