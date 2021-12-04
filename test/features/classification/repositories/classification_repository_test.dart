@@ -19,7 +19,8 @@ void main() {
     dio = MockDio();
     repository = ClassificationRepositoryImpl(dio);
   });
-  final url = 'http://192.168.0.107:5000/text_classification';
+  final url =
+      'https://depressionclassification.herokuapp.com/text_classification';
   const content = Content(value: 'test');
   final expected = SentimentAnalysisDTO(0.1, 0.9);
   final queryParameters = {
@@ -28,7 +29,9 @@ void main() {
   test(
     'should return SentimentAnalysisDTO from body if status code is ok',
     () async {
-      when(dio.post(url, queryParameters: queryParameters)).thenAnswer(
+      when(
+        dio.post(url, queryParameters: queryParameters),
+      ).thenAnswer(
         (_) async => Response(
           requestOptions: RequestOptions(path: url),
           data: jsonDecode(fixture('sentimentAnalysis.json')),

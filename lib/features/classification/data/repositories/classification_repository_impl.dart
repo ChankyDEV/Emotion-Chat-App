@@ -18,16 +18,12 @@ class ClassificationRepositoryImpl implements ClassificationRepository {
     final queryParameters = {
       'message': content.value,
     };
-    try {
-      final response = await _dio.post(_url, queryParameters: queryParameters);
-      if (response.statusCode == 200) {
-        return SentimentAnalysisDTO.fromJson(response.data);
-      } else {
-        throw ClassificationException(
-            message: ErrorMessages.classification.error);
-      }
-    } catch (e) {
-      throw ClassificationException(message: ErrorMessages.internet.error);
+    final response = await _dio.post(_url, queryParameters: queryParameters);
+    if (response.statusCode == 200) {
+      return SentimentAnalysisDTO.fromJson(response.data);
+    } else {
+      throw ClassificationException(
+          message: ErrorMessages.classification.error);
     }
   }
 }
