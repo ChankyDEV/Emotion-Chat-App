@@ -209,11 +209,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                 onTap: () => widget.pageController.nextPage(
                                     duration: const Duration(milliseconds: 500),
                                     curve: Curves.easeIn),
-                                child: Text('Do not have an account',
-                                    style: const TextStyle(
-                                        color: cLightGrey,
-                                        fontSize: 12,
-                                        fontFamily: 'Lato')),
+                                child: Text(
+                                  'Create an account',
+                                  style: const TextStyle(
+                                      color: cLightGrey,
+                                      fontSize: 12,
+                                      fontFamily: 'Lato'),
+                                ),
                               )
                             ],
                           ),
